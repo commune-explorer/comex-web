@@ -20,19 +20,27 @@ export const TokenProfile = () => {
         {[
           {
             text: 'Market Cap',
+            value: '$1.2B',
+          },
+          {
+            text: '24h Volume',
+            value: '$1.2B',
+          },
+          {
+            text: 'Circulating Supply',
             value: '1.2B',
           },
           {
-            text: 'Market Cap',
+            text: 'Total Supply',
             value: '1.2B',
           },
           {
-            text: 'Market Cap',
-            value: '1.2B',
+            text: 'Validating APR',
+            value: '12.02%',
           },
           {
-            text: 'Market Cap',
-            value: '1.2B',
+            text: 'Staking APR',
+            value: '15.02%',
           },
         ].map((item, index) => (
           <div className="flex flex-col gap-1 col-span-2">
