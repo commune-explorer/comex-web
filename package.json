@@ -1,7 +1,7 @@
 {
-  "name": "vite-wagmi-starter",
+  "name": "comex",
   "version": "0.0.0",
-  "description": "vite wagmi starter",
+  "description": "comex",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
@@ -70,17 +70,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fisand/vite-wagmi-seed.git"
+    "url": "git+https://github.com/mosaicx-org/comex.git"
   },
   "keywords": [
     "vite",
     "wagmi",
     "unocss"
-  ],
-  "author": "zouhang",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/fisand/vite-wagmi-seed/issues"
-  },
-  "homepage": "https://github.com/fisand/vite-wagmi-seed#readme"
+  ]
 }

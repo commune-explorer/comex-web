@@ -5,6 +5,9 @@ import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastVi
 import { useToast } from '@/components/ui/use-toast'
 import routes from '~react-pages'
 
+import { Footer } from './components/layout/Footer'
+import { Header } from './components/layout/Header'
+
 function Redirect({ to }: { to: string }) {
   let navigate = useNavigate()
   useEffect(() => {
@@ -16,8 +19,10 @@ function Redirect({ to }: { to: string }) {
 function App() {
   const { toasts } = useToast()
   return (
-    <>
-      {useRoutes([...routes, { path: '*', element: <Redirect to="/" /> }])}
+    <div className="min-h-100vh flex flex-col">
+      <Header />
+      <div className="flex-1"> {useRoutes([...routes, { path: '*', element: <Redirect to="/" /> }])}</div>
+      <Footer />
       <ToastProvider duration={2000}>
         {toasts.map(function ({ id, title, description, action, ...props }) {
           return (
@@ -33,7 +38,7 @@ function App() {
         })}
         <ToastViewport />
       </ToastProvider>
-    </>
+    </div>
   )
 }
 

@@ -1,9 +1,9 @@
 body {
   margin: 0;
-  font-family: 'Varela Round', sans-serif;
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #f5f5f8
+  background: #191A2B;
 }
 
 body .walletconnect-modal__footer {

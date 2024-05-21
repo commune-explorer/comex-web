@@ -48,6 +48,7 @@ export default defineConfig(({ mode }) => {
             componentPrefix: 'Icon',
           }),
         ],
+        dirs: ['./src/components/ui'],
       }),
       EslintPlugin(),
       // Analyze(),
