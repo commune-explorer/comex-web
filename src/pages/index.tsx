@@ -9,6 +9,8 @@ const Home = () => {
       <div className=" container mx-auto">
         <TokenProfile />
         <div className="mt-5 flex justify-between">
+          <div className="flex-1">Trading View</div>
+          <Separator orientation="vertical" className="h-auto mx-5" />
           <SubnetsPanel />
         </div>
       </div>
