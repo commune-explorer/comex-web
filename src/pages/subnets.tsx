@@ -23,7 +23,9 @@ export default function SubnetsPage() {
               key={tab}
               className={cn(
                 'relative flex-col-center items-stretch [&>svg]:cursor-pointer',
-                currentTab === tab ? '[&>div]:btn-brand-bg text-primary' : '[&>svg]:hidden text-brand'
+                currentTab === tab
+                  ? '[&>div]:btn-brand-bg text-primary'
+                  : '[&>svg]:hidden text-brand hover:btn-brand-bg'
               )}
               onClick={() => setCurrentTab(tab)}
             >

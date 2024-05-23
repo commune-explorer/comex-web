@@ -35,7 +35,7 @@ export const Header = ({ action }: { action?: ReactNode }) => {
                 variant="link"
                 className={cn(
                   'relative text-brand font-medium rounded-none underline-transparent',
-                  pathname === link.href ? 'btn-brand-bg' : 'bg-transparent hover:bg-brand/5'
+                  pathname === link.href ? 'btn-brand-bg' : 'bg-transparent hover:btn-brand-bg'
                 )}
               >
                 {link.title}
