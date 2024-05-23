@@ -12,7 +12,20 @@ const config: UserConfig = {
     },
   ],
   rules: [],
-  theme: {},
+  preflights: [
+    {
+      getCSS: () => `
+      :root {
+        --brand: 241 49.50% 78.20%;
+      }
+      `,
+    },
+  ],
+  theme: {
+    colors: {
+      brand: 'hsl(var(--brand))',
+    },
+  },
   safelist: ['animate-fade-in', '!animate-duration-360'],
   transformers: [transformerVariantGroup()],
 }

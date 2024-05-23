@@ -8,7 +8,7 @@ const links = [
 
 export const Header = ({ action }: { action?: ReactNode }) => {
   return (
-    <div className="h-16 border-b-1 border-solid border-border box-border sticky top-0 bg-background z-10">
+    <div className="h-16 border-b-1 border-solid border-border box-border sticky top-0 z-10 bg-#191A2B">
       <div className="container m-auto h-full flex justify-between items-center">
         <div className="flex items-center font-bold cursor-pointer">
           <span className="text-xl">Comex</span>
@@ -16,7 +16,9 @@ export const Header = ({ action }: { action?: ReactNode }) => {
         <div className="flex gap-4">
           {links.map((link, index) => (
             <a key={index} href={link.href}>
-              <Button variant="link">{link.title}</Button>
+              <Button variant="link" className="text-brand font-medium">
+                {link.title}
+              </Button>
             </a>
           ))}
         </div>
