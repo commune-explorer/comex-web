@@ -69,7 +69,7 @@ const links = [
 export const Footer = () => {
   return (
     <>
-      <div className="">
+      <div className="mt-40">
         <div className="container mx-auto flex gap-20">
           <div className="text-xs space-y-4">
             <div className="font-bold">

@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import { useSvgBg } from '@/hooks/use-svg'
 import { cn } from '@/lib/utils'
@@ -17,15 +18,17 @@ export const Header = ({ action }: { action?: ReactNode }) => {
   return (
     <div className="h-16 border-b-1 border-solid border-border box-border sticky top-0 z-10 bg-#191A2B">
       <div className="container m-auto h-full flex justify-between items-center">
-        <div className="flex items-center font-bold cursor-pointer">
-          <span className="text-xl">Comex</span>
-        </div>
+        <Link to="/" className="flex items-center font-bold cursor-pointer">
+          <span className="text-xl font-[Krona_One]">
+            <span className="text-brand">C</span>omex
+          </span>
+        </Link>
         <div className="flex gap-4">
           {links.map((link, index) => (
-            <a
+            <Link
               ref={svgRef}
               key={index}
-              href={link.href}
+              to={link.href}
               className={cn('relative p-.25 flex-col-center', pathname === link.href ? '' : '[&>svg]:hidden')}
             >
               <Button
@@ -37,7 +40,7 @@ export const Header = ({ action }: { action?: ReactNode }) => {
               >
                 {link.title}
               </Button>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
