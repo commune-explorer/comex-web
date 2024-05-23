@@ -11,7 +11,15 @@ const config: UserConfig = {
       'flex-col-center': 'flex flex-col justify-center items-center',
     },
   ],
-  rules: [],
+  rules: [
+    [
+      'btn-brand-bg',
+      {
+        background:
+          'radial-gradient(56.52% 56.52% at 50% 50%, rgba(43, 26, 60, 0.00) 54.5%, rgba(107, 104, 255, 0.15) 100%)',
+      },
+    ],
+  ],
   preflights: [
     {
       getCSS: () => `

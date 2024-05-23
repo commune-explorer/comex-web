@@ -31,7 +31,7 @@ export const SubnetsPanel = () => {
                     <span
                       className={cn(
                         'w-1 h-5 bg-muted rounded-sm',
-                        index < 4 ? ' bg-#14DEC2 shadow shadow-[#14DEC2]' : ''
+                        index < 4 ? ' bg-#adace3 shadow shadow-[#adace3]' : ''
                       )}
                     />
                   ))}

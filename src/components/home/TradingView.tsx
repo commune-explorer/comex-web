@@ -36,13 +36,13 @@ export const TradingView = () => {
 
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#14dec2" stopOpacity={0.5} />
+              <stop offset="0%" stopColor="#adace3" stopOpacity={0.5} />
               <stop offset="95%" stopColor="transparent" stopOpacity={0.1} />
             </linearGradient>
           </defs>
           {data && (
             <>
-              <Line type="monotone" dataKey="close" dot={false} stroke="#14dec2" />
+              <Line type="monotone" dataKey="close" dot={false} stroke="#adace3" />
               <Area dataKey="close" stroke="transparent" dot={false} fill="url(#colorUv)" />
             </>
           )}
