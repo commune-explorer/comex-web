@@ -18,8 +18,8 @@ export const SubnetsPanel = () => {
           .map(() => (
             <div className="flex-center justify-between">
               <div className="flex flex-col gap-.5">
-                <span className="text-muted-foreground text-sm">Active Keys</span>
-                <span className="text-muted-foreground text-primary">
+                <span className="text-brand text-sm">Active Keys</span>
+                <span className="text-brand text-primary">
                   <span>1000</span>
                   <span>/1024</span>
                 </span>

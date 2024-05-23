@@ -4,7 +4,7 @@ export const TokenProfile = () => {
       <div className="w-12 h-12 rounded-full bg-secondary"></div>
 
       <div className="">
-        <div className="flex items-center gap-2 text-muted-foreground text-sm">
+        <div className="flex items-center gap-2 text-brand text-sm">
           Bittensor price
           <Button variant="secondary" size="sm" className="px-2 py-1 h-auto text-xs">
             CMX
@@ -44,7 +44,7 @@ export const TokenProfile = () => {
           },
         ].map((item, index) => (
           <div className="flex flex-col gap-1 col-span-2">
-            <span className="text-sm text-muted-foreground">{item.text}</span>
+            <span className="text-sm text-brand">{item.text}</span>
             <span className="text-base text-primary">{item.value}</span>
           </div>
         ))}
