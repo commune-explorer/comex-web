@@ -1,6 +1,5 @@
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-// import Analyze from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
@@ -19,8 +18,8 @@ export default defineConfig(({ mode }) => {
     base: env.BASE,
     resolve: {
       alias: {
-        '@/': `${resolve(__dirname, 'src')}/`,
-      },
+        '@/': `${resolve(__dirname, 'src')}/`
+      }
     },
     plugins: [
       react(),
@@ -31,13 +30,13 @@ export default defineConfig(({ mode }) => {
         customCollections: {
           'fisand-icons': FileSystemIconLoader(`${resolve(__dirname, 'src/assets/icons')}/`, (svg) =>
             svg.replace(/^<svg /, '<svg fill="currentColor" ')
-          ),
-        },
+          )
+        }
       }),
       Pages({
         dirs: [{ dir: 'src/pages', baseRoute: env.BASE || '' }],
         exclude: ['**/[A-Z]*.tsx'],
-        importMode: 'sync',
+        importMode: 'sync'
       }),
       UnoCSS(),
       AutoImport({
@@ -45,27 +44,26 @@ export default defineConfig(({ mode }) => {
         dts: './src/auto-imports.d.ts',
         resolvers: [
           IconsResolver({
-            componentPrefix: 'Icon',
-          }),
+            componentPrefix: 'Icon'
+          })
         ],
-        dirs: ['./src/components/ui'],
+        dirs: ['./src/components/ui']
       }),
       EslintPlugin(),
       // Analyze(),
-      nodePolyfills(),
+      nodePolyfills()
     ],
     build: {
       rollupOptions: {
         output: {
           manualChunks: {
-            'react-vendor': ['react', 'react-router-dom', 'react-dom'],
-            'wagmi-vendor': ['wagmi', 'viem'],
-          },
-        },
-      },
+            'react-vendor': ['react', 'react-router-dom', 'react-dom']
+          }
+        }
+      }
     },
     optimizeDeps: {
-      include: ['react-dom'],
-    },
+      include: ['react-dom']
+    }
   }
 })

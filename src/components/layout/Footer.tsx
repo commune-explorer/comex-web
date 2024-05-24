@@ -1,5 +1,3 @@
-import { link } from 'fs'
-
 const links = [
   {
     title: 'Apps',

@@ -1,7 +1,7 @@
 export const Prompting = () => {
   return (
     <div>
-      <div className="text-[#ADACE3] text-7.5 font-400 lh-9 font-[Krona_One]">Text Prompting</div>
+      <div className="text-[#ADACE3] text-7.5 font-400 lh-9 font-[Orbitron]">Text Prompting</div>
       <div className="mt-3 space-y-3">
         <div className="flex items-center">
           <span className="w-30 text-brand">Subnet info</span>

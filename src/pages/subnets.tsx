@@ -43,7 +43,7 @@ export default function SubnetsPage() {
             <TradingView />
             <Separator orientation="vertical" className="h-auto mx-5" />
             <div className="min-w-280px">
-              <div>Current Registration Cost </div>
+              <div>Current Registration Cost</div>
             </div>
           </div>
         )}

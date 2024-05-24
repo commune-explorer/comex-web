@@ -1,18 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import {
-  Area,
-  Bar,
-  CartesianGrid,
-  ComposedChart,
-  Legend,
-  Line,
-  ResponsiveContainer,
-  Scatter,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
+import { Area, ComposedChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 export const TradingView = () => {
   const { data } = useQuery({

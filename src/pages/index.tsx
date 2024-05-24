@@ -1,5 +1,3 @@
-import { useAccount } from 'wagmi'
-
 import { TokenProfile } from '@/components/home/Profile'
 import { RankPanel } from '@/components/home/RankPanel'
 import { SubnetsPanel } from '@/components/home/SubnetsPanel'
@@ -25,7 +23,7 @@ const Home = () => {
           <TradingView />
           <Separator orientation="vertical" className="h-auto mx-5" />
           <div className="min-w-280px">
-            <div>Current Registration Cost </div>
+            <div>Current Registration Cost</div>
           </div>
         </div>
       </div>

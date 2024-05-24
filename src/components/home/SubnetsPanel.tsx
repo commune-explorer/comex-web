@@ -3,12 +3,12 @@ import { cn } from '@/lib/utils'
 export const SubnetsPanel = () => {
   return (
     <div className="shrink-0">
-      <div className="uppercase text-lg"> subnets</div>
+      <div className="uppercase text-lg">Subnets</div>
       <div className="mt-4 grid grid-cols-8 gap-1">
         {Array(36)
           .fill(1)
           .map((item, index) => (
-            <div className="w-8 h-8 text-primary bg-secondary flex-col-center">{index + 1}</div>
+            <div className="w-8 h-8 text-primary bg-[rgba(173,172,227,0.08)] flex-col-center">{index + 1}</div>
           ))}
       </div>
 
