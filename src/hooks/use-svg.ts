@@ -1,15 +1,20 @@
 import { SVG } from '@svgdotjs/svg.js'
 import { useWindowSize } from 'usehooks-ts'
 
+import { sleep } from '@/utils'
+
 export const useSvgBg = (color: string = '#6b68ff') => {
   const { width } = useWindowSize()
   const svgRef = useCallback(
-    (target?: HTMLDivElement | HTMLButtonElement | HTMLAnchorElement | null) => {
+    async (target?: HTMLDivElement | HTMLButtonElement | HTMLAnchorElement | null) => {
       if (!target) return
       const hasSvg = target.querySelector('.random-svg-bg')
       if (hasSvg) {
         target.removeChild(hasSvg)
       }
+
+      // wait for the element to be rendered
+      await sleep(48)
 
       const wrapperSize = target?.getBoundingClientRect()
       const w = wrapperSize!.width
