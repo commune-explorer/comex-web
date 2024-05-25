@@ -1,5 +1,6 @@
 import { RankPanel } from '@/components/home/RankPanel'
 import { TradingView } from '@/components/home/TradingView'
+import { LeaderBoard } from '@/components/subnets/LeaderBoard'
 import { ParamsPanel } from '@/components/subnets/ParamsPanel'
 import { Prompting } from '@/components/subnets/Prompting'
 import { useSvgBg } from '@/hooks/use-svg'
@@ -47,6 +48,8 @@ export default function SubnetsPage() {
             </div>
           </div>
         )}
+
+        {currentTab === tabs[3] && <LeaderBoard />}
       </div>
     </div>
   )
