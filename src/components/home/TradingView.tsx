@@ -30,7 +30,7 @@ export const TradingView = () => {
             <>
               {/* <Line type="monotone" dataKey="close" dot={false} stroke="#adace3" /> */}
               <Area dataKey="close" stroke="#adace3" dot={false} fill="url(#colorUv)" />
-              <Bar dataKey="close" barSize={1} fill="rgba(20, 222, 194, 0.5)" />
+              <Bar dataKey="volumefrom" barSize={1} fill="rgba(20, 222, 194, 0.5)" />
             </>
           )}
         </ComposedChart>
