@@ -19,6 +19,13 @@ const config: UserConfig = {
           'radial-gradient(56.52% 56.52% at 50% 50%, rgba(43, 26, 60, 0.00) 54.5%, rgba(107, 104, 255, 0.15) 100%)',
       },
     ],
+    [
+      'btn-brand-bg-bold',
+      {
+        background:
+          'radial-gradient(56.52% 56.52% at 50% 50%, rgba(43, 26, 60, 0.00) 54.5%, rgba(107, 104, 255, 0.3) 100%)',
+      },
+    ],
   ],
   preflights: [
     {

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { Area, ComposedChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Area, Bar, ComposedChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 export const TradingView = () => {
   const { data } = useQuery({
@@ -20,18 +20,17 @@ export const TradingView = () => {
           <XAxis className="text-xs" dataKey="time" tickFormatter={(val) => dayjs(val * 1000).format("MMM YY'")} />
           <YAxis className="text-xs" />
 
-          {/* <Bar dataKey="close" barSize={2} fill="rgba(252, 185, 0, 0.5)" /> */}
-
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#adace3" stopOpacity={0.5} />
-              <stop offset="95%" stopColor="transparent" stopOpacity={0.1} />
+              <stop offset="70%" stopColor="transparent" stopOpacity={0.1} />
             </linearGradient>
           </defs>
           {data && (
             <>
-              <Line type="monotone" dataKey="close" dot={false} stroke="#adace3" />
-              <Area dataKey="close" stroke="transparent" dot={false} fill="url(#colorUv)" />
+              {/* <Line type="monotone" dataKey="close" dot={false} stroke="#adace3" /> */}
+              <Area dataKey="close" stroke="#adace3" dot={false} fill="url(#colorUv)" />
+              <Bar dataKey="close" barSize={1} fill="rgba(20, 222, 194, 0.5)" />
             </>
           )}
         </ComposedChart>

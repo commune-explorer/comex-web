@@ -8,7 +8,14 @@ export const SubnetsPanel = () => {
         {Array(36)
           .fill(1)
           .map((item, index) => (
-            <div className="w-8 h-8 text-primary bg-[rgba(173,172,227,0.08)] flex-col-center">{index + 1}</div>
+            <div
+              className={cn(
+                'w-8 h-8 text-primary bg-[rgba(173,172,227,0.08)] hover:btn-brand-bg-bold cursor-pointer flex-col-center',
+                index <= 0 ? 'btn-brand-bg-bold' : ''
+              )}
+            >
+              {index + 1}
+            </div>
           ))}
       </div>
 
