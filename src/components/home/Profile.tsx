@@ -1,18 +1,15 @@
+import ComaiImg from '@/assets/images/comai.png'
+
 export const TokenProfile = () => {
   return (
     <div className="flex gap-10 py-5 items-center">
-      <div className="w-12 h-12 rounded-full bg-secondary"></div>
+      <img src={ComaiImg} alt="" className="p-0.5 w-12 h-12 rounded-full bg-secondary" />
 
       <div className="">
-        <div className="flex items-center gap-2 text-brand text-sm">
-          Bittensor price
-          <Button variant="secondary" size="sm" className="px-2 py-1 h-auto text-xs">
-            CMX
-          </Button>
-        </div>
+        <div className="flex items-center gap-2 text-brand text-sm">$COMAI Price</div>
         <div className="font-medium flex items-end gap-1">
-          <span className="text-2xl">$407.00</span>
-          <span className="text-green-400">12.02%</span>
+          <span className="text-2xl">$0.81</span>
+          <span className="text-green-400">1.02%</span>
         </div>
       </div>
 

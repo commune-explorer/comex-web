@@ -20,17 +20,20 @@ export const SubnetsPanel = () => {
       </div>
 
       <div className="mt-5 space-y-5">
-        {Array(4)
-          .fill(1)
-          .map(() => (
-            <div className="flex-center justify-between">
-              <div className="flex flex-col gap-.5">
-                <span className="text-brand text-sm">Active Keys</span>
-                <span className="text-brand text-primary">
-                  <span>1000</span>
-                  <span>/1024</span>
-                </span>
-              </div>
+        {[
+          { key: 'Active Keys', value: '256/256', totalValue: '256' },
+          { key: 'Active Validators', value: '256/256', totalValue: '256' },
+          { key: 'Active Miners', value: '256/256', totalValue: '256' },
+          { key: 'Registration Cost', value: '0.6' },
+        ].map((item) => (
+          <div className="flex-center justify-between">
+            <div className="flex flex-col gap-.5">
+              <span className="text-brand text-sm">{item.key}</span>
+              <span className="text-brand text-primary">
+                <span>{item.totalValue ? `${item.value}/${item.totalValue}` : item.value}</span>
+              </span>
+            </div>
+            {item.totalValue && (
               <div className="flex gap-1">
                 {Array(10)
                   .fill(1)
@@ -43,8 +46,9 @@ export const SubnetsPanel = () => {
                     />
                   ))}
               </div>
-            </div>
-          ))}
+            )}
+          </div>
+        ))}
       </div>
     </div>
   )
