@@ -17,7 +17,7 @@ const columns: Array<{
 ]
 
 export const RankPanel = ({ list }: { list?: IModule[] }) => {
-  const pagers = [1, 2, 3, 5]
+  const pagers = [10, 25, 50, 100]
   const [pageSize, setPageSize] = useState(pagers[0])
   const [currentPage, setCurrentPage] = useState(1)
   const total = list?.length ?? 0
