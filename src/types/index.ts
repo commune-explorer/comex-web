@@ -30,3 +30,9 @@ export interface ISubnet {
     [k: string]: number
   }
 }
+
+export interface ITrading {
+  timestamp: string
+  price: number
+  volume: number
+}

@@ -64,9 +64,11 @@ export function Header() {
                       <Link
                         key={item.id}
                         to={`/subnets/${item.id}`}
-                        className={`${navigationMenuTriggerStyle()} !w-full !justify-start`}
+                        className={`${navigationMenuTriggerStyle()} !w-full !justify-start !bg-transparent hover:!bg-#6b68ff/50`}
                       >
-                        {item.id}: {item.name}
+                        <span className="whitespace-nowrap text-ellipsis overflow-hidden">
+                          {item.id}: {item.name}
+                        </span>
                       </Link>
                     ))}
                   </ul>
