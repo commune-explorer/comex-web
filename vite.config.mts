@@ -69,7 +69,6 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           target: 'https://comex.mosaicx.org',
-          rewrite: (path) => path.replace(/^\/api/, ''),
           changeOrigin: true,
         },
       },
