@@ -34,7 +34,7 @@ export const SubnetsPanel = () => {
             key={`subnet_${item.id}`}
             className={cn(
               'w-8 h-8 text-primary bg-[rgba(173,172,227,0.08)] hover:btn-brand-bg-bold cursor-pointer flex-col-center',
-              index <= 0 ? 'btn-brand-bg-bold' : ''
+              item.id === subnetId ? 'btn-brand-bg-bold' : ''
             )}
             onClick={() => setSubnetId(item.id)}
           >
@@ -57,24 +57,22 @@ export const SubnetsPanel = () => {
                 <span>{item.totalValue ? `${item.value}/${item.totalValue}` : item.value}</span>
               </span>
             </div>
-            {item.totalValue && (
-              <div className="flex gap-1">
-                {Array(10)
-                  .fill(1)
-                  .map((_i, idx) => {
-                    const length = item.value && item.totalValue ? Math.floor(item.value / item.totalValue) : 0
-                    return (
-                      <span
-                        key={`value_${idx}`}
-                        className={cn(
-                          'w-1 h-5 bg-muted rounded-sm',
-                          idx < length * 10 ? ' bg-#adace3 shadow shadow-[#adace3]' : ''
-                        )}
-                      />
-                    )
-                  })}
-              </div>
-            )}
+            <div className="flex gap-1">
+              {Array(10)
+                .fill(1)
+                .map((_i, idx) => {
+                  const length = item.value && item.totalValue ? Math.floor(item.value / item.totalValue) : 0
+                  return (
+                    <span
+                      key={`value_${idx}`}
+                      className={cn(
+                        'w-1 h-5 bg-muted rounded-sm',
+                        idx < length * 10 ? ' bg-#adace3 shadow shadow-[#adace3]' : ''
+                      )}
+                    />
+                  )
+                })}
+            </div>
           </div>
         ))}
       </div>

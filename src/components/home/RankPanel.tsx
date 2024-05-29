@@ -9,11 +9,11 @@ const columns: Array<{
   { title: 'Emission', prop: 'emission' },
   { title: 'Incentive', prop: 'incentive' },
   { title: 'Dividends', prop: 'dividends' },
-  { title: 'Delegation Fee', prop: 'delegation_fee' },
+  { title: 'Delegation Fee', prop: 'delegationFee' },
   { title: 'Stake', prop: 'stake' },
   { title: 'Address', prop: 'address' },
   { title: 'Active', prop: 'active' },
-  { title: 'In Immunity', prop: 'in_immunity' },
+  { title: 'In Immunity', prop: 'inImmunity' },
 ]
 
 export const RankPanel = ({ list }: { list?: IModule[] }) => {
@@ -66,30 +66,34 @@ export const RankPanel = ({ list }: { list?: IModule[] }) => {
       {currentList?.map((data, index) => (
         <div key={index} className="grid grid-cols-10 even:bg-[rgba(173,172,227,0.03)]">
           {columns.map((item, idx: number) => (
-            <div key={`item_${index}_${idx}`} className="h-12 flex-col-center items-start first:pl-4">
-              {data?.[item.prop]}
+            <div
+              key={`item_${index}_${idx}`}
+              className="h-12 flex-col-center items-start px-2 first:pl-4 overflow-hidden"
+            >
+              <span className="w-full truncate">{`${data?.[item.prop]}`}</span>
             </div>
           ))}
         </div>
       ))}
-
-      <div className="mt-8 flex justify-between">
-        <div className="flex text-brand gap-1">
-          Showing <span>{(currentPage - 1) * pageSize + 1}</span> to{' '}
-          <span>{Math.min(currentPage * pageSize, total)}</span> of <span>{total}</span> entries
+      {total > 0 && (
+        <div className="mt-8 flex justify-between">
+          <div className="flex text-brand gap-1">
+            Showing <span>{(currentPage - 1) * pageSize + 1}</span> to{' '}
+            <span>{Math.min(currentPage * pageSize, total)}</span> of <span>{total}</span> entries
+          </div>
+          <div className="flex justify-end">
+            <Pagination
+              page={currentPage}
+              count={pageCount}
+              onChange={(page) => {
+                if (page >= 1 && page <= pageCount) {
+                  setCurrentPage(page)
+                }
+              }}
+            ></Pagination>
+          </div>
         </div>
-        <div className="flex justify-end">
-          <Pagination
-            page={currentPage}
-            count={pageCount}
-            onChange={(page) => {
-              if (page >= 1 && page <= pageCount) {
-                setCurrentPage(page)
-              }
-            }}
-          ></Pagination>
-        </div>
-      </div>
+      )}
     </div>
   )
 }

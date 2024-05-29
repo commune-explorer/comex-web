@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { Area, Bar, ComposedChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 import { priceHistoryKeys } from '@/apis/queries'
-import { ITrading } from '@/types'
+import type { ITrading } from '@/types'
 import { formatNumber, get } from '@/utils'
 
 export const TradingView = () => {

@@ -4,11 +4,11 @@ export interface IModule {
   emission: number
   incentive: number
   dividends: number
-  delegation_fee: number
+  delegationFee: number
   stake: number
   address: string
   active: boolean
-  in_immunity: boolean
+  inImmunity: boolean
 }
 
 export interface ISubnet {
@@ -25,7 +25,6 @@ export interface ISubnet {
   registeredAt: string
   registeredBy: string
   emissionPercentage: number
-  modules: IModule[]
   params: {
     [k: string]: number
   }

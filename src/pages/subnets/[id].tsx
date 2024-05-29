@@ -9,7 +9,7 @@ import { ParamsPanel } from '@/components/subnets/ParamsPanel'
 import { Prompting } from '@/components/subnets/Prompting'
 import { useSvgBg } from '@/hooks/use-svg'
 import { cn } from '@/lib/utils'
-import { ISubnet } from '@/types'
+import type { IModule, ISubnet } from '@/types'
 import { get } from '@/utils'
 
 const tabs = ['Metagraph', 'Hyperparams', 'Registration', 'Leaderboard']
@@ -22,6 +22,10 @@ export default function SubnetsPage() {
     queryKey: subnetKeys.detail(id!),
     queryFn: () => get(`/api/subnets/${id}`),
     enabled: !!id,
+  })
+  const { data: { data: { modules = [] } = {} } = {} } = useQuery<{ data: { modules: IModule[] } }>({
+    queryKey: subnetKeys.detailModules(id!),
+    queryFn: () => get(`/api/subnets/${id}/modules`),
   })
 
   if (!data) return null
@@ -49,7 +53,7 @@ export default function SubnetsPage() {
           ))}
         </div>
 
-        {currentTab === tabs[0] && <RankPanel list={data.modules} />}
+        {currentTab === tabs[0] && <RankPanel list={modules} />}
 
         {currentTab === tabs[1] && <ParamsPanel params={data.params} />}
 
