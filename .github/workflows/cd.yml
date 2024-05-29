@@ -26,7 +26,7 @@ jobs:
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avzr --delete --filter=':- .gitignore'
-          path: distDOT/*
+          path: dist/*
           remote_path: /data/comex-web
           remote_host: 20.212.6.4
           remote_port: 2222
