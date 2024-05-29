@@ -44,39 +44,39 @@ export const SubnetsPanel = () => {
       </div>
 
       <div className="mt-5 space-y-5">
-        {subnet &&
-          [
-            { key: 'Active Keys', value: subnet.activeKeys, totalValue: subnet.totalKeys },
-            { key: 'Active Validators', value: subnet.activeValidators, totalValue: subnet.totalValidators },
-            { key: 'Active Miners', value: subnet.activeMiners, totalValue: subnet.totalMiners },
-            { key: 'Registration Cost', value: subnet.registerCost.toFixed(2) },
-          ].map((item) => (
-            <div key={item.key} className="flex-center justify-between">
-              <div className="flex flex-col gap-.5">
-                <span className="text-brand text-sm">{item.key}</span>
-                <span className="text-brand text-primary">
-                  <span>{item.totalValue ? `${item.value}/${item.totalValue}` : item.value}</span>
-                </span>
-              </div>
-              {item.totalValue && (
-                <div className="flex gap-1">
-                  {Array(10)
-                    .fill(1)
-                    .map((i, idx) => (
+        {[
+          { key: 'Active Keys', value: subnet?.activeKeys, totalValue: subnet?.totalKeys },
+          { key: 'Active Validators', value: subnet?.activeValidators, totalValue: subnet?.totalValidators },
+          { key: 'Active Miners', value: subnet?.activeMiners, totalValue: subnet?.totalMiners },
+          { key: 'Registration Cost', value: subnet?.registerCost.toFixed(2) },
+        ].map((item) => (
+          <div key={item.key} className="flex-center justify-between">
+            <div className="flex flex-col gap-.5">
+              <span className="text-brand text-sm">{item.key}</span>
+              <span className="text-brand text-primary">
+                <span>{item.totalValue ? `${item.value}/${item.totalValue}` : item.value}</span>
+              </span>
+            </div>
+            {item.totalValue && (
+              <div className="flex gap-1">
+                {Array(10)
+                  .fill(1)
+                  .map((_i, idx) => {
+                    const length = item.value && item.totalValue ? Math.floor(item.value / item.totalValue) : 0
+                    return (
                       <span
                         key={`value_${idx}`}
                         className={cn(
                           'w-1 h-5 bg-muted rounded-sm',
-                          idx < Math.floor(item.value / item.totalValue) * 10
-                            ? ' bg-#adace3 shadow shadow-[#adace3]'
-                            : ''
+                          idx < length * 10 ? ' bg-#adace3 shadow shadow-[#adace3]' : ''
                         )}
                       />
-                    ))}
-                </div>
-              )}
-            </div>
-          ))}
+                    )
+                  })}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   )

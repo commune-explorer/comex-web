@@ -59,15 +59,15 @@ export function Header() {
                   Subnet
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-#191A2B">
-                  <ul className="grid w-[200px] gap-3 p-4 md:w-[300px] md:grid-cols-2 lg:w-[400px] ">
+                  <ul className="grid w-[200px] gap-3 p-4 md:w-[200px] md:grid-cols-2 lg:w-[300px] 2xl:w-[600px]">
                     {subnets.map((item) => (
-                      <NavigationMenuLink
+                      <Link
                         key={item.id}
-                        href={`/subnets/${item.id}`}
+                        to={`/subnets/${item.id}`}
                         className={`${navigationMenuTriggerStyle()} !w-full !justify-start`}
                       >
                         {item.id}: {item.name}
-                      </NavigationMenuLink>
+                      </Link>
                     ))}
                   </ul>
                 </NavigationMenuContent>
