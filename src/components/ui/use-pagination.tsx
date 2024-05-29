@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export interface PaginationProps {
   boundaryCount?: number
@@ -42,10 +42,16 @@ export default function usePagination(props: PaginationProps = {}) {
     ...other
   } = props
 
-  const [page, setPageState] = useState<number>(1)
+  const [page, setPageState] = useState<number>(pageProp || defaultPage)
+
+  useEffect(() => {
+    if (pageProp !== undefined) {
+      setPageState(pageProp)
+    }
+  }, [pageProp])
 
   const handleClick = (value: number) => {
-    if (!pageProp) {
+    if (pageProp === undefined) {
       setPageState(value)
     }
     if (handleChange) {

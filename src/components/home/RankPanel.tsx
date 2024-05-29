@@ -17,24 +17,32 @@ const columns: Array<{
 ]
 
 export const RankPanel = ({ list }: { list?: IModule[] }) => {
-  const [pageSize, setPageSize] = useState(10)
+  const pagers = [1, 2, 3, 5]
+  const [pageSize, setPageSize] = useState(pagers[0])
   const [currentPage, setCurrentPage] = useState(1)
   const total = list?.length ?? 0
   const pageCount = useMemo(() => (!isNaN(total) ? Math.ceil(total / pageSize) : 0), [total, pageSize])
   const currentList = useMemo(() => {
-    console.log('currentlist change')
     const start = (currentPage - 1) * pageSize
     const end = start + pageSize
     return list?.slice(start, end)
   }, [currentPage, list, pageSize])
+
   return (
     <div className="py-5">
       <div className="flex justify-between">
         <div className="flex text-brand gap-5 items-center">
           Show
-          <ToggleGroup type="single" value={`${pageSize}`} onValueChange={(val) => setPageSize(Number(val))}>
-            {['10', '25', '50', '100'].map((i) => (
-              <ToggleGroupItem key={i} value={i} aria-label={`Toggle ${i}`}>
+          <ToggleGroup
+            type="single"
+            value={`${pageSize}`}
+            onValueChange={(val) => {
+              setCurrentPage(1)
+              setPageSize(Number(val))
+            }}
+          >
+            {pagers.map((i) => (
+              <ToggleGroupItem key={i} value={`${i}`} aria-label={`Toggle ${i}`}>
                 {i}
               </ToggleGroupItem>
             ))}
@@ -72,6 +80,7 @@ export const RankPanel = ({ list }: { list?: IModule[] }) => {
         </div>
         <div className="flex justify-end">
           <Pagination
+            page={currentPage}
             count={pageCount}
             onChange={(page) => {
               if (page >= 1 && page <= pageCount) {
