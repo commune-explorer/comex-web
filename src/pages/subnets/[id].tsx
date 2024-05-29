@@ -49,9 +49,9 @@ export default function SubnetsPage() {
           ))}
         </div>
 
-        {currentTab === tabs[0] && <RankPanel />}
+        {currentTab === tabs[0] && <RankPanel list={data.modules} />}
 
-        {currentTab === tabs[1] && <ParamsPanel />}
+        {currentTab === tabs[1] && <ParamsPanel params={data.params} />}
 
         {currentTab === tabs[2] && (
           <div className="py-10 flex justify-between">

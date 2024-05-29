@@ -1,10 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 
-import { ButtonProps, buttonVariants } from '@/components/ui/button'
+import { Button, ButtonProps } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
+import usePagination, { type PaginationProps } from './use-pagination'
+
+const PaginationRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
     role="navigation"
     aria-label="pagination"
@@ -12,7 +14,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
     {...props}
   />
 )
-Pagination.displayName = 'Pagination'
+PaginationRoot.displayName = 'PaginationRoot'
 
 const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<'ul'>>(
   ({ className, ...props }, ref) => (
@@ -28,35 +30,28 @@ PaginationItem.displayName = 'PaginationItem'
 
 type PaginationLinkProps = {
   isActive?: boolean
-} & Pick<ButtonProps, 'size'> &
-  React.ComponentProps<'a'>
+} & ButtonProps
 
-const PaginationLink = ({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) => (
-  <a
+const PaginationLink = ({ className, isActive, size = 'icon', type = 'button', ...props }: PaginationLinkProps) => (
+  <Button
     aria-current={isActive ? 'page' : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? 'outline' : 'ghost',
-        size,
-      }),
-      className
-    )}
+    variant={isActive ? 'outline' : 'ghost'}
+    size={size}
+    className={cn(className, '!disabled:cursor-not-allowed')}
     {...props}
   />
 )
 PaginationLink.displayName = 'PaginationLink'
 
 const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to previous page" size="default" className={cn('gap-1 pl-2.5', className)} {...props}>
+  <PaginationLink aria-label="Go to previous page" size="default" className={cn('px-2.5', className)} {...props}>
     <ChevronLeftIcon className="h-4 w-4" />
-    <span>Previous</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
 
 const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to next page" size="default" className={cn('gap-1 pr-2.5', className)} {...props}>
-    <span>Next</span>
+  <PaginationLink aria-label="Go to next page" size="default" className={cn('px-2.5', className)} {...props}>
     <ChevronRightIcon className="h-4 w-4" />
   </PaginationLink>
 )
@@ -70,6 +65,42 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'
 )
 PaginationEllipsis.displayName = 'PaginationEllipsis'
 
+const Pagination: React.FC<PaginationProps> = (props) => {
+  const { items } = usePagination(props)
+  return (
+    <PaginationRoot>
+      <PaginationContent>
+        {items.map(({ page, type, selected, ...item }, index) => {
+          let children = null
+
+          if (type === 'start-ellipsis' || type === 'end-ellipsis') {
+            children = <PaginationEllipsis />
+          } else if (type === 'page') {
+            children = (
+              <PaginationLink isActive={selected} {...item}>
+                {page}
+              </PaginationLink>
+            )
+          } else if (type === 'previous') {
+            children = <PaginationPrevious {...item} />
+          } else if (type === 'next') {
+            children = <PaginationNext {...item} />
+          } else {
+            children = (
+              <button type="button" {...item}>
+                {type}
+              </button>
+            )
+          }
+
+          return <PaginationItem key={index}>{children}</PaginationItem>
+        })}
+      </PaginationContent>
+    </PaginationRoot>
+  )
+}
+Pagination.displayName = 'Pagination'
+
 export {
   Pagination,
   PaginationContent,
@@ -78,4 +109,5 @@ export {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationRoot,
 }

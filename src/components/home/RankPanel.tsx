@@ -1,44 +1,44 @@
-const columns = [
-  {
-    title: 'pos',
-  },
-  {
-    title: 'UID',
-  },
-  {
-    title: 'Stake',
-  },
-  {
-    title: 'HOTKEY',
-  },
-  {
-    title: 'SN0',
-  },
-  {
-    title: 'SN1',
-  },
-  {
-    title: 'SN2',
-  },
-  {
-    title: 'SN3',
-  },
-  {
-    title: 'SN4',
-  },
-  {
-    title: 'SN5',
-  },
+import type { IModule } from '@/types'
+
+const columns: Array<{
+  title: string
+  prop: keyof IModule
+}> = [
+  { title: 'Uid', prop: 'uid' },
+  { title: 'Key', prop: 'key' },
+  { title: 'Emission', prop: 'emission' },
+  { title: 'Incentive', prop: 'incentive' },
+  { title: 'Dividends', prop: 'dividends' },
+  { title: 'Delegation Fee', prop: 'delegation_fee' },
+  { title: 'Stake', prop: 'stake' },
+  { title: 'Address', prop: 'address' },
+  { title: 'Active', prop: 'active' },
+  { title: 'In Immunity', prop: 'in_immunity' },
 ]
 
-const fakeData = Array(12).fill([1, 2, '1,298,375', '0.04', '0.04', '0.04', '0.04', '0.04', '0.04', '0.04'])
-
-export const RankPanel = () => {
+export const RankPanel = ({ list }: { list?: IModule[] }) => {
+  const [pageSize, setPageSize] = useState(10)
+  const [currentPage, setCurrentPage] = useState(1)
+  const total = list?.length ?? 0
+  const pageCount = useMemo(() => (!isNaN(total) ? Math.ceil(total / pageSize) : 0), [total, pageSize])
+  const currentList = useMemo(() => {
+    console.log('currentlist change')
+    const start = (currentPage - 1) * pageSize
+    const end = start + pageSize
+    return list?.slice(start, end)
+  }, [currentPage, list, pageSize])
   return (
     <div className="py-5">
       <div className="flex justify-between">
-        <div className="flex text-brand gap-5">
-          Show <span>10</span> <span>25</span> <span>50</span> <span>100</span>
+        <div className="flex text-brand gap-5 items-center">
+          Show
+          <ToggleGroup type="single" value={`${pageSize}`} onValueChange={(val) => setPageSize(Number(val))}>
+            {['10', '25', '50', '100'].map((i) => (
+              <ToggleGroupItem key={i} value={i} aria-label={`Toggle ${i}`}>
+                {i}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-brand">Search:</span>
@@ -55,11 +55,11 @@ export const RankPanel = () => {
           </div>
         ))}
       </div>
-      {fakeData.map((data, index) => (
+      {currentList?.map((data, index) => (
         <div key={index} className="grid grid-cols-10 even:bg-[rgba(173,172,227,0.03)]">
-          {data.map((item: any, idx: number) => (
+          {columns.map((item, idx: number) => (
             <div key={`item_${index}_${idx}`} className="h-12 flex-col-center items-start first:pl-4">
-              {item}
+              {data?.[item.prop]}
             </div>
           ))}
         </div>
@@ -67,33 +67,19 @@ export const RankPanel = () => {
 
       <div className="mt-8 flex justify-between">
         <div className="flex text-brand gap-1">
-          Showing <span>1</span> to <span>25</span> of <span>256</span> entries
+          Showing <span>{(currentPage - 1) * pageSize + 1}</span> to{' '}
+          <span>{Math.min(currentPage * pageSize, total)}</span> of <span>{total}</span> entries
         </div>
-
-        <Pagination className="max-w-auto w-auto mx-0">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                2
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <div className="flex justify-end">
+          <Pagination
+            count={pageCount}
+            onChange={(page) => {
+              if (page >= 1 && page <= pageCount) {
+                setCurrentPage(page)
+              }
+            }}
+          ></Pagination>
+        </div>
       </div>
     </div>
   )

@@ -1,7 +1,14 @@
-interface IModule {
-  id: number
+export interface IModule {
+  uid: number
+  key: string
+  emission: number
+  incentive: number
+  dividends: number
+  delegation_fee: number
+  stake: number
   address: string
   active: boolean
+  in_immunity: boolean
 }
 
 export interface ISubnet {
@@ -20,6 +27,6 @@ export interface ISubnet {
   emissionPercentage: number
   modules: IModule[]
   params: {
-    immunityPeriod: number
+    [k: string]: number
   }
 }
