@@ -1,6 +1,26 @@
+import { formatAmount } from '@did-network/dapp-sdk'
+import { useQuery } from '@tanstack/react-query'
+
+import { profileKeys } from '@/apis/queries'
 import ComaiImg from '@/assets/images/comai.png'
+import { formatNumber, get } from '@/utils'
+
+interface IProfile {
+  price: number
+  priceChangePercentageIn24h: number
+  volumeIn24h: number
+  marketCap: number
+  circulatingSupply: number
+  totalSupply: number
+  stakingApr: number
+}
 
 export const TokenProfile = () => {
+  const { data: { data } = {} } = useQuery<{ data: IProfile }>({
+    queryKey: profileKeys.all,
+    queryFn: () => get('/api/info'),
+  })
+  if (!data) return null
   return (
     <div className="flex gap-10 py-5 items-center">
       <img src={ComaiImg} alt="" className="p-0.5 w-12 h-12 rounded-full bg-secondary" />
@@ -8,8 +28,10 @@ export const TokenProfile = () => {
       <div className="">
         <div className="flex items-center gap-2 text-brand text-sm">$COMAI Price</div>
         <div className="font-medium flex items-end gap-1">
-          <span className="text-2xl">$0.81</span>
-          <span className="text-green-400">1.02%</span>
+          <span className="text-2xl">${formatAmount(data.price, 0, 2)}</span>
+          <span className={data.priceChangePercentageIn24h > 0 ? 'text-green-400' : 'text-red-400'}>
+            {data.priceChangePercentageIn24h?.toFixed(2)}%
+          </span>
         </div>
       </div>
 
@@ -17,30 +39,30 @@ export const TokenProfile = () => {
         {[
           {
             text: 'Market Cap',
-            value: '$1.2B',
+            value: `$${formatNumber(data.marketCap ?? 0)}`,
           },
           {
             text: '24h Volume',
-            value: '$1.2B',
+            value: `$${formatNumber(data.volumeIn24h ?? 0)}`,
           },
           {
             text: 'Circulating Supply',
-            value: '1.2B',
+            value: formatNumber(data.circulatingSupply ?? 0),
           },
           {
             text: 'Total Supply',
-            value: '1.2B',
+            value: formatNumber(data.totalSupply),
           },
           {
             text: 'Validating APR',
-            value: '12.02%',
+            value: `??%`, // TODO: replace
           },
           {
             text: 'Staking APR',
-            value: '15.02%',
+            value: `${data.stakingApr?.toFixed(2)}%`,
           },
         ].map((item, index) => (
-          <div className="flex flex-col gap-1 col-span-2">
+          <div key={index} className="flex flex-col gap-1 col-span-2">
             <span className="text-sm text-brand">{item.text}</span>
             <span className="text-base text-primary">{item.value}</span>
           </div>

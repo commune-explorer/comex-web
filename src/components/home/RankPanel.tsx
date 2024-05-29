@@ -55,10 +55,12 @@ export const RankPanel = () => {
           </div>
         ))}
       </div>
-      {fakeData.map((data) => (
-        <div className="grid grid-cols-10 even:bg-[rgba(173,172,227,0.03)]">
-          {data.map((item: any) => (
-            <div className="h-12 flex-col-center items-start first:pl-4">{item}</div>
+      {fakeData.map((data, index) => (
+        <div key={index} className="grid grid-cols-10 even:bg-[rgba(173,172,227,0.03)]">
+          {data.map((item: any, idx: number) => (
+            <div key={`item_${index}_${idx}`} className="h-12 flex-col-center items-start first:pl-4">
+              {item}
+            </div>
           ))}
         </div>
       ))}

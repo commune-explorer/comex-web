@@ -1,3 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
+
+import { subnetKeys } from '@/apis/queries'
 import { RankPanel } from '@/components/home/RankPanel'
 import { TradingView } from '@/components/home/TradingView'
 import { LeaderBoard } from '@/components/subnets/LeaderBoard'
@@ -5,17 +9,27 @@ import { ParamsPanel } from '@/components/subnets/ParamsPanel'
 import { Prompting } from '@/components/subnets/Prompting'
 import { useSvgBg } from '@/hooks/use-svg'
 import { cn } from '@/lib/utils'
+import { ISubnet } from '@/types'
+import { get } from '@/utils'
 
 const tabs = ['Metagraph', 'Hyperparams', 'Registration', 'Leaderboard']
 
 export default function SubnetsPage() {
+  const { id } = useParams()
   const { svgRef } = useSvgBg()
   const [currentTab, setCurrentTab] = useState(tabs[0])
+  const { data: { data } = {} } = useQuery<{ data: ISubnet }>({
+    queryKey: subnetKeys.detail(id!),
+    queryFn: () => get(`/api/subnets/${id}`),
+    enabled: !!id,
+  })
+
+  if (!data) return null
 
   return (
     <div className="mt-10">
       <div className="container mx-auto">
-        <Prompting />
+        <Prompting subnet={data} />
 
         <div className="mt-15 flex items-center gap-3">
           {tabs.map((tab) => (

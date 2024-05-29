@@ -18,8 +18,8 @@ export default defineConfig(({ mode }) => {
     base: env.BASE,
     resolve: {
       alias: {
-        '@/': `${resolve(__dirname, 'src')}/`
-      }
+        '@/': `${resolve(__dirname, 'src')}/`,
+      },
     },
     plugins: [
       react(),
@@ -30,13 +30,13 @@ export default defineConfig(({ mode }) => {
         customCollections: {
           'fisand-icons': FileSystemIconLoader(`${resolve(__dirname, 'src/assets/icons')}/`, (svg) =>
             svg.replace(/^<svg /, '<svg fill="currentColor" ')
-          )
-        }
+          ),
+        },
       }),
       Pages({
         dirs: [{ dir: 'src/pages', baseRoute: env.BASE || '' }],
         exclude: ['**/[A-Z]*.tsx'],
-        importMode: 'sync'
+        importMode: 'sync',
       }),
       UnoCSS(),
       AutoImport({
@@ -44,26 +44,35 @@ export default defineConfig(({ mode }) => {
         dts: './src/auto-imports.d.ts',
         resolvers: [
           IconsResolver({
-            componentPrefix: 'Icon'
-          })
+            componentPrefix: 'Icon',
+          }),
         ],
-        dirs: ['./src/components/ui']
+        dirs: ['./src/components/ui'],
       }),
       EslintPlugin(),
       // Analyze(),
-      nodePolyfills()
+      nodePolyfills(),
     ],
     build: {
       rollupOptions: {
         output: {
           manualChunks: {
-            'react-vendor': ['react', 'react-router-dom', 'react-dom']
-          }
-        }
-      }
+            'react-vendor': ['react', 'react-router-dom', 'react-dom'],
+          },
+        },
+      },
     },
     optimizeDeps: {
-      include: ['react-dom']
-    }
+      include: ['react-dom'],
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://comex.mosaicx.org',
+          rewrite: (path) => path.replace(/^\/api/, ''),
+          changeOrigin: true,
+        },
+      },
+    },
   }
 })

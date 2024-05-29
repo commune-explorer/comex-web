@@ -8,13 +8,13 @@ export const useSvgBg = (color: string = '#6b68ff') => {
   const svgRef = useCallback(
     async (target?: HTMLDivElement | HTMLButtonElement | HTMLAnchorElement | null) => {
       if (!target) return
+
+      // wait for the element to be rendered
+      await sleep(48)
       const hasSvg = target.querySelector('.random-svg-bg')
       if (hasSvg) {
         target.removeChild(hasSvg)
       }
-
-      // wait for the element to be rendered
-      await sleep(48)
 
       const wrapperSize = target?.getBoundingClientRect()
       const w = wrapperSize!.width

@@ -51,11 +51,15 @@ export const Footer = () => {
           </div>
         </div>
         <div className="flex gap-20 justify-between ">
-          {links.map((link) => (
-            <div className="flex flex-col text-xs space-y-3">
+          {links.map((link, index) => (
+            <div key={`link_${index}`} className="flex flex-col text-xs space-y-3">
               <div className="font-bold text-sm">{link.title}</div>
-              {link.children.map((child) => (
-                <a href={child.url} className="text-muted-foreground hover:text-foreground">
+              {link.children.map((child, idx) => (
+                <a
+                  key={`link_${index}_${idx}`}
+                  href={child.url}
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   {child.title}
                 </a>
               ))}
