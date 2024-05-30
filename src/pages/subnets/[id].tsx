@@ -52,7 +52,7 @@ export default function SubnetsPage() {
 
         {currentTab === tabs[0] && <ModulesPanel netuid={netuid} />}
         {currentTab === tabs[1] && <ParamsPanel params={data.params} />}
-        {currentTab === tabs[2] && <LeaderBoard />}
+        {currentTab === tabs[2] && <LeaderBoard netuid={netuid} />}
       </div>
     </div>
   )

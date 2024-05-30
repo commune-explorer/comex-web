@@ -13,4 +13,5 @@ export const subnetKeys = {
   details: () => [...subnetKeys.all, 'detail'] as const,
   detail: (id: number | string) => [...subnetKeys.details(), id] as const,
   detailModules: (id: number | string) => [...subnetKeys.detail(id), 'modules'] as const,
+  detailLeaderboard: (id: number | string) => [...subnetKeys.detail(id), 'leaderboard'] as const,
 }

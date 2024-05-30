@@ -99,8 +99,15 @@ export const TradingView = () => {
           {recentRecords && (
             <>
               <Tooltip content={<CustomTooltip />} />
-              <Area dataKey="price" stroke="#adace3" dot={false} fill="url(#colorUv)" yAxisId="price" />
-              <Bar dataKey="volume" barSize={1} fill="#22EAAECC" yAxisId="volume" />
+              <Area
+                isAnimationActive={false}
+                dataKey="price"
+                stroke="#adace3"
+                dot={false}
+                fill="url(#colorUv)"
+                yAxisId="price"
+              />
+              <Bar isAnimationActive={false} dataKey="volume" barSize={1} fill="#22EAAECC" yAxisId="volume" />
             </>
           )}
         </ComposedChart>
