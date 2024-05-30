@@ -36,14 +36,14 @@ export const TradingView = () => {
       const price = payload.find((p) => p.name === 'price')?.value
       const volume = payload.find((p) => p.name === 'volume')?.value
       return (
-        <div className="min-w-30 text-sm rounded overflow-hidden shadow-light/20 shadow-sm">
-          <div className="bg-black/80 p-2">{dayjs(label * 1000).format('D MMM YY')}</div>
-          <div className="p-2 bg-white/5">
+        <div className="w-36 text-sm overflow-hidden bg-muted border border-white/6 border-2">
+          <div className="bg-white/6 text-center py-1">{dayjs(label * 1000).format('DD MMM YYYY')}</div>
+          <div className="px-3 py-2 bg-black/5 space-y-2">
             <div className="flex justify-between gap-2">
               <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#adace3 before:left-0 before:top-1/2 before:-translate-y-1/2">
                 Price:
               </span>
-              <span className="font-medium">{`${price ? Number(price)?.toFixed(2) : '-'}`}</span>
+              <span className="font-medium">{`$${price ? Number(price)?.toFixed(2) : '-'}`}</span>
             </div>
             <div className="flex justify-between gap-2">
               <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#22EAAECC before:left-0 before:top-1/2 before:-translate-y-1/2">
@@ -58,7 +58,7 @@ export const TradingView = () => {
     return null
   }
   return (
-    <div className="h-400px w-full">
+    <div className="h-60vh w-full">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart width={500} height={400} data={recentRecords}>
           <XAxis

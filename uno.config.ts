@@ -34,10 +34,16 @@ const config: UserConfig = {
         --brand: 241 49.50% 78.20%;
         --border: 241 49.50% 78.20% / 0.15;
         --foreground: 0 0% 100%;
+        --muted: 237.76 22.998% 15.007%;
         --muted-foreground: 0 0% 80%;
         --accent: 241 49.50% 78.20% / 0.30;
         --accent-foreground: 0 0% 100%;
         --radius: 0rem;
+        
+        --blue: #447EF2;
+        --green: #22EAAE;
+        --yellow: #FEC464;
+        --purple: #9A7CE0;
       }
       `,
     },

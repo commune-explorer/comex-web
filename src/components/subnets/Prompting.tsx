@@ -4,28 +4,32 @@ import type { ISubnet } from '@/types'
 
 export const Prompting = ({ subnet }: { subnet: ISubnet }) => {
   return (
-    <div>
-      <div className="text-[#ADACE3] text-7.5 font-400 lh-9 font-[Orbitron]">{subnet.name ?? '??'}</div>
-      <div className="mt-3 space-y-3">
+    <div className="bg-brand/5 py-6 px-8">
+      <div className="text-brand text-4xl font-[Orbitron]">{subnet.name ?? '??'}</div>
+      <div className="my-4 space-y-2">
         <div className="flex items-center">
           <span className="w-30 text-brand">Subnet repo</span>
-          <span className="text-[#6B68FF] text-4 font-400">{subnet.githubUrl}</span>
+          <a
+            href={subnet.githubUrl}
+            target="_blank"
+            className="text-muted-foreground hover:text-foreground hover:underline underline-1"
+          >
+            {subnet.githubUrl}
+          </a>
         </div>
         {subnet.registeredAt ? (
           <div className="flex items-center">
             <span className="w-30 text-brand">Registered on</span>
-            <span className="text-primary text-4 font-400">
-              {dayjs(subnet.registeredAt).format('DD MMM YYYY HH:mm:ss')}
-            </span>
+            <span className="font-400">{dayjs(subnet.registeredAt).format('DD MMM YYYY HH:mm:ss')}</span>
           </div>
         ) : null}
         <div className="flex items-center">
           <span className="w-30 text-brand">Registered to</span>
-          <span className="text-#FF8023 text-4 font-400">{subnet.registeredBy}</span>
+          <span className="text-#FEC464 font-400">{subnet.registeredBy}</span>
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-4 gap-3">
         {[
           {
             title: 'Emissions',
@@ -43,18 +47,10 @@ export const Prompting = ({ subnet }: { subnet: ISubnet }) => {
             title: 'Registration Cost',
             value: `${subnet.registerCost.toFixed(2)}`,
           },
-          {
-            title: 'Recycled',
-            value: '-',
-          },
-          {
-            title: 'Recycled(24h)',
-            value: '-',
-          },
         ].map((item, index) => (
-          <div key={index} className="flex flex-col gap-.5">
+          <div key={index} className="flex flex-col">
             <span className="text-brand">{item.title}</span>
-            <span className="text-primary">{item.value}</span>
+            <span className="text-lg text-primary">{item.value}</span>
           </div>
         ))}
       </div>
