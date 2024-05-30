@@ -49,11 +49,11 @@ export function Header() {
             <PopoverTrigger
               ref={svgRef}
               className={cn(
-                'relative py-2 px-4 text-brand font-medium',
+                'relative',
                 isSubnetDetail ? 'btn-brand-bg' : 'bg-transparent hover:!btn-brand-bg [&>svg]:hidden'
               )}
             >
-              Subnets
+              <div className="py-2 px-4 text-brand font-medium">Subnets</div>
             </PopoverTrigger>
             <PopoverContent className="bg-#191A29 p-0 mt-4 mr-2 w-150 shadow-lg text-sm">
               <div className="bg-#ADACE308 grid gap-3 p-4 grid-cols-1 md:grid-cols-3">

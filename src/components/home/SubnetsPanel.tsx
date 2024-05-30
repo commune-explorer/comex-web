@@ -63,10 +63,7 @@ export const SubnetsPanel = () => {
                     return (
                       <span
                         key={`${item.key}_indicator_${idx}`}
-                        className={cn(
-                          'w-1 h-5 bg-muted rounded-sm',
-                          idx <= length * 10 ? ' bg-#adace3 shadow shadow-[#adace3]' : ''
-                        )}
+                        className={cn('w-1 h-5 rounded-sm', idx <= length * 10 ? ' bg-#adace3cc' : 'bg-#26253B')}
                       />
                     )
                   })}
