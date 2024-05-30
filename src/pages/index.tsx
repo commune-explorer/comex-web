@@ -14,16 +14,18 @@ const Home = () => {
           <SubnetsPanel />
         </div>
 
-        <div className="mt-20">
-          <RankPanel />
-        </div>
+        <div className="hidden">
+          <div className="mt-20">
+            <RankPanel />
+          </div>
 
-        <div className="my-5 text-lg text-primary font-medium">SUBNET REGISTRATION DATA</div>
-        <div className="py-10 flex justify-between">
-          <TradingView />
-          <Separator orientation="vertical" className="h-auto mx-5" />
-          <div className="min-w-280px">
-            <div>Current Registration Cost</div>
+          <div className="my-5 text-lg text-primary font-medium">SUBNET REGISTRATION DATA</div>
+          <div className="py-10 flex justify-between">
+            <TradingView />
+            <Separator orientation="vertical" className="h-auto mx-5" />
+            <div className="min-w-280px">
+              <div>Current Registration Cost</div>
+            </div>
           </div>
         </div>
       </div>

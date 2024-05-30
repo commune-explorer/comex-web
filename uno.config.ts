@@ -32,6 +32,8 @@ const config: UserConfig = {
       getCSS: () => `
       :root {
         --brand: 241 49.50% 78.20%;
+        --border: 241 49.50% 78.20% / 0.15;
+        --radius: 0rem;
       }
       `,
     },

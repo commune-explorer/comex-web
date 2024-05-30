@@ -37,7 +37,7 @@ const links = [
 
 export const Footer = () => {
   return (
-    <div className="mt-10 py-6 flex-col-center border-t-1 border-solid border-border">
+    <div className="mt-10 py-6 flex-col-center border-t-1 border-solid">
       <div className="container mx-auto flex justify-between">
         <div className="w-1/2 text-xs space-y-4">
           <div className="font-bold">

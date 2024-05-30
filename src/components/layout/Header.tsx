@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { subnetKeys } from '@/apis/queries'
-import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
 import { useSvgBg } from '@/hooks/use-svg'
 import { cn } from '@/lib/utils'
 import { type ISubnet } from '@/types'
@@ -22,7 +21,7 @@ export function Header() {
   const isSubnetDetail = /^\/subnets\/[^/]+$/.test(pathname)
 
   return (
-    <div className="h-16 border-b-1 border-solid border-border box-border sticky top-0 z-10 bg-#191A2B">
+    <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#191A2B">
       <div className="container m-auto h-full flex justify-between items-center">
         <Link to="/" className="flex items-center font-bold cursor-pointer">
           <span className="text-xl font-[Orbitron]">
@@ -46,41 +45,37 @@ export function Header() {
             </Button>
           </Link>
 
-          <NavigationMenu className="relative flex">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  ref={svgRef}
-                  className={cn(
-                    'flex relative py-2 px-4 text-brand font-medium rounded-none border-none underline-transparent flex-col-center h-9 bg-transparent focus-visible:ring-0 focus-visible:ring-0',
-                    isSubnetDetail ? 'btn-brand-bg' : 'bg-transparent hover:!btn-brand-bg [&>svg]:hidden'
-                  )}
-                >
-                  Subnets
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-#191A2B">
-                  <ul className="grid w-[200px] gap-3 p-4 md:w-[200px] md:grid-cols-2 lg:w-[300px] 2xl:w-[600px]">
-                    {subnets.map((item) => (
-                      <Link
-                        key={item.id}
-                        to={`/subnets/${item.id}`}
-                        className={`${navigationMenuTriggerStyle()} !w-full !justify-start !bg-transparent hover:!bg-#6b68ff/50`}
-                      >
-                        <span className="whitespace-nowrap text-ellipsis overflow-hidden">
-                          {item.id}: {item.name}
-                        </span>
-                      </Link>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          <Popover>
+            <PopoverTrigger
+              ref={svgRef}
+              className={cn(
+                'relative py-2 px-4 text-brand font-medium',
+                isSubnetDetail ? 'btn-brand-bg' : 'bg-transparent hover:!btn-brand-bg [&>svg]:hidden'
+              )}
+            >
+              Subnets
+            </PopoverTrigger>
+            <PopoverContent className="bg-#191A29 p-0 mt-4 mr-2 w-150 shadow-lg text-sm">
+              <div className="bg-#ADACE308 grid gap-3 p-4 grid-cols-1 md:grid-cols-3">
+                {subnets.map((item) => (
+                  <Link
+                    key={item.id}
+                    to={`/subnets/${item.id}`}
+                    className={
+                      'uppercase px-3 py-2 self-stretch bg-transparent text-muted-foreground hover:text-foreground hover:bg-#ADACE316'
+                    }
+                  >
+                    {item.id}: {item.name}
+                  </Link>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
 
           <Link
             ref={svgRef}
             to={'/blockchain'}
-            className={cn('relative p-.25 flex-col-center', pathname === '/blockchain' ? '' : '[&>svg]:hidden')}
+            className={cn('!hidden relative p-.25 flex-col-center', pathname === '/blockchain' ? '' : '[&>svg]:hidden')}
           >
             <Button
               variant="link"
