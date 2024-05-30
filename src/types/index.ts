@@ -22,7 +22,7 @@ export interface ISubnet {
   totalMiners: number
   registerCost: number
   githubUrl: string
-  registeredAt: string
+  registeredAt: number
   registeredBy: string
   emissionPercentage: number
   params: {

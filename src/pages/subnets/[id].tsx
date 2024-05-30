@@ -2,33 +2,34 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
 import { subnetKeys } from '@/apis/queries'
-import { RankPanel } from '@/components/home/RankPanel'
 import { TradingView } from '@/components/home/TradingView'
 import { LeaderBoard } from '@/components/subnets/LeaderBoard'
+import { ModulesPanel } from '@/components/subnets/ModulesPanel'
 import { ParamsPanel } from '@/components/subnets/ParamsPanel'
 import { Prompting } from '@/components/subnets/Prompting'
 import { useSvgBg } from '@/hooks/use-svg'
 import { cn } from '@/lib/utils'
-import type { IModule, ISubnet } from '@/types'
+import type { ISubnet } from '@/types'
 import { get } from '@/utils'
-
-const tabs = ['Metagraph', 'Hyperparams', 'Registration', 'Leaderboard']
 
 export default function SubnetsPage() {
   const { id } = useParams()
+  const netuid = parseInt(id ?? '0')
+
+  const tabs = useMemo(
+    () => (netuid > 0 ? ['Modules', 'Parameters', 'Registration', 'Leaderboard'] : ['Modules']),
+    [netuid]
+  )
+
   const { svgRef } = useSvgBg()
   const [currentTab, setCurrentTab] = useState(tabs[0])
   const { data: { data } = {} } = useQuery<{ data: ISubnet }>({
-    queryKey: subnetKeys.detail(id!),
-    queryFn: () => get(`/api/subnets/${id}`),
+    queryKey: subnetKeys.detail(netuid),
+    queryFn: () => get(`/api/subnets/${netuid}`),
     enabled: !!id,
   })
-  const { data: { data: { modules = [] } = {} } = {} } = useQuery<{ data: { modules: IModule[] } }>({
-    queryKey: subnetKeys.detailModules(id!),
-    queryFn: () => get(`/api/subnets/${id}/modules`),
-  })
 
-  if (!data) return null
+  if (!id || !data) return null
 
   return (
     <div className="mt-10">
@@ -53,20 +54,9 @@ export default function SubnetsPage() {
           ))}
         </div>
 
-        {currentTab === tabs[0] && <RankPanel list={modules} />}
-
+        {currentTab === tabs[0] && <ModulesPanel netuid={netuid} />}
         {currentTab === tabs[1] && <ParamsPanel params={data.params} />}
-
-        {currentTab === tabs[2] && (
-          <div className="py-10 flex justify-between">
-            <TradingView />
-            <Separator orientation="vertical" className="h-auto mx-5" />
-            <div className="min-w-280px">
-              <div>Current Registration Cost</div>
-            </div>
-          </div>
-        )}
-
+        {currentTab === tabs[2] && <TradingView />}
         {currentTab === tabs[3] && <LeaderBoard />}
       </div>
     </div>

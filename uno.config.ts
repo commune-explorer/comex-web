@@ -33,6 +33,10 @@ const config: UserConfig = {
       :root {
         --brand: 241 49.50% 78.20%;
         --border: 241 49.50% 78.20% / 0.15;
+        --foreground: 0 0% 100%;
+        --muted-foreground: 0 0% 80%;
+        --accent: 241 49.50% 78.20% / 0.30;
+        --accent-foreground: 0 0% 100%;
         --radius: 0rem;
       }
       `,

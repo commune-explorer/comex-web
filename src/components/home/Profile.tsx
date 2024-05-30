@@ -55,7 +55,7 @@ export const TokenProfile = () => {
           },
           // {
           //   text: 'Validating APR',
-          //   value: `??%`,
+          //   value: `-%`,
           // },
           // {
           //   text: 'Staking APR',

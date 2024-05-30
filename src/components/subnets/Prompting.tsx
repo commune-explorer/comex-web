@@ -8,42 +8,28 @@ export const Prompting = ({ subnet }: { subnet: ISubnet }) => {
       <div className="text-[#ADACE3] text-7.5 font-400 lh-9 font-[Orbitron]">{subnet.name ?? '??'}</div>
       <div className="mt-3 space-y-3">
         <div className="flex items-center">
-          <span className="w-30 text-brand">Subnet info</span>
+          <span className="w-30 text-brand">Subnet repo</span>
           <span className="text-[#6B68FF] text-4 font-400">{subnet.githubUrl}</span>
         </div>
-        <div className="flex items-center">
-          <span className="w-30 text-brand">Registered on</span>
-          <span className="text-primary text-4 font-400">
-            {dayjs(subnet.registeredAt).format('DD MMM YYYY HH:mm:ss')}
-          </span>
-        </div>
+        {subnet.registeredAt ? (
+          <div className="flex items-center">
+            <span className="w-30 text-brand">Registered on</span>
+            <span className="text-primary text-4 font-400">
+              {dayjs(subnet.registeredAt).format('DD MMM YYYY HH:mm:ss')}
+            </span>
+          </div>
+        ) : null}
         <div className="flex items-center">
           <span className="w-30 text-brand">Registered to</span>
           <span className="text-#FF8023 text-4 font-400">{subnet.registeredBy}</span>
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-4 gap-3">
+      <div className="mt-3 grid grid-cols-3 gap-3">
         {[
           {
             title: 'Emissions',
-            value: `${subnet.emissionPercentage.toFixed(2)}%`, // 4.89%
-          },
-          {
-            title: 'Recycled',
-            value: '??',
-          },
-          {
-            title: 'Recycled(24h)',
-            value: '??',
-          },
-          {
-            title: 'Registration Cost',
-            value: `${subnet.registerCost.toFixed(2)}`,
-          },
-          {
-            title: 'Active Keys',
-            value: `${subnet.activeKeys}/${subnet.totalKeys}`,
+            value: `${subnet.emissionPercentage.toFixed(2)}%`,
           },
           {
             title: 'Active Validators',
@@ -54,8 +40,16 @@ export const Prompting = ({ subnet }: { subnet: ISubnet }) => {
             value: `${subnet.activeMiners}/${subnet.totalMiners}`,
           },
           {
-            title: 'Active Dual Miners/Validators',
-            value: '2/128',
+            title: 'Registration Cost',
+            value: `${subnet.registerCost.toFixed(2)}`,
+          },
+          {
+            title: 'Recycled',
+            value: '-',
+          },
+          {
+            title: 'Recycled(24h)',
+            value: '-',
           },
         ].map((item, index) => (
           <div key={index} className="flex flex-col gap-.5">
