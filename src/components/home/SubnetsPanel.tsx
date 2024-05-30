@@ -13,11 +13,7 @@ export const SubnetsPanel = () => {
 
   const [subnetId, setSubnetId] = useState<number | undefined>(undefined)
 
-  const { data: { data: subnet } = {} } = useQuery<{ data: ISubnet }>({
-    queryKey: subnetKeys.detail(subnetId!),
-    queryFn: () => get(`/api/subnets/${subnetId}`),
-    enabled: !!subnetId,
-  })
+  const subnet = useMemo(() => subnets.find((item) => item.id === subnetId), [subnets, subnetId])
 
   useEffect(() => {
     if (subnets.length > 0) {
@@ -45,6 +41,7 @@ export const SubnetsPanel = () => {
 
       <div className="mt-5 space-y-5">
         {[
+          { key: 'Subnet Name', value: subnet?.name.toUpperCase() },
           { key: 'Active Keys', value: subnet?.activeKeys, totalValue: subnet?.totalKeys },
           { key: 'Active Validators', value: subnet?.activeValidators, totalValue: subnet?.totalValidators },
           { key: 'Active Miners', value: subnet?.activeMiners, totalValue: subnet?.totalMiners },
@@ -57,22 +54,24 @@ export const SubnetsPanel = () => {
                 <span>{item.totalValue ? `${item.value}/${item.totalValue}` : item.value}</span>
               </span>
             </div>
-            <div className="flex gap-1">
-              {Array(10)
-                .fill(1)
-                .map((_i, idx) => {
-                  const length = item.value && item.totalValue ? Math.floor(item.value / item.totalValue) : 0
-                  return (
-                    <span
-                      key={`value_${idx}`}
-                      className={cn(
-                        'w-1 h-5 bg-muted rounded-sm',
-                        idx < length * 10 ? ' bg-#adace3 shadow shadow-[#adace3]' : ''
-                      )}
-                    />
-                  )
-                })}
-            </div>
+            {item.totalValue && (
+              <div className="flex gap-1">
+                {Array(10)
+                  .fill(1)
+                  .map((_i, idx) => {
+                    const length = item.value && item.totalValue ? item.value / item.totalValue : 0
+                    return (
+                      <span
+                        key={`${item.key}_indicator_${idx}`}
+                        className={cn(
+                          'w-1 h-5 bg-muted rounded-sm',
+                          idx <= length * 10 ? ' bg-#adace3 shadow shadow-[#adace3]' : ''
+                        )}
+                      />
+                    )
+                  })}
+              </div>
+            )}
           </div>
         ))}
       </div>

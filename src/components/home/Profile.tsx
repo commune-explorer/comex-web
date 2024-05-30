@@ -53,14 +53,14 @@ export const TokenProfile = () => {
             text: 'Total Supply',
             value: formatNumber(data.totalSupply),
           },
-          {
-            text: 'Validating APR',
-            value: `??%`, // TODO: replace
-          },
-          {
-            text: 'Staking APR',
-            value: `${data.stakingApr?.toFixed(2)}%`,
-          },
+          // {
+          //   text: 'Validating APR',
+          //   value: `??%`,
+          // },
+          // {
+          //   text: 'Staking APR',
+          //   value: `${data.stakingApr?.toFixed(2)}%`,
+          // },
         ].map((item, index) => (
           <div key={index} className="flex flex-col gap-1 col-span-2">
             <span className="text-sm text-brand">{item.text}</span>
