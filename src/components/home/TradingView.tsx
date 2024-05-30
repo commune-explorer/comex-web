@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { Area, Bar, ComposedChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Area, Bar, ComposedChart, ResponsiveContainer, Tooltip, type TooltipProps, XAxis, YAxis } from 'recharts'
 
 import { priceHistoryKeys } from '@/apis/queries'
 import type { ITrading } from '@/types'
@@ -31,6 +31,32 @@ export const TradingView = () => {
     return recentRecords.reduce((max, item) => Math.max(max, item.volume), 0)
   }, [recentRecords])
 
+  const CustomTooltip = ({ active, payload, label }: TooltipProps<string, string>) => {
+    if (active && payload && payload.length) {
+      const price = payload.find((p) => p.name === 'price')?.value
+      const volume = payload.find((p) => p.name === 'volume')?.value
+      return (
+        <div className="rounded bg-muted/70">
+          <div className="bg-muted p-2">{dayjs(label * 1000).format('D MMM YY')}</div>
+          <div className="p-2 text-sm">
+            <div className="flex justify-between gap-2">
+              <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#adace3 before:left-0 before:top-1/2 before:-translate-y-1/2">
+                Price:
+              </span>
+              <span>{`${price ? Number(price)?.toFixed(2) : '-'}`}</span>
+            </div>
+            <div className="flex justify-between gap-2">
+              <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#22EAAECC before:left-0 before:top-1/2 before:-translate-y-1/2">
+                Vol:
+              </span>
+              <span>{`${volume ? formatNumber(Number(volume)) : '-'}`}</span>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    return null
+  }
   return (
     <div className="h-400px w-full">
       <ResponsiveContainer width="100%" height="100%">
@@ -72,6 +98,7 @@ export const TradingView = () => {
           </defs>
           {recentRecords && (
             <>
+              <Tooltip content={<CustomTooltip />} />
               <Area dataKey="price" stroke="#adace3" dot={false} fill="url(#colorUv)" yAxisId="price" />
               <Bar dataKey="volume" barSize={1} fill="#22EAAECC" yAxisId="volume" />
             </>
