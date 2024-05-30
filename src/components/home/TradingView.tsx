@@ -36,9 +36,9 @@ export const TradingView = () => {
       const price = payload.find((p) => p.name === 'price')?.value
       const volume = payload.find((p) => p.name === 'volume')?.value
       return (
-        <div className="min-w-30 text-sm">
-          <div className="rounded-t bg-black/80 p-2">{dayjs(label * 1000).format('D MMM YY')}</div>
-          <div className="p-2 rounded-b bg-white/25">
+        <div className="min-w-30 text-sm rounded overflow-hidden shadow-light/20 shadow-sm">
+          <div className="bg-black/80 p-2">{dayjs(label * 1000).format('D MMM YY')}</div>
+          <div className="p-2 bg-white/5">
             <div className="flex justify-between gap-2">
               <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#adace3 before:left-0 before:top-1/2 before:-translate-y-1/2">
                 Price:
