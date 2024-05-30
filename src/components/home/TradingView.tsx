@@ -36,20 +36,20 @@ export const TradingView = () => {
       const price = payload.find((p) => p.name === 'price')?.value
       const volume = payload.find((p) => p.name === 'volume')?.value
       return (
-        <div className="rounded bg-muted/70">
-          <div className="bg-muted p-2">{dayjs(label * 1000).format('D MMM YY')}</div>
-          <div className="p-2 text-sm">
+        <div className="min-w-30 text-sm">
+          <div className="rounded-t bg-black/80 p-2">{dayjs(label * 1000).format('D MMM YY')}</div>
+          <div className="p-2 rounded-b bg-white/25">
             <div className="flex justify-between gap-2">
               <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#adace3 before:left-0 before:top-1/2 before:-translate-y-1/2">
                 Price:
               </span>
-              <span>{`${price ? Number(price)?.toFixed(2) : '-'}`}</span>
+              <span className="font-medium">{`${price ? Number(price)?.toFixed(2) : '-'}`}</span>
             </div>
             <div className="flex justify-between gap-2">
               <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#22EAAECC before:left-0 before:top-1/2 before:-translate-y-1/2">
                 Vol:
               </span>
-              <span>{`${volume ? formatNumber(Number(volume)) : '-'}`}</span>
+              <span className="font-medium">{`${volume ? formatNumber(Number(volume)) : '-'}`}</span>
             </div>
           </div>
         </div>
