@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from 'react-router'
 import { useParams } from 'react-router-dom'
 
 import { subnetKeys } from '@/apis/queries'
@@ -12,13 +13,14 @@ import type { ISubnet } from '@/types'
 import { get } from '@/utils'
 
 export default function SubnetsPage() {
-  const { id } = useParams()
+  const nav = useNavigate()
+  const { id, tab = '' } = useParams()
   const netuid = parseInt(id ?? '0')
+  const currentTab = tab.charAt(0).toUpperCase() + tab.slice(1)
 
   const tabs = useMemo(() => (netuid > 0 ? ['Modules', 'Parameters', 'Leaderboard'] : ['Modules']), [netuid])
 
   const { svgRef } = useSvgBg()
-  const [currentTab, setCurrentTab] = useState(tabs[0])
   const { data: { data } = {} } = useQuery<{ data: ISubnet }>({
     queryKey: subnetKeys.detail(netuid),
     queryFn: () => get(`/api/subnets/${netuid}`),
@@ -43,16 +45,16 @@ export default function SubnetsPage() {
                   ? '[&>div]:btn-brand-bg text-primary'
                   : '[&>svg]:hidden text-brand hover:btn-brand-bg'
               )}
-              onClick={() => setCurrentTab(tab)}
+              onClick={() => nav(`/subnets/${id}/${tab.toLowerCase()}`)}
             >
               <div className="px-4 py-2.5 h-full w-full font-medium cursor-pointer">{tab}</div>
             </div>
           ))}
         </div>
 
-        {currentTab === tabs[0] && <ModulesPanel netuid={netuid} />}
-        {currentTab === tabs[1] && <ParamsPanel params={data.params} />}
-        {currentTab === tabs[2] && <LeaderBoard netuid={netuid} />}
+        {currentTab === 'Modules' && <ModulesPanel netuid={netuid} />}
+        {currentTab === 'Parameters' && <ParamsPanel params={data.params} />}
+        {currentTab === 'Leaderboard' && <LeaderBoard netuid={netuid} />}
       </div>
     </div>
   )

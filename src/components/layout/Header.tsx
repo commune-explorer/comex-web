@@ -18,7 +18,7 @@ export function Header() {
     queryFn: () => get('/api/subnets'),
   })
 
-  const isSubnetDetail = /^\/subnets\/[^/]+$/.test(pathname)
+  const isSubnetDetail = pathname.startsWith('/subnets/')
 
   return (
     <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#191A2B">

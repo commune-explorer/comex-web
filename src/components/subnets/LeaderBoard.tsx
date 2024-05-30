@@ -1,3 +1,4 @@
+import { formatAmount, shorten } from '@did-network/dapp-sdk'
 import { CaretSortIcon } from '@radix-ui/react-icons'
 import { useQuery } from '@tanstack/react-query'
 import { ColumnDef } from '@tanstack/react-table'
@@ -15,6 +16,10 @@ interface ILeaderBoard {
 
 const columns: ColumnDef<ILeaderBoard>[] = [
   {
+    accessorKey: 'rank',
+    header: 'Rank',
+  },
+  {
     accessorKey: 'uid',
     header: 'Uid',
   },
@@ -23,16 +28,14 @@ const columns: ColumnDef<ILeaderBoard>[] = [
     header: 'Name',
   },
   {
-    accessorKey: 'rank',
-    header: 'Rank',
-  },
-  {
     accessorKey: 'tokenPerDay',
-    header: 'Token Per Day',
+    header: 'Rewards / Day',
+    cell: ({ row }) => formatAmount(row.getValue('tokenPerDay'), 0, 2),
   },
   {
     accessorKey: 'usdPerDay',
-    header: 'USD Per Day',
+    header: 'USD Value',
+    cell: ({ row }) => '$' + formatAmount(row.getValue('usdPerDay'), 0, 2),
   },
 ]
 
