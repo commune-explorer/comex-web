@@ -1,111 +1,130 @@
 import { formatAmount, shorten } from '@did-network/dapp-sdk'
-import { CaretSortIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon, ClipboardCopyIcon } from '@radix-ui/react-icons'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import * as changeCase from 'change-case'
 import dayjs from 'dayjs'
+import { useCopyToClipboard } from 'usehooks-ts'
 
 import { blockchainKeys } from '@/apis/queries'
 import type { IAccountInfo } from '@/types'
 import { get } from '@/utils'
 
-const columns: ColumnDef<IAccountInfo>[] = [
-  {
-    header: 'Rank',
-    accessorKey: 'rank',
-  },
-  {
-    header: 'Address',
-    accessorKey: 'address',
-    cell: ({ row }) => shorten(row.getValue('address')),
-  },
-  {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="uppercase px-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Created At
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    accessorKey: 'createdAt',
-    cell: ({ row }) =>
-      row.getValue('createdAt') &&
-      dayjs((parseInt(row.getValue('createdAt') as string) * 1000).toString()).format('DD MMM YYYY'),
-  },
-  {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="uppercase px-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Updated At
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    accessorKey: 'updatedAt',
-    cell: ({ row }) =>
-      row.getValue('updatedAt') &&
-      dayjs((parseInt(row.getValue('updatedAt') as string) * 1000).toString()).format('DD MMM YYYY'),
-  },
-  {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="uppercase px-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Balance Free
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    accessorKey: 'balanceFree',
-    cell: ({ row }) => formatAmount(row.getValue('balanceFree')),
-  },
-  {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="uppercase px-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Balance Staked
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    accessorKey: 'balanceStaked',
-    cell: ({ row }) => formatAmount(row.getValue('balanceStaked')),
-  },
-  {
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="uppercase px-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Balance Total
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    accessorKey: 'balanceTotal',
-    cell: ({ row }) => formatAmount(row.getValue('balanceTotal')),
-  },
-]
-
 const Blockchain = () => {
+  const [copied, copy] = useCopyToClipboard()
+  const columns: ColumnDef<IAccountInfo>[] = [
+    {
+      header: 'Rank',
+      accessorKey: 'rank',
+    },
+    {
+      header: 'Address',
+      accessorKey: 'address',
+      cell: ({ row }) => (
+        <div className="flex items-center gap-1">
+          <span>{shorten(row.getValue('address'), 4, 15)}</span>
+          <Button
+            variant="link"
+            className="hover:text-brand"
+            onClick={() => {
+              copy(row.getValue('address')).then((success) => {
+                if (success) {
+                } else {
+                  console.error('Failed to copy text to clipboard.')
+                }
+              })
+            }}
+          >
+            <ClipboardCopyIcon className="h-4" />
+          </Button>
+        </div>
+      ),
+    },
+    {
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="uppercase px-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Created At
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      accessorKey: 'createdAt',
+      cell: ({ row }) =>
+        row.getValue('createdAt') &&
+        dayjs((parseInt(row.getValue('createdAt') as string) * 1000).toString()).format('DD MMM YYYY'),
+    },
+    {
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="uppercase px-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Updated At
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      accessorKey: 'updatedAt',
+      cell: ({ row }) =>
+        row.getValue('updatedAt') &&
+        dayjs((parseInt(row.getValue('updatedAt') as string) * 1000).toString()).format('DD MMM YYYY'),
+    },
+    {
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="uppercase px-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Balance Free
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      accessorKey: 'balanceFree',
+      cell: ({ row }) => formatAmount(row.getValue('balanceFree')),
+    },
+    {
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="uppercase px-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Balance Staked
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      accessorKey: 'balanceStaked',
+      cell: ({ row }) => formatAmount(row.getValue('balanceStaked')),
+    },
+    {
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="uppercase px-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Balance Total
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      accessorKey: 'balanceTotal',
+      cell: ({ row }) => formatAmount(row.getValue('balanceTotal')),
+    },
+  ]
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [sorting, setSorting] = useState<SortingState>([])
