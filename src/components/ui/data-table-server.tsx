@@ -3,12 +3,10 @@ import {
   ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table'
+import { Loader2 } from 'lucide-react'
 import * as React from 'react'
 
 import { Input } from '@/components/ui/input'
@@ -17,30 +15,61 @@ import { cn } from '@/lib/utils'
 
 import { Pagination } from './pagination'
 
-interface DataTableProps<TData, TValue> {
+interface ServerDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  total: number
+  pageIndex: number
+  pageSize: number
   searchKey?: string
-  loading?: boolean
+  pending?: boolean
+  fetching?: boolean
+  onPageChange: (pageIndex: number) => void
+  onPageSizeChange: (pageSize: number) => void
+  onSortingChange: (sorting: SortingState) => void
+  onColumnFiltersChange: (filters: ColumnFiltersState) => void
 }
 
-export function DataTable<TData, TValue>({ columns, data, searchKey, loading = false }: DataTableProps<TData, TValue>) {
+export function DataTableServer<TData, TValue>({
+  columns,
+  data,
+  total,
+  pageIndex,
+  pageSize,
+  searchKey,
+  pending = false,
+  fetching = false,
+  onPageChange,
+  onPageSizeChange,
+  onSortingChange,
+  onColumnFiltersChange,
+}: ServerDataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
+    pageCount: Math.ceil(total / pageSize),
+    manualPagination: true,
+    manualSorting: true,
+    manualFiltering: true,
+    onSortingChange: (newSorting) => {
+      setSorting(newSorting)
+      onSortingChange(newSorting as SortingState)
+    },
+    onColumnFiltersChange: (newFilters) => {
+      setColumnFilters(newFilters)
+      onColumnFiltersChange(newFilters as ColumnFiltersState)
+    },
     state: {
       sorting,
       columnFilters,
+      pagination: { pageIndex, pageSize },
     },
+    getCoreRowModel: getCoreRowModel(),
   })
+
   const pagers = [10, 25, 50, 100]
 
   return (
@@ -52,8 +81,8 @@ export function DataTable<TData, TValue>({ columns, data, searchKey, loading = f
             type="single"
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
-              table.setPageSize(Number(value))
-              table.setPageIndex(0)
+              onPageChange(0)
+              onPageSizeChange(Number(value))
             }}
           >
             {pagers.map((i) => (
@@ -65,6 +94,8 @@ export function DataTable<TData, TValue>({ columns, data, searchKey, loading = f
         </div>
         {searchKey && (
           <div className="flex items-center gap-2">
+            {fetching && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+
             <span className="text-brand text-sm">Search:</span>
             <div className="flex w-40 h-9 px-2.25 py-0.25 items-center gap-2.5 border-rd-1.25 bg-[rgba(173,172,227,0.03)]">
               <span className="w-4 h-4 text-brand i-lucide-search"></span>
@@ -92,7 +123,13 @@ export function DataTable<TData, TValue>({ columns, data, searchKey, loading = f
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {pending ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                Loading...
+              </TableCell>
+            </TableRow>
+          ) : table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row, index) => (
               <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className="border-none">
                 {row.getVisibleCells().map((cell) => (
@@ -111,33 +148,27 @@ export function DataTable<TData, TValue>({ columns, data, searchKey, loading = f
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                {loading ? 'loading...' : 'No results.'}
+                {'No results.'}
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
-      {table.getFilteredRowModel().rows.length > 0 && (
-        <div className="flex justify-between">
-          <div className="flex text-brand gap-1">
-            Showing <span>{table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}</span> to{' '}
-            {Math.min(
-              (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-              table.getFilteredRowModel().rows.length
-            )}{' '}
-            of <span>{table.getFilteredRowModel().rows.length}</span> entries
-          </div>
-          <div className="flex justify-end">
-            <Pagination
-              page={table.getState().pagination.pageIndex + 1}
-              count={table.getPageCount()}
-              onChange={(page) => {
-                table.setPageIndex(page - 1)
-              }}
-            ></Pagination>
-          </div>
+      <div className="flex justify-between">
+        <div className="flex text-brand gap-1">
+          Showing <span>{pageIndex * pageSize + 1}</span> to {Math.min((pageIndex + 1) * pageSize, total)} of{' '}
+          <span>{total}</span> entries
         </div>
-      )}
+        <div className="flex justify-end items-center">
+          <Pagination
+            page={pageIndex + 1}
+            count={Math.ceil(total / pageSize)}
+            onChange={(page) => {
+              onPageChange(page - 1)
+            }}
+          ></Pagination>
+        </div>
+      </div>
     </div>
   )
 }

@@ -75,7 +75,7 @@ export function Header() {
           <Link
             ref={svgRef}
             to={'/blockchain'}
-            className={cn('!hidden relative p-.25 flex-col-center', pathname === '/blockchain' ? '' : '[&>svg]:hidden')}
+            className={cn('relative p-.25 flex-col-center', pathname === '/blockchain' ? '' : '[&>svg]:hidden')}
           >
             <Button
               variant="link"

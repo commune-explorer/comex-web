@@ -15,3 +15,9 @@ export const subnetKeys = {
   detailModules: (id: number | string) => [...subnetKeys.detail(id), 'modules'] as const,
   detailLeaderboard: (id: number | string) => [...subnetKeys.detail(id), 'leaderboard'] as const,
 }
+
+export const blockchainKeys = {
+  all: ['blockchain'] as const,
+  lists: () => [...blockchainKeys.all, 'list'] as const,
+  list: (query: any) => [...blockchainKeys.lists(), { query }] as const,
+}

@@ -35,3 +35,12 @@ export interface ITrading {
   price: number
   volume: number
 }
+
+export interface IAccountInfo {
+  rank: number
+  address: string
+  updatedAt: string
+  balanceFree: string
+  balanceStaked: string
+  balanceTotal: string
+}
