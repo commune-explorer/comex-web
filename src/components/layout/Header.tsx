@@ -18,8 +18,6 @@ export function Header() {
     queryFn: () => get('/api/subnets'),
   })
 
-  const isSubnetDetail = pathname.startsWith('/subnets/')
-
   return (
     <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#191A2B">
       <div className="container m-auto h-full flex justify-between items-center">
@@ -50,7 +48,7 @@ export function Header() {
               ref={svgRef}
               className={cn(
                 'relative',
-                isSubnetDetail ? 'btn-brand-bg' : 'bg-transparent hover:!btn-brand-bg [&>svg]:hidden'
+                pathname.startsWith('/subnets/') ? 'btn-brand-bg' : 'bg-transparent hover:!btn-brand-bg [&>svg]:hidden'
               )}
             >
               <div className="py-2 px-4 text-brand font-medium">Subnets</div>
@@ -75,17 +73,12 @@ export function Header() {
           <Link
             ref={svgRef}
             to={'/blockchain'}
-            className={cn('relative p-.25 flex-col-center', pathname === '/blockchain' ? '' : '[&>svg]:hidden')}
+            className={cn(
+              'relative flex-col-center',
+              pathname.startsWith('/blockchain') ? 'btn-brand-bg' : '[&>svg]:hidden bg-transparent hover:btn-brand-bg'
+            )}
           >
-            <Button
-              variant="link"
-              className={cn(
-                'relative text-brand font-medium rounded-none underline-transparent',
-                pathname === '/blockchain' ? 'btn-brand-bg' : 'bg-transparent hover:btn-brand-bg'
-              )}
-            >
-              Blockchain
-            </Button>
+            <div className="py-2 px-4 text-brand font-medium">Blockchain</div>
           </Link>
         </div>
       </div>

@@ -22,7 +22,7 @@ export const TokenProfile = () => {
   })
   if (!data) return null
   return (
-    <div className="flex gap-10 py-5 items-center">
+    <div className="flex gap-10 py-4 items-center">
       <img src={ComaiImg} alt="" className="p-0.5 w-12 h-12 rounded-full bg-secondary" />
 
       <div className="">

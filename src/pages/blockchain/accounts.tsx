@@ -1,17 +1,21 @@
 import { formatAmount, shorten } from '@did-network/dapp-sdk'
-import { CaretSortIcon, ClipboardCopyIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon, CopyIcon } from '@radix-ui/react-icons'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import * as changeCase from 'change-case'
 import dayjs from 'dayjs'
+import { NavLink, useParams } from 'react-router-dom'
 import { useCopyToClipboard } from 'usehooks-ts'
 
 import { blockchainKeys } from '@/apis/queries'
+import { cn } from '@/lib/utils'
 import type { IAccountInfo } from '@/types'
 import { get } from '@/utils'
 
-const Blockchain = () => {
-  const [copied, copy] = useCopyToClipboard()
+export default function Accounts() {
+  const { tab = 'accounts' } = useParams()
+  const currentTab = tab.charAt(0).toUpperCase() + tab.slice(1)
+  const [, copy] = useCopyToClipboard()
   const columns: ColumnDef<IAccountInfo>[] = [
     {
       header: 'Rank',
@@ -23,106 +27,71 @@ const Blockchain = () => {
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
           <span>{shorten(row.getValue('address'), 4, 15)}</span>
-          <Button
-            variant="link"
-            className="hover:text-brand"
-            onClick={() => {
-              copy(row.getValue('address')).then((success) => {
-                if (success) {
-                } else {
-                  console.error('Failed to copy text to clipboard.')
-                }
-              })
+          <CopyIcon
+            className="h-4 text-muted-foreground hover:text-foreground"
+            onClick={async () => {
+              const success = await copy(row.getValue('address'))
+              if (success) {
+                toast({ title: 'Address Copied' })
+              } else {
+                console.error('Failed to copy text to clipboard.')
+              }
             }}
-          >
-            <ClipboardCopyIcon className="h-4" />
-          </Button>
+          />
         </div>
       ),
     },
     {
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Created At
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-      accessorKey: 'createdAt',
-      cell: ({ row }) =>
-        row.getValue('createdAt') &&
-        dayjs((parseInt(row.getValue('createdAt') as string) * 1000).toString()).format('DD MMM YYYY'),
-    },
-    {
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Updated At
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-      accessorKey: 'updatedAt',
-      cell: ({ row }) =>
-        row.getValue('updatedAt') &&
-        dayjs((parseInt(row.getValue('updatedAt') as string) * 1000).toString()).format('DD MMM YYYY'),
-    },
-    {
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Balance Free
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
       accessorKey: 'balanceFree',
-      cell: ({ row }) => formatAmount(row.getValue('balanceFree')),
+      header: ({ column }) => {
+        return (
+          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+            Free
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      cell: ({ row }) => formatAmount(row.getValue('balanceFree'), 9, 2),
     },
     {
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Balance Staked
+          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+            Staked
             <CaretSortIcon className="ml-2 h-4 w-4" />
           </Button>
         )
       },
       accessorKey: 'balanceStaked',
-      cell: ({ row }) => formatAmount(row.getValue('balanceStaked')),
+      cell: ({ row }) => formatAmount(row.getValue('balanceStaked'), 9, 2),
     },
     {
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Balance Total
+          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+            Total
             <CaretSortIcon className="ml-2 h-4 w-4" />
           </Button>
         )
       },
       accessorKey: 'balanceTotal',
-      cell: ({ row }) => formatAmount(row.getValue('balanceTotal')),
+      cell: ({ row }) => formatAmount(row.getValue('balanceTotal'), 9, 2),
+    },
+    {
+      header: ({ column }) => {
+        return (
+          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+            Last Update
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      accessorKey: 'updatedAt',
+      cell: ({ row }) => (
+        <a className="text-$green" target="_blank" href={``}>
+          {row.getValue('updatedAt')}
+        </a>
+      ),
     },
   ]
   const [pageIndex, setPageIndex] = useState(0)
@@ -154,14 +123,27 @@ const Blockchain = () => {
       if (filterParams) {
         // TODO
       }
-      const result = await get<{ data: { records: IAccountInfo[]; totalCount: number } }>(`/api/accounts`, { params })
-      return result
+      return await get<{ data: { records: IAccountInfo[]; totalCount: number } }>(`/api/accounts`, { params })
     },
     placeholderData: keepPreviousData,
   })
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto py-6">
+      <div className="py-4 flex items-center gap-3">
+        {['Accounts'].map((tab) => (
+          <NavLink
+            key={tab}
+            className={cn(
+              'border-b-2',
+              currentTab === tab ? 'text-foreground border-brand' : 'text-brand border-transparent'
+            )}
+            to={`/blockchain/${tab.toLowerCase()}`}
+          >
+            <div className="px-1 pb-2 h-full w-full font-medium cursor-pointer">{tab}</div>
+          </NavLink>
+        ))}
+      </div>
       <div className="text-sm py-4">
         <DataTableServer
           columns={columns}
@@ -181,5 +163,3 @@ const Blockchain = () => {
     </div>
   )
 }
-
-export default Blockchain

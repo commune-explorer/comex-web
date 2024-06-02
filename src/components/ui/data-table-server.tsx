@@ -114,7 +114,7 @@ export function DataTableServer<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="h-10 text-brand uppercase">
+                  <TableHead key={header.id} className="h-10 text-brand">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 )
