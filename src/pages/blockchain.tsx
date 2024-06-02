@@ -21,8 +21,8 @@ const Blockchain = () => {
       header: 'Address',
       accessorKey: 'address',
       cell: ({ row }) => (
-        <div className="flex items-center gap-1">
-          <span>{shorten(row.getValue('address'), 4, 15)}</span>
+        <div className="flex items-center">
+          <span>{shorten(row.getValue('address'), 6)}</span>
           <Button
             variant="link"
             className="hover:text-brand"
@@ -39,24 +39,6 @@ const Blockchain = () => {
           </Button>
         </div>
       ),
-    },
-    {
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Created At
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-      accessorKey: 'createdAt',
-      cell: ({ row }) =>
-        row.getValue('createdAt') &&
-        dayjs((parseInt(row.getValue('createdAt') as string) * 1000).toString()).format('DD MMM YYYY'),
     },
     {
       header: ({ column }) => {
