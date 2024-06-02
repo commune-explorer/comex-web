@@ -26,7 +26,7 @@ export default function Accounts() {
       accessorKey: 'address',
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
-          <span>{shorten(row.getValue('address'), 4, 15)}</span>
+          <span>{shorten(row.getValue('address'), 10, 10)}</span>
           <CopyIcon
             className="h-4 text-muted-foreground hover:text-foreground"
             onClick={async () => {
