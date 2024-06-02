@@ -63,14 +63,13 @@ export const ModulesPanel = ({ netuid }: { netuid: number }) => {
         ...item,
         header: ({ column }) => {
           return (
-            <Button
-              variant="ghost"
-              className="uppercase px-0"
+            <span
+              className="uppercase px-0 inline-flex items-center gap-1 cursor-pointer hover:text-accent-foreground"
               onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
             >
               {item.header as string}
               <CaretSortIcon className="ml-2 h-4 w-4" />
-            </Button>
+            </span>
           )
         },
       } as ColumnDef<IModule>)

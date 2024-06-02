@@ -43,14 +43,13 @@ const Blockchain = () => {
     {
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
+          <span
+            className="uppercase px-0 inline-flex items-center gap-1 cursor-pointer hover:text-accent-foreground"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Updated At
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
+            <CaretSortIcon className="h-4 w-4" />
+          </span>
         )
       },
       accessorKey: 'updatedAt',
@@ -61,14 +60,13 @@ const Blockchain = () => {
     {
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
+          <span
+            className="uppercase px-0 inline-flex items-center gap-1 cursor-pointer hover:text-accent-foreground"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Balance Free
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
+            <CaretSortIcon className="h-4 w-4" />
+          </span>
         )
       },
       accessorKey: 'balanceFree',
@@ -77,14 +75,13 @@ const Blockchain = () => {
     {
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
+          <span
+            className="uppercase px-0 inline-flex items-center gap-1 cursor-pointer hover:text-accent-foreground"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Balance Staked
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
+            <CaretSortIcon className="h-4 w-4" />
+          </span>
         )
       },
       accessorKey: 'balanceStaked',
@@ -93,14 +90,13 @@ const Blockchain = () => {
     {
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            className="uppercase px-0"
+          <span
+            className="uppercase px-0 inline-flex items-center gap-1 cursor-pointer hover:text-accent-foreground"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Balance Total
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
+            <CaretSortIcon className="h-4 w-4" />
+          </span>
         )
       },
       accessorKey: 'balanceTotal',
