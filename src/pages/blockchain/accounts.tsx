@@ -157,7 +157,7 @@ export default function Accounts() {
           onPageSizeChange={setPageSize}
           onSortingChange={setSorting}
           onColumnFiltersChange={setFilters}
-          searchKey="address"
+          // searchKey="address"
         />
       </div>
     </div>
