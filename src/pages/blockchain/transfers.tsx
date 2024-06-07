@@ -68,7 +68,7 @@ export default function Accounts() {
         params.orderBy = sortingParams[0]
       }
       if (filters.length > 0) {
-        const account = filters.find((i) => i.id === 'account')?.value
+        const account = filters.find((i) => i.id === 'from')?.value
         if (account) {
           params.account = account
         }
@@ -94,7 +94,7 @@ export default function Accounts() {
           onPageSizeChange={setPageSize}
           onSortingChange={setSorting}
           onColumnFiltersChange={setFilters}
-          searchKey="account"
+          searchKey="from"
         />
       </div>
     </div>
