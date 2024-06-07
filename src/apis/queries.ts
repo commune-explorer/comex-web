@@ -16,8 +16,20 @@ export const subnetKeys = {
   detailLeaderboard: (id: number | string) => [...subnetKeys.detail(id), 'leaderboard'] as const,
 }
 
-export const blockchainKeys = {
+export const accountKeys = {
   all: ['blockchain'] as const,
-  lists: () => [...blockchainKeys.all, 'list'] as const,
-  list: (query: any) => [...blockchainKeys.lists(), { query }] as const,
+  lists: () => [...accountKeys.all, 'list'] as const,
+  list: (query: any) => [...accountKeys.lists(), { query }] as const,
+}
+
+export const delegationKeys = {
+  all: ['blockchain'] as const,
+  lists: () => [...delegationKeys.all, 'list'] as const,
+  list: (query: any) => [...delegationKeys.lists(), { query }] as const,
+}
+
+export const transferKeys = {
+  all: ['blockchain'] as const,
+  lists: () => [...transferKeys.all, 'list'] as const,
+  list: (query: any) => [...transferKeys.lists(), { query }] as const,
 }

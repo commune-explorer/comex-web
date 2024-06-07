@@ -1,17 +1,16 @@
 import { formatAmount, shorten } from '@did-network/dapp-sdk'
-import { CaretSortIcon, CopyIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon } from '@radix-ui/react-icons'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import * as changeCase from 'change-case'
-import { useCopyToClipboard } from 'usehooks-ts'
 
-import { blockchainKeys } from '@/apis/queries'
+import { accountKeys } from '@/apis/queries'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
+import { CopyButton } from '@/components/blockchain/CopyButton'
 import type { IAccountInfo } from '@/types'
 import { get } from '@/utils'
 
 export default function Accounts() {
-  const [, copy] = useCopyToClipboard()
   const columns: ColumnDef<IAccountInfo>[] = [
     {
       header: 'Rank',
@@ -23,17 +22,7 @@ export default function Accounts() {
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
           <span>{shorten(row.getValue('address'), 10, 10)}</span>
-          <CopyIcon
-            className="h-4 text-muted-foreground hover:text-foreground"
-            onClick={async () => {
-              const success = await copy(row.getValue('address'))
-              if (success) {
-                toast({ title: 'Address Copied' })
-              } else {
-                console.error('Failed to copy text to clipboard.')
-              }
-            }}
-          />
+          <CopyButton value={row.getValue('address')} />
         </div>
       ),
     },
@@ -99,7 +88,7 @@ export default function Accounts() {
     isPending,
     isFetching,
   } = useQuery({
-    queryKey: blockchainKeys.list({
+    queryKey: accountKeys.list({
       pageIndex,
       pageSize,
       sorting,
@@ -111,13 +100,15 @@ export default function Accounts() {
         offset: pageSize * pageIndex,
       } as Record<PropertyKey, any>
       const sortingParams = sorting.map((s) => `${changeCase.snakeCase(s.id)}_${s.desc ? 'desc' : 'asc'}`.toUpperCase())
-      const filterParams = filters.map((f) => `${f.id}=${f.value}`)
 
       if (sortingParams?.[0]) {
         params.orderBy = sortingParams[0]
       }
-      if (filterParams) {
-        // TODO
+      if (filters.length > 0) {
+        const account = filters.find((i) => i.id === 'account')?.value
+        if (account) {
+          params.account = account
+        }
       }
       return await get<{ data: { records: IAccountInfo[]; totalCount: number } }>(`/api/accounts`, { params })
     },
@@ -140,7 +131,7 @@ export default function Accounts() {
           onPageSizeChange={setPageSize}
           onSortingChange={setSorting}
           onColumnFiltersChange={setFilters}
-          // searchKey="address"
+          searchKey="account"
         />
       </div>
     </div>

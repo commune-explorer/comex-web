@@ -44,3 +44,25 @@ export interface IAccountInfo {
   balanceStaked: string
   balanceTotal: string
 }
+
+export interface IDelegationEvents {
+  account: string
+  action: string
+  amount: string
+  extrinsicId: number
+  height: number
+  id: string
+  module: string
+  netUid: number
+  nodeId: string
+}
+
+export interface ITransfer {
+  to: string
+  nodeId: string
+  id: string
+  from: string
+  extrinsicId: number
+  blockNumber: string
+  amount: string
+}

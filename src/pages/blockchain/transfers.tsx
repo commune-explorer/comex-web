@@ -1,93 +1,45 @@
 import { formatAmount, shorten } from '@did-network/dapp-sdk'
-import { CaretSortIcon, CopyIcon } from '@radix-ui/react-icons'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import * as changeCase from 'change-case'
-import { useCopyToClipboard } from 'usehooks-ts'
 
-import { blockchainKeys } from '@/apis/queries'
+import { transferKeys } from '@/apis/queries'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
-import type { IAccountInfo } from '@/types'
+import { CopyButton } from '@/components/blockchain/CopyButton'
+import type { ITransfer } from '@/types'
 import { get } from '@/utils'
 
 export default function Accounts() {
-  const [, copy] = useCopyToClipboard()
-  const columns: ColumnDef<IAccountInfo>[] = [
+  const columns: ColumnDef<ITransfer>[] = [
     {
-      header: 'Rank',
-      accessorKey: 'rank',
-    },
-    {
-      header: 'Address',
-      accessorKey: 'address',
+      header: 'From',
+      accessorKey: 'from',
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
-          <span>{shorten(row.getValue('address'), 10, 10)}</span>
-          <CopyIcon
-            className="h-4 text-muted-foreground hover:text-foreground"
-            onClick={async () => {
-              const success = await copy(row.getValue('address'))
-              if (success) {
-                toast({ title: 'Address Copied' })
-              } else {
-                console.error('Failed to copy text to clipboard.')
-              }
-            }}
-          />
+          <span>{shorten(row.getValue('from'), 10, 10)}</span>
+          <CopyButton value={row.getValue('from')} />
         </div>
       ),
     },
     {
-      accessorKey: 'balanceFree',
-      header: ({ column }) => {
-        return (
-          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-            Free
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-      cell: ({ row }) => formatAmount(row.getValue('balanceFree'), 9, 2),
-    },
-    {
-      header: ({ column }) => {
-        return (
-          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-            Staked
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-      accessorKey: 'balanceStaked',
-      cell: ({ row }) => formatAmount(row.getValue('balanceStaked'), 9, 2),
-    },
-    {
-      header: ({ column }) => {
-        return (
-          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-            Total
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-      accessorKey: 'balanceTotal',
-      cell: ({ row }) => formatAmount(row.getValue('balanceTotal'), 9, 2),
-    },
-    {
-      header: ({ column }) => {
-        return (
-          <Button variant="ghost" className="px-0" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-            Last Update
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-      accessorKey: 'updatedAt',
+      accessorKey: 'to',
+      header: 'To',
       cell: ({ row }) => (
-        <a className="text-$green" target="_blank" href={``}>
-          {row.getValue('updatedAt')}
-        </a>
+        <div className="flex items-center gap-1">
+          <span>{shorten(row.getValue('to'), 10, 10)}</span>
+          <CopyButton value={row.getValue('to')} />
+        </div>
       ),
+    },
+    {
+      accessorKey: 'amount',
+      header: 'Amount',
+      cell: ({ row }) => formatAmount(row.getValue('amount'), 9, 2),
+    },
+    {
+      header: 'Block Number',
+      accessorKey: 'blockNumber',
+      cell: ({ row }) => <div className="text-$green">{row.getValue('blockNumber')}</div>,
     },
   ]
   const [pageIndex, setPageIndex] = useState(0)
@@ -99,7 +51,7 @@ export default function Accounts() {
     isPending,
     isFetching,
   } = useQuery({
-    queryKey: blockchainKeys.list({
+    queryKey: transferKeys.list({
       pageIndex,
       pageSize,
       sorting,
@@ -111,15 +63,17 @@ export default function Accounts() {
         offset: pageSize * pageIndex,
       } as Record<PropertyKey, any>
       const sortingParams = sorting.map((s) => `${changeCase.snakeCase(s.id)}_${s.desc ? 'desc' : 'asc'}`.toUpperCase())
-      const filterParams = filters.map((f) => `${f.id}=${f.value}`)
 
       if (sortingParams?.[0]) {
         params.orderBy = sortingParams[0]
       }
-      if (filterParams) {
-        // TODO
+      if (filters.length > 0) {
+        const account = filters.find((i) => i.id === 'account')?.value
+        if (account) {
+          params.account = account
+        }
       }
-      return await get<{ data: { records: IAccountInfo[]; totalCount: number } }>(`/api/accounts`, { params })
+      return await get<{ data: { records: ITransfer[]; totalCount: number } }>(`/api/accounts/transfers`, { params })
     },
     placeholderData: keepPreviousData,
   })
@@ -140,7 +94,7 @@ export default function Accounts() {
           onPageSizeChange={setPageSize}
           onSortingChange={setSorting}
           onColumnFiltersChange={setFilters}
-          // searchKey="address"
+          searchKey="account"
         />
       </div>
     </div>
