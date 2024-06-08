@@ -22,7 +22,7 @@ export const TokenProfile = () => {
   })
   if (isPending || !data)
     return (
-      <div className="flex gap-10 py-4 items-center">
+      <div className="flex gap-10 py-4 items-center h-21">
         <Skeleton className="w-12 h-12 rounded-full" />
         {Array(5)
           .fill(1)
