@@ -51,12 +51,15 @@ export default function Accounts() {
     isPending,
     isFetching,
   } = useQuery({
-    queryKey: transferKeys.list({
-      pageIndex,
-      pageSize,
-      sorting,
-      filters,
-    }),
+    queryKey: [
+      'transfers',
+      ...transferKeys.list({
+        pageIndex,
+        pageSize,
+        sorting,
+        filters,
+      }),
+    ],
     queryFn: async () => {
       let params = {
         limit: pageSize,

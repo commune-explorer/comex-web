@@ -16,11 +16,25 @@ interface IProfile {
 }
 
 export const TokenProfile = () => {
-  const { data: { data } = {} } = useQuery<{ data: IProfile }>({
+  const { data: { data } = {}, isPending } = useQuery<{ data: IProfile }>({
     queryKey: profileKeys.all,
     queryFn: () => get('/api/info'),
   })
-  if (!data) return null
+  if (isPending || !data)
+    return (
+      <div className="flex gap-10 py-4 items-center">
+        <Skeleton className="w-12 h-12 rounded-full" />
+        {Array(5)
+          .fill(1)
+          .map((i) => (
+            <div key={'skeleton_col' + i} className="space-y-2">
+              <Skeleton className="h-4 w-30" />
+              <Skeleton className="h-4 w-20" />
+            </div>
+          ))}
+      </div>
+    )
+
   return (
     <div className="flex gap-10 py-4 items-center">
       <img src={ComaiImg} alt="" className="p-0.5 w-12 h-12 rounded-full bg-secondary" />

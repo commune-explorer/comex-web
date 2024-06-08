@@ -65,6 +65,7 @@ declare global {
   const SelectTrigger: typeof import('./components/ui/select')['SelectTrigger']
   const SelectValue: typeof import('./components/ui/select')['SelectValue']
   const Separator: typeof import('./components/ui/separator')['Separator']
+  const Skeleton: typeof import('./components/ui/skeleton')['Skeleton']
   const Table: typeof import('./components/ui/table')['Table']
   const TableBody: typeof import('./components/ui/table')['TableBody']
   const TableCaption: typeof import('./components/ui/table')['TableCaption']

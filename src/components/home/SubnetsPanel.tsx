@@ -21,7 +21,7 @@ export const SubnetsPanel = () => {
     }
   }, [subnets])
 
-  return (
+  return !subnets.length ? null : (
     <div className="shrink-0">
       <div className="uppercase text-lg">Subnets</div>
       <div className="mt-4 grid grid-cols-8 gap-1">

@@ -88,12 +88,15 @@ export default function Accounts() {
     isPending,
     isFetching,
   } = useQuery({
-    queryKey: accountKeys.list({
-      pageIndex,
-      pageSize,
-      sorting,
-      filters,
-    }),
+    queryKey: [
+      'accounts',
+      ...accountKeys.list({
+        pageIndex,
+        pageSize,
+        sorting,
+        filters,
+      }),
+    ],
     queryFn: async () => {
       let params = {
         limit: pageSize,
@@ -105,7 +108,7 @@ export default function Accounts() {
         params.orderBy = sortingParams[0]
       }
       if (filters.length > 0) {
-        const account = filters.find((i) => i.id === 'account')?.value
+        const account = filters.find((i) => i.id === 'address')?.value
         if (account) {
           params.account = account
         }
@@ -131,7 +134,7 @@ export default function Accounts() {
           onPageSizeChange={setPageSize}
           onSortingChange={setSorting}
           onColumnFiltersChange={setFilters}
-          searchKey="account"
+          searchKey={'address'}
         />
       </div>
     </div>

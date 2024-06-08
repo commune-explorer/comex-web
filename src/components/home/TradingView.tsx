@@ -57,7 +57,11 @@ export const TradingView = () => {
     }
     return null
   }
-  return (
+  return records.length <= 0 ? (
+    <div className="h-60vh w-full flex-col-center">
+      <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
+    </div>
+  ) : (
     <div className="h-60vh w-full">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart width={500} height={400} data={recentRecords}>

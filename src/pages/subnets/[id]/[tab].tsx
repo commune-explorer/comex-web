@@ -27,7 +27,31 @@ export default function SubnetsPage() {
     enabled: !!id,
   })
 
-  if (!id || !data) return null
+  if (!!(!id || !data))
+    return (
+      <div className="container mx-auto mt-10">
+        <div className="bg-brand/5 py-6 px-8 space-y-3">
+          <Skeleton className="h-9 w-40" />
+          <Skeleton className="h-4 w-50" />
+          <Skeleton className="h-4 w-40" />
+
+          <div className="!mt-6 flex justify-between">
+            {Array(4)
+              .fill(1)
+              .map((i) => (
+                <div key={'skeleton_col' + i} className="space-y-2">
+                  <Skeleton className="h-4 w-30" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              ))}
+          </div>
+        </div>
+
+        <div className="mt-20 flex-col-center">
+          <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
+        </div>
+      </div>
+    )
 
   return (
     <div className="mt-10">

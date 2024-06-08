@@ -6,7 +6,6 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table'
-import { Loader2 } from 'lucide-react'
 import * as React from 'react'
 
 import { Input } from '@/components/ui/input'
@@ -94,7 +93,9 @@ export function DataTableServer<TData, TValue>({
         </div>
         {searchKey && (
           <div className="flex items-center gap-2">
-            {fetching && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+            {fetching && (
+              <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
+            )}
 
             <span className="text-brand text-sm">Search:</span>
             <div className="flex w-40 h-9 px-2.25 py-0.25 items-center gap-2.5 border-rd-1.25 bg-[rgba(173,172,227,0.03)]">

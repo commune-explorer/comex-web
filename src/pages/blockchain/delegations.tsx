@@ -64,12 +64,15 @@ export default function Accounts() {
     isPending,
     isFetching,
   } = useQuery({
-    queryKey: delegationKeys.list({
-      pageIndex,
-      pageSize,
-      sorting,
-      filters,
-    }),
+    queryKey: [
+      'delegations',
+      ...delegationKeys.list({
+        pageIndex,
+        pageSize,
+        sorting,
+        filters,
+      }),
+    ],
     queryFn: async () => {
       let params = {
         limit: pageSize,
