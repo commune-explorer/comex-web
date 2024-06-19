@@ -70,8 +70,8 @@ export const TokenProfile = () => {
           },
           {
             text: 'Daily Emission',
-            value: formatNumber(data.dailyEmission ?? 0),
-          }
+            value: formatNumber(data.dailyEmission),
+          },
           // {
           //   text: 'Validating APR',
           //   value: `-%`,
