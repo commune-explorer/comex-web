@@ -13,6 +13,7 @@ interface IProfile {
   circulatingSupply: number
   totalSupply: number
   stakingApr: number
+  dailyEmission: number
 }
 
 export const TokenProfile = () => {
@@ -67,6 +68,10 @@ export const TokenProfile = () => {
             text: 'Total Supply',
             value: formatNumber(data.totalSupply),
           },
+          {
+            text: 'Daily Emission',
+            value: formatNumber(data.dailyEmission ?? 0),
+          }
           // {
           //   text: 'Validating APR',
           //   value: `-%`,
