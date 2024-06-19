@@ -5,6 +5,34 @@ import { profileKeys } from '@/apis/queries'
 import ComaiImg from '@/assets/images/comai.png'
 import { formatNumber, get } from '@/utils'
 
+interface InfoTooltipProps {
+  text: string
+}
+
+export const InfoTooltip: React.FC<InfoTooltipProps> = ({ text }) => {
+  return (
+    <div className="relative group">
+      <svg
+        className="w-4 h-4 ml-1 text-brand cursor-pointer"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-60">
+        {text}
+      </div>
+    </div>
+  )
+}
+
 interface IProfile {
   price: number
   priceChangePercentageIn24h: number
@@ -74,7 +102,16 @@ export const TokenProfile = () => {
           },
           // This is actually the staking apr, although it's called validating, this is because it counts in the floor fee
           {
-            text: 'Staking APR',
+            text: (
+              <div className="flex items-center">
+                Staking APR
+                <InfoTooltip
+                  text="This value does not include compound interest. 
+It's calculation follows the formula: 
+yearly rewards - floor fee / total stake * 100"
+                />
+              </div>
+            ),
             value: `${data.validatingApr}%`,
           },
           // {
