@@ -68,7 +68,7 @@ export const SubnetsPanel = () => {
           { key: 'Active Keys', value: subnet?.activeKeys, totalValue: subnet?.totalKeys },
           { key: 'Active Validators', value: subnet?.activeValidators, totalValue: subnet?.totalValidators },
           { key: 'Active Miners', value: subnet?.activeMiners, totalValue: subnet?.totalMiners },
-          { key: 'Registration Cost', value: subnet?.registerCost.toFixed(2) },
+          { key: 'Registration Cost', value: `${subnet?.registerCost.toFixed(2)} $COMAI` },
         ].map((item) => (
           <div key={item.key} className="flex-center justify-between">
             <div className="flex flex-col gap-.5">
