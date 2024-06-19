@@ -3,7 +3,7 @@ import { useWindowSize } from 'usehooks-ts'
 
 import { sleep } from '@/utils'
 
-export const useSvgBg = (color: string = '#6b68ff') => {
+export const useSvgBg = (color: string = '#22C55E') => {
   const { width } = useWindowSize()
   const svgRef = useCallback(
     async (target?: HTMLDivElement | HTMLButtonElement | HTMLAnchorElement | null) => {

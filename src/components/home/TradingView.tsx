@@ -36,11 +36,11 @@ export const TradingView = () => {
       const price = payload.find((p) => p.name === 'price')?.value
       const volume = payload.find((p) => p.name === 'volume')?.value
       return (
-        <div className="w-36 text-sm overflow-hidden bg-muted border border-white/6 border-2">
+        <div className="w-36 text-sm overflow-hidden bg-[#060606] border border-white/6 border-2">
           <div className="bg-white/6 text-center py-1">{dayjs(label * 1000).format('DD MMM YYYY')}</div>
           <div className="px-3 py-2 bg-black/5 space-y-2">
             <div className="flex justify-between gap-2">
-              <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#adace3 before:left-0 before:top-1/2 before:-translate-y-1/2">
+              <span className="relative pl-4 before:content-[''] before:absolute before:h-3 before:w-3 before:rounded-full before:overflow-hidden before:bg-#FFFFFF before:left-0 before:top-1/2 before:-translate-y-1/2">
                 Price:
               </span>
               <span className="font-medium">{`$${price ? Number(price)?.toFixed(2) : '-'}`}</span>
@@ -67,16 +67,16 @@ export const TradingView = () => {
         <ComposedChart width={500} height={400} data={recentRecords}>
           <XAxis
             stroke="#ADACE344"
-            tick={{ fill: '#ADACE3' }}
+            tick={{ fill: '#FFFFFF' }}
             tickLine={{ stroke: '#ADACE344' }}
-            className="text-xs"
+            className="text-xs "
             dataKey="timestamp"
             interval={Math.floor(recentRecords.length / 10)}
             tickFormatter={(val) => dayjs(val * 1000).format('MM-DD')}
           />
           <YAxis
             stroke="#ADACE344"
-            tick={{ fill: '#ADACE3' }}
+            tick={{ fill: '#FFFFFF' }}
             tickLine={{ stroke: '#ADACE344' }}
             yAxisId="price"
             className="text-xs"
@@ -85,7 +85,7 @@ export const TradingView = () => {
           />
           <YAxis
             stroke="#ADACE344"
-            tick={{ fill: '#ADACE3' }}
+            tick={{ fill: '#FFFFFF' }}
             tickLine={{ stroke: '#ADACE344' }}
             yAxisId="volume"
             className="text-xs"
@@ -96,7 +96,7 @@ export const TradingView = () => {
 
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#adace3" stopOpacity={0.6} />
+              <stop offset="0%" stopColor="#ffffff" stopOpacity={0.6} />
               <stop offset="90%" stopColor="transparent" stopOpacity={0.1} />
             </linearGradient>
           </defs>
@@ -106,7 +106,7 @@ export const TradingView = () => {
               <Area
                 isAnimationActive={false}
                 dataKey="price"
-                stroke="#adace3"
+                stroke="#ffffff"
                 dot={false}
                 fill="url(#colorUv)"
                 yAxisId="price"

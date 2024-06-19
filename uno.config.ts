@@ -16,16 +16,16 @@ const config: UserConfig = {
       'btn-brand-bg',
       {
         background:
-          'radial-gradient(56.52% 56.52% at 50% 50%, rgba(43, 26, 60, 0.00) 54.5%, rgba(107, 104, 255, 0.15) 100%), radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%)',
-        boxShadow: '0 0 15px 3px rgba(107, 104, 255, 0.4), 0 0 30px 5px rgba(107, 104, 255, 0.2)',
+          'radial-gradient(56.52% 56.52% at 50% 50%, rgba(39, 171, 132, 0.00) 54.5%, rgba(39, 171, 132, 0.1) 100%), radial-gradient(circle at center, rgba(39, 171, 132, 0.05) 0%, rgba(39, 171, 132, 0) 70%)',
+        boxShadow: '0 0 15px 3px rgba(39, 171, 132, 0.4), 0 0 30px 5px rgba(39, 171, 132, 0.2)',
       },
     ],
     [
       'btn-brand-bg-bold',
       {
         background:
-          'radial-gradient(56.52% 56.52% at 50% 50%, rgba(43, 26, 60, 0.00) 54.5%, rgba(107, 104, 255, 0.3) 100%), radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%)',
-        boxShadow: '0 0 20px 5px rgba(107, 104, 255, 0.6), 0 0 40px 10px rgba(107, 104, 255, 0.4)',
+          'radial-gradient(56.52% 56.52% at 50% 50%, rgba(39, 171, 132, 0.00) 54.5%, rgba(39, 171, 132, 0.1) 100%), radial-gradient(circle at center, rgba(39, 171, 132, 0.05) 0%, rgba(39, 171, 132, 0) 70%)',
+        boxShadow: '0 0 20px 5px rgba(39, 171, 132, 0.6), 0 0 40px 10px rgba(39, 171, 132, 0.4)',
       },
     ],
     [
@@ -39,12 +39,12 @@ const config: UserConfig = {
     {
       getCSS: () => `
         :root {
-          --brand: 241 49.50% 78.20%;
-          --border: 241 49.50% 78.20% / 0.15;
+          --brand: 150.00 87.25% 40.86%;
+          --border: 135.00 77.25% 36.86% / 0.15;
           --foreground: 0 0% 100%;
           --muted: 237.76 22.998% 15.007%;
           --muted-foreground: 0 0% 80%;
-          --accent: 241 49.50% 78.20% / 0.30;
+          --accent: 135.00 77.25% 36.86% / 0.30;
           --accent-foreground: 0 0% 100%;
           --radius: 0rem;
           --blue: #447EF2;

@@ -120,7 +120,7 @@ yearly rewards - floor fee / total stake * 100"
           // },
         ].map((item, index) => (
           <div key={index} className="flex flex-col gap-1 col-span-2">
-            <span className="text-sm text-brand">{item.text}</span>
+            <span className="text-base text-brand">{item.text}</span>
             <span className="text-base text-primary">{item.value}</span>
           </div>
         ))}
