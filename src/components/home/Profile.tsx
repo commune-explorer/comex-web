@@ -12,7 +12,7 @@ interface IProfile {
   marketCap: number
   circulatingSupply: number
   totalSupply: number
-  stakingApr: number
+  validatingApr: number
   dailyEmission: number
 }
 
@@ -72,13 +72,14 @@ export const TokenProfile = () => {
             text: 'Daily Emission',
             value: formatNumber(data.dailyEmission),
           },
-          // {
-          //   text: 'Validating APR',
-          //   value: `-%`,
-          // },
+          // This is actually the staking apr, although it's called validating, this is because it counts in the floor fee
+          {
+            text: 'Staking APR',
+            value: `${data.validatingApr}%`,
+          },
           // {
           //   text: 'Staking APR',
-          //   value: `${data.stakingApr?.toFixed(2)}%`,
+          //   value: `${data.validatingApr?.toFixed(2)}%`,
           // },
         ].map((item, index) => (
           <div key={index} className="flex flex-col gap-1 col-span-2">
