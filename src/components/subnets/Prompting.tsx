@@ -17,12 +17,6 @@ export const Prompting = ({ subnet }: { subnet: ISubnet }) => {
             {subnet.githubUrl}
           </a>
         </div>
-        {subnet.registeredAt ? (
-          <div className="flex items-center">
-            <span className="w-30 text-brand">Registered on</span>
-            <span className="font-400">{dayjs(subnet.registeredAt).format('DD MMM YYYY HH:mm:ss')}</span>
-          </div>
-        ) : null}
         <div className="flex items-center">
           <span className="w-30 text-brand">Registered to</span>
           <span className="text-#FEC464 font-400">{subnet.registeredBy}</span>
