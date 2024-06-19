@@ -66,7 +66,7 @@ export const TokenProfile = () => {
 
   return (
     <div className="flex gap-10 py-4 items-center">
-      <img src={ComaiImg} alt="" className="p-0.5 w-12 h-12 rounded-full bg-secondary" />
+      <img src={ComaiImg} alt="" className="p-0.5 w-12 h-12 rounded-full" style={{ backgroundColor: 'transparent' }} />
 
       <div className="">
         <div className="flex items-center gap-2 text-brand text-sm">$COMAI Price</div>
