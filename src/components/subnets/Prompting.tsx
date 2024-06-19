@@ -25,7 +25,7 @@ export const Prompting = ({ subnet }: { subnet: ISubnet }) => {
         ) : null}
         <div className="flex items-center">
           <span className="w-30 text-brand">Registered to</span>
-          <span className="text-#FEC464 font-400">{subnet.registeredBy}</span>
+          <span className="text-#ffffff font-400">{subnet.registeredBy}</span>
         </div>
       </div>
 

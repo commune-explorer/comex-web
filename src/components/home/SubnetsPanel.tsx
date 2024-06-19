@@ -72,7 +72,7 @@ export const SubnetsPanel = () => {
         ].map((item) => (
           <div key={item.key} className="flex-center justify-between">
             <div className="flex flex-col gap-.5">
-              <span className="text-brand text-sm">{item.key}</span>
+              <span className="text-emerald text-sm">{item.key}</span>
               <span className="text-brand text-primary">
                 <span>{item.totalValue ? `${item.value}/${item.totalValue}` : item.value}</span>
               </span>
@@ -86,7 +86,7 @@ export const SubnetsPanel = () => {
                     return (
                       <span
                         key={`${item.key}_indicator_${idx}`}
-                        className={cn('w-1 h-5 rounded-sm', idx <= length * 10 ? ' bg-#adace3cc' : 'bg-#26253B')}
+                        className={cn('w-1 h-5 rounded-sm', idx <= length * 10 ? ' bg-#119040' : 'bg-#26253B')}
                       />
                     )
                   })}

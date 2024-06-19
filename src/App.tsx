@@ -19,7 +19,8 @@ function Redirect({ to }: { to: string }) {
 function App() {
   const { toasts } = useToast()
   return (
-    <div className="min-h-100vh flex flex-col bg-gradient-to-br from-#191A2B to-#191A2B">
+    <div className="min-h-100vh flex flex-col">
+      <img src="/bg-pattern.svg" alt="bg-pattern" className="absolute inset-0 object-cover -z-36 w-full h-full" />
       <Header />
       <div className="flex-1"> {useRoutes([...routes, { path: '*', element: <Redirect to="/" /> }])}</div>
       <Footer />

@@ -19,7 +19,7 @@ export function Header() {
   })
 
   return (
-    <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#191A2B">
+    <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#070907">
       <div className="container m-auto h-full flex justify-between items-center">
         <Link to="/" className="flex items-center font-bold cursor-pointer">
           <span className="text-xl font-[Orbitron]">
@@ -53,7 +53,7 @@ export function Header() {
             >
               <div className="py-2 px-4 text-brand font-medium">Subnets</div>
             </PopoverTrigger>
-            <PopoverContent className="bg-muted p-0 mt-4 mr-2 w-150 shadow-lg text-sm">
+            <PopoverContent className="bg-[#060606] p-0 mt-4 mr-2 w-150 shadow-lg text-sm">
               <div className="bg-#ADACE308 grid gap-3 p-4 grid-cols-1 md:grid-cols-3">
                 {subnets.map((item) => (
                   <Link
