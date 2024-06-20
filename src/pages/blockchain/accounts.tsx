@@ -119,7 +119,7 @@ export default function Accounts() {
   })
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto py-6 lt-sm:(px-4)">
       <BlockchainTabs currentTab="accounts" />
       <div className="text-sm py-4">
         <DataTableServer

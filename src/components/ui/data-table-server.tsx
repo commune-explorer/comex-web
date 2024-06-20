@@ -73,7 +73,7 @@ export function DataTableServer<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
+      <div className="flex justify-between lt-sm:(flex-col gap-3)">
         <div className="flex text-brand gap-5 items-center text-sm">
           Show
           <ToggleGroup
@@ -155,7 +155,7 @@ export function DataTableServer<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <div className="flex justify-between">
+      <div className="flex justify-between lt-sm:(flex-col gap-3)">
         <div className="flex text-brand gap-1">
           Showing <span>{pageIndex * pageSize + 1}</span> to {Math.min((pageIndex + 1) * pageSize, total)} of{' '}
           <span>{total}</span> entries

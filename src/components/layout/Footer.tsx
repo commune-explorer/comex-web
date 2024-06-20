@@ -37,8 +37,8 @@ const links = [
 
 export const Footer = () => {
   return (
-    <div className="mt-10 py-6 flex-col-center border-t-1 border-solid">
-      <div className="container mx-auto flex justify-between">
+    <div className="mt-10 py-6 flex-col-center border-t-1 border-solid lt-sm:(px-4)">
+      <div className="container mx-auto flex justify-between lt-sm:(flex-col gap-10)">
         <div className="w-1/2 text-xs space-y-4">
           <div className="font-bold">
             Powered by <span>Comex</span>
@@ -50,7 +50,7 @@ export const Footer = () => {
             claim is made as to the accuracy or currency of the content on this site at any time.
           </div>
         </div>
-        <div className="flex gap-20 justify-between ">
+        <div className="flex gap-20 justify-between lt-sm:(flex-col gap-10)">
           {links.map((link, index) => (
             <div key={`link_${index}`} className="flex flex-col text-xs space-y-3">
               <div className="font-bold text-sm">{link.title}</div>

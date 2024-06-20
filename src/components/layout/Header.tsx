@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useLocation, useNavigate } from 'react-router'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 import { subnetKeys } from '@/apis/queries'
 import { useSvgBg } from '@/hooks/use-svg'
@@ -19,14 +19,15 @@ export function Header() {
   })
 
   return (
-    <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#070907">
+    <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#070907 lt-sm:(px-4)">
       <div className="container m-auto h-full flex justify-between items-center">
         <Link to="/" className="flex items-center font-bold cursor-pointer">
           <span className="text-xl font-[Orbitron]">
             <span className="text-brand">C</span>OMEX
           </span>
         </Link>
-        <div className="flex gap-4">
+
+        <div className="flex gap-4 lt-sm:(hidden)">
           <Link
             ref={svgRef}
             to={'/'}
@@ -81,7 +82,43 @@ export function Header() {
             <div className="py-2 px-4 text-brand font-medium">Blockchain</div>
           </Link>
         </div>
+
+        <MenuItem subnets={subnets} />
       </div>
     </div>
+  )
+}
+
+function MenuItem({ subnets }: { subnets: any[] }) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <span className="w-6 h-6 sm:hidden i-lucide:menu"></span>
+      </SheetTrigger>
+      <SheetContent>
+        <div className="flex flex-col gap-3">
+          <NavLink to="/">Home</NavLink>
+
+          <Separator />
+
+          <span>Subnets</span>
+          {subnets.map((item) => (
+            <NavLink
+              key={item.id}
+              to={`/subnets/${item.id}`}
+              className={'text-xs uppercase self-stretch bg-transparent text-muted-foreground'}
+            >
+              {item.id}: {item.name}
+            </NavLink>
+          ))}
+
+          <Separator />
+
+          <NavLink to="/blockchain" className="capitalize">
+            blockchain
+          </NavLink>
+        </div>
+      </SheetContent>
+    </Sheet>
   )
 }

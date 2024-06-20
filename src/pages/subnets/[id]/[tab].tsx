@@ -35,7 +35,7 @@ export default function SubnetsPage() {
           <Skeleton className="h-4 w-50" />
           <Skeleton className="h-4 w-40" />
 
-          <div className="!mt-6 flex justify-between">
+          <div className="!mt-6 flex justify-between lt-sm:(hidden)">
             {Array(4)
               .fill(1)
               .map((i) => (
@@ -54,7 +54,7 @@ export default function SubnetsPage() {
     )
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 lt-sm:(px-4)">
       <div className="container mx-auto">
         <Prompting subnet={data} />
 
@@ -71,7 +71,7 @@ export default function SubnetsPage() {
               )}
               onClick={() => nav(`/subnets/${id}/${tab.toLowerCase()}`)}
             >
-              <div className="px-4 py-2.5 h-full w-full font-medium cursor-pointer">{tab}</div>
+              <div className="px-4 py-2.5 h-full w-full font-medium cursor-pointer lt-sm:(px-2 py-1.5)">{tab}</div>
             </div>
           ))}
         </div>

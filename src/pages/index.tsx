@@ -7,7 +7,7 @@ const Home = () => {
     <div className="">
       <div className="container mx-auto py-6">
         <TokenProfile />
-        <div className="my-10 flex justify-between">
+        <div className="my-10 flex justify-between lt-sm:(flex-col)">
           <TradingView />
           <Separator orientation="vertical" className="h-auto mx-5" />
           <SubnetsPanel />

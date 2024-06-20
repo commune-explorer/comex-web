@@ -45,7 +45,7 @@ export function DataTable<TData, TValue>({ columns, data, searchKey, loading = f
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
+      <div className="flex justify-between lt-sm:(flex-col gap-3)">
         <div className="flex text-brand gap-5 items-center text-sm">
           Show
           <ToggleGroup
@@ -118,7 +118,7 @@ export function DataTable<TData, TValue>({ columns, data, searchKey, loading = f
         </TableBody>
       </Table>
       {table.getFilteredRowModel().rows.length > 0 && (
-        <div className="flex justify-between">
+        <div className="flex justify-between lt-sm:(flex-col gap-3)">
           <div className="flex text-brand gap-1">
             Showing <span>{table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}</span> to{' '}
             {Math.min(

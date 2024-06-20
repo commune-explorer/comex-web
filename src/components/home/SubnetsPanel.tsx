@@ -22,7 +22,7 @@ export const SubnetsPanel = () => {
   }, [subnets])
 
   return !subnets.length ? (
-    <div className="w-90 space-y-8 [&>div]:space-y-3">
+    <div className="w-90 space-y-8 [&>div]:space-y-3 lt-sm:(px-4)">
       <div>
         <Skeleton className="h-4 w-20" />
         <Skeleton className="h-4 w-full" />
@@ -45,7 +45,7 @@ export const SubnetsPanel = () => {
       </div>
     </div>
   ) : (
-    <div className="shrink-0">
+    <div className="shrink-0 lt-sm:(px-4)">
       <div className="uppercase text-lg">Subnets</div>
       <div className="mt-4 grid grid-cols-8 gap-1">
         {subnets?.map((item, index) => (

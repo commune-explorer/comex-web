@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { Area, Bar, ComposedChart, ResponsiveContainer, Tooltip, type TooltipProps, XAxis, YAxis } from 'recharts'
+import { useMediaQuery } from 'usehooks-ts'
 
 import { priceHistoryKeys } from '@/apis/queries'
 import type { ITrading } from '@/types'
@@ -57,42 +58,49 @@ export const TradingView = () => {
     }
     return null
   }
+
+  const matches = useMediaQuery('(min-width: 640px)')
+
   return records.length <= 0 ? (
     <div className="h-60vh w-full flex-col-center">
       <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
     </div>
   ) : (
-    <div className="h-60vh w-full">
+    <div className="h-60vh w-full lt-sm:(px-4)">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart width={500} height={400} data={recentRecords}>
           <XAxis
             stroke="#ADACE344"
             tick={{ fill: '#FFFFFF' }}
             tickLine={{ stroke: '#ADACE344' }}
-            className="text-xs "
+            className="text-xs"
             dataKey="timestamp"
             interval={Math.floor(recentRecords.length / 10)}
             tickFormatter={(val) => dayjs(val * 1000).format('MM-DD')}
           />
-          <YAxis
-            stroke="#ADACE344"
-            tick={{ fill: '#FFFFFF' }}
-            tickLine={{ stroke: '#ADACE344' }}
-            yAxisId="price"
-            className="text-xs"
-            domain={[0, maxPrice * 1.05]}
-            tickFormatter={(value) => value.toFixed(2)}
-          />
-          <YAxis
-            stroke="#ADACE344"
-            tick={{ fill: '#FFFFFF' }}
-            tickLine={{ stroke: '#ADACE344' }}
-            yAxisId="volume"
-            className="text-xs"
-            orientation="right"
-            domain={[0, maxVolume * 2]}
-            tickFormatter={(value) => formatNumber(value)}
-          />
+          {matches && (
+            <>
+              <YAxis
+                stroke="#ADACE344"
+                tick={{ fill: '#FFFFFF' }}
+                tickLine={{ stroke: '#ADACE344' }}
+                yAxisId="price"
+                className="text-xs"
+                domain={[0, maxPrice * 1.05]}
+                tickFormatter={(value) => value.toFixed(2)}
+              />
+              <YAxis
+                stroke="#ADACE344"
+                tick={{ fill: '#FFFFFF' }}
+                tickLine={{ stroke: '#ADACE344' }}
+                yAxisId="volume"
+                className="text-xs"
+                orientation="right"
+                domain={[0, maxVolume * 2]}
+                tickFormatter={(value) => formatNumber(value)}
+              />
+            </>
+          )}
 
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">

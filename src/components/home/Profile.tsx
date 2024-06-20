@@ -1,5 +1,6 @@
 import { formatAmount } from '@did-network/dapp-sdk'
 import { useQuery } from '@tanstack/react-query'
+import { useMediaQuery } from 'usehooks-ts'
 
 import { profileKeys } from '@/apis/queries'
 import ComaiImg from '@/assets/images/comai.png'
@@ -26,7 +27,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ text }) => {
           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
-      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-60">
+      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-60 lt-sm:(right-0 -left-10)">
         {text}
       </div>
     </div>
@@ -45,15 +46,18 @@ interface IProfile {
 }
 
 export const TokenProfile = () => {
+  const matches = useMediaQuery('(min-width: 640px)')
+
   const { data: { data } = {}, isPending } = useQuery<{ data: IProfile }>({
     queryKey: profileKeys.all,
     queryFn: () => get('/api/info'),
   })
+
   if (isPending || !data)
     return (
-      <div className="flex gap-10 py-4 items-center h-21">
+      <div className="flex gap-10 py-4 items-center h-21 lt-sm:(px-4)">
         <Skeleton className="w-12 h-12 rounded-full" />
-        {Array(5)
+        {Array(matches ? 5 : 1)
           .fill(1)
           .map((i) => (
             <div key={'skeleton_col' + i} className="space-y-2">
@@ -65,7 +69,7 @@ export const TokenProfile = () => {
     )
 
   return (
-    <div className="flex gap-10 py-4 items-center">
+    <div className="flex gap-10 py-4 items-center lt-sm:(flex-col items-start px-4 gap-6)">
       <img src={ComaiImg} alt="" className="p-0.5 w-12 h-12 rounded-full" style={{ backgroundColor: 'transparent' }} />
 
       <div className="">
@@ -78,7 +82,7 @@ export const TokenProfile = () => {
         </div>
       </div>
 
-      <div className="flex-1 grid grid-cols-12">
+      <div className="flex-1 grid grid-cols-12 lt-sm:(grid-cols-4 w-full)">
         {[
           {
             text: 'Market Cap',
