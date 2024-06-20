@@ -72,9 +72,9 @@ export const TokenProfile = () => {
         <div className="flex items-center gap-2 text-brand text-sm">$COMAI Price</div>
         <div className="font-medium flex items-end gap-1">
           <span className="text-2xl">${formatAmount(data.price, 0, 2)}</span>
-          <span className={data.priceChangePercentageIn24h > 0 ? 'text-green-400' : 'text-red-400'}>
+          {/* <span className={data.priceChangePercentageIn24h > 0 ? 'text-green-400' : 'text-red-400'}>
             {data.priceChangePercentageIn24h?.toFixed(2)}%
-          </span>
+          </span> */}
         </div>
       </div>
 
