@@ -97,26 +97,31 @@ function MenuItem({ subnets }: { subnets: any[] }) {
       </SheetTrigger>
       <SheetContent>
         <div className="flex flex-col gap-3">
-          <NavLink to="/">Home</NavLink>
+          <SheetClose asChild>
+            <NavLink to="/">Home</NavLink>
+          </SheetClose>
 
           <Separator />
 
           <span>Subnets</span>
           {subnets.map((item) => (
-            <NavLink
-              key={item.id}
-              to={`/subnets/${item.id}`}
-              className={'text-xs uppercase self-stretch bg-transparent text-muted-foreground'}
-            >
-              {item.id}: {item.name}
-            </NavLink>
+            <SheetClose asChild key={item.id}>
+              <NavLink
+                to={`/subnets/${item.id}`}
+                className={'text-xs uppercase self-stretch bg-transparent text-muted-foreground'}
+              >
+                {item.id}: {item.name}
+              </NavLink>
+            </SheetClose>
           ))}
 
           <Separator />
 
-          <NavLink to="/blockchain" className="capitalize">
-            blockchain
-          </NavLink>
+          <SheetClose asChild>
+            <NavLink to="/blockchain" className="capitalize">
+              blockchain
+            </NavLink>
+          </SheetClose>
         </div>
       </SheetContent>
     </Sheet>
