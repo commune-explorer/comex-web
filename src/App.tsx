@@ -20,7 +20,21 @@ function App() {
   const { toasts } = useToast()
   return (
     <div className="min-h-100vh flex flex-col">
-      <img src="/bg-pattern.svg" alt="bg-pattern" className="absolute inset-0 object-cover -z-36 w-full h-full" />
+      <img
+        src="/bg-pattern.svg"
+        alt="bg-pattern"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: -10,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          backgroundRepeat: 'repeat',
+          objectPosition: 'center',
+        }}
+      />
       <Header />
       <div className="flex-1"> {useRoutes([...routes, { path: '*', element: <Redirect to="/" /> }])}</div>
       <Footer />
