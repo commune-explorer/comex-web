@@ -48,7 +48,10 @@ const config: UserConfig = {
           --accent-foreground: 0 0% 100%;
           --radius: 0rem;
           --blue: #447EF2;
+          --lightblue: #6d99f2;
           --green: #22EAAE;
+          --red: #F24444;
+          --pink: #ed6666;
           --yellow: #FEC464;
           --purple: #9A7CE0;
         }

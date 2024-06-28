@@ -38,6 +38,7 @@ export interface ITrading {
 export interface IAccountInfo {
   rank: number
   address: string
+  tag?: IAccountTag
   updatedAt: string
   balanceFree: string
   balanceStaked: string
@@ -46,22 +47,31 @@ export interface IAccountInfo {
 
 export interface IDelegationEvents {
   account: string
+  accountTag?: IAccountTag
   action: string
   amount: string
   extrinsicId: number
   height: number
   id: string
   module: string
+  moduleTag?: IAccountTag
   netUid: number
   nodeId: string
 }
 
 export interface ITransfer {
   to: string
+  toTag?: IAccountTag
   nodeId: string
   id: string
   from: string
+  fromTag?: IAccountTag
   extrinsicId: number
   blockNumber: string
   amount: string
+}
+
+export interface IAccountTag {
+  text: string
+  color?: string
 }

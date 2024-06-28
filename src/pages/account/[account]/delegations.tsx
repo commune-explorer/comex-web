@@ -1,16 +1,20 @@
 import { formatAmount, shorten } from '@did-network/dapp-sdk'
+import { CaretSortIcon } from '@radix-ui/react-icons'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import * as changeCase from 'change-case'
+import { useParams } from 'react-router-dom'
 
-import { delegationKeys } from '@/apis/queries'
+import { accountKeys, delegationKeys, transferKeys } from '@/apis/queries'
+import { AccountHead } from '@/components/account/AccountHead'
 import { AccountTag } from '@/components/account/AccountTag'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
 import { CopyButton } from '@/components/blockchain/CopyButton'
-import type { IDelegationEvents } from '@/types'
+import type { IAccountInfo, IDelegationEvents, ITransfer } from '@/types'
 import { get } from '@/utils'
 
-export default function Accounts() {
+export default function Index() {
+  const accountAddress = useParams().account
   const columns: ColumnDef<IDelegationEvents>[] = [
     {
       header: 'Net UID',
@@ -20,12 +24,10 @@ export default function Accounts() {
       header: 'account',
       accessorKey: 'account',
       cell: ({ row }) => (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 text-$green">
           <span className="text-center">
             {row.original.accountTag && <AccountTag tag={row.original.accountTag}></AccountTag>}
-            <a href={`/account/${row.getValue('account')}`} className="hover:(underline)">
-              {shorten(row.getValue('account'), 10, 10)}
-            </a>
+            <span>{shorten(row.getValue('account'), 10, 10)}</span>
           </span>
           <CopyButton value={row.getValue('account')} />
         </div>
@@ -48,7 +50,10 @@ export default function Accounts() {
         <div className="flex items-center gap-1">
           <span className="text-center">
             {row.original.moduleTag && <AccountTag tag={row.original.moduleTag}></AccountTag>}
-            <a href={`/account/${row.getValue('module')}`} className="hover:(underline)">
+            <a
+              href={`/account/${row.getValue('module')}`}
+              className={`hover:(underline)` && accountAddress === row.getValue('module') ? 'text-$green' : ''}
+            >
               {shorten(row.getValue('module'), 10, 10)}
             </a>
           </span>
@@ -66,6 +71,7 @@ export default function Accounts() {
       ),
     },
   ]
+
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [sorting, setSorting] = useState<SortingState>([])
@@ -88,18 +94,9 @@ export default function Accounts() {
       let params = {
         limit: pageSize,
         offset: pageSize * pageIndex,
+        account: accountAddress ?? '',
       } as Record<PropertyKey, any>
-      const sortingParams = sorting.map((s) => `${changeCase.snakeCase(s.id)}_${s.desc ? 'desc' : 'asc'}`.toUpperCase())
 
-      if (sortingParams?.[0]) {
-        params.orderBy = sortingParams[0]
-      }
-      if (filters.length > 0) {
-        const account = filters.find((i) => i.id === 'account')?.value
-        if (account) {
-          params.account = account
-        }
-      }
       return await get<{ data: { records: IDelegationEvents[]; totalCount: number } }>(
         `/api/accounts/delegation-events`,
         {
@@ -112,7 +109,7 @@ export default function Accounts() {
 
   return (
     <div className="container mx-auto py-6 lt-sm:(px-4)">
-      <BlockchainTabs currentTab="delegations" />{' '}
+      <AccountHead currentTab="delegations" account={accountAddress ?? ''} />
       <div className="text-sm py-4">
         <DataTableServer
           columns={columns}
@@ -126,7 +123,6 @@ export default function Accounts() {
           onPageSizeChange={setPageSize}
           onSortingChange={setSorting}
           onColumnFiltersChange={setFilters}
-          searchKey="account"
         />
       </div>
     </div>

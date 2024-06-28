@@ -5,6 +5,7 @@ import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-tab
 import * as changeCase from 'change-case'
 
 import { accountKeys } from '@/apis/queries'
+import { AccountTag } from '@/components/account/AccountTag'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
 import { CopyButton } from '@/components/blockchain/CopyButton'
 import type { IAccountInfo } from '@/types'
@@ -21,7 +22,12 @@ export default function Accounts() {
       accessorKey: 'address',
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
-          <span>{shorten(row.getValue('address'), 10, 10)}</span>
+          <span className="text-center">
+            {row.original.tag && <AccountTag tag={row.original.tag}></AccountTag>}
+            <a href={`/account/${row.getValue('address')}`} className="hover:(underline)">
+              {shorten(row.getValue('address'), 10, 10)}
+            </a>
+          </span>
           <CopyButton value={row.getValue('address')} />
         </div>
       ),
@@ -111,6 +117,10 @@ export default function Accounts() {
         const account = filters.find((i) => i.id === 'address')?.value
         if (account) {
           params.account = account
+        }
+        if (params.account.length === 48) {
+          window.location.href = `/account/${params.account}`
+          return { data: { records: [], totalCount: 0 } }
         }
       }
       return await get<{ data: { records: IAccountInfo[]; totalCount: number } }>(`/api/accounts`, { params })
