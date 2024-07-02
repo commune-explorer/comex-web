@@ -14,16 +14,9 @@ const queryClient = new QueryClient()
 
 const root = createRoot(document.getElementById('root')!)
 root.render(
-  <div className="flex flex-col items-center justify-center h-screen">
-    <h1 className="text-3xl text-emerald">Under maintenance</h1>
-    <p>
-      We apologize for the inconvenience. Our site is currently undergoing maintenance due to a indexer problem and will
-      be back soon.
-    </p>
-  </div>
-  // <QueryClientProvider client={queryClient}>
-  //   <BrowserRouter>
-  //     <App />
-  //   </BrowserRouter>
-  // </QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </QueryClientProvider>
 )
