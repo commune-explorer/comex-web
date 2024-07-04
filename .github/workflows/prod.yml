@@ -11,28 +11,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
         with:
           version: 8.7.5
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
           cache: 'pnpm'
+
       - name: Install npm dependencies
-        run: pnpm install
-      - name: build
+        run: |
+          pnpm config set registry https://registry.npmjs.org/
+          pnpm install --no-frozen-lockfile
+        env:
+          NPM_CONFIG_USERCONFIG: /dev/null
+
+      - name: Build
         run: pnpm build
-      
+
       - uses: actions/upload-artifact@v4
         with:
-          path: dist/*
-  
+          name: dist
+          path: dist
+
   deploy:
     runs-on: self-hosted
     needs: build
     steps:
       - uses: actions/download-artifact@v4
+        with:
+          name: dist
 
-      - name: Deploy builded artifacts
-        run: rsync -avzr --delete --filter=':- .gitignore' artifact/* /web
+      - name: Deploy built artifacts
+        run: rsync -avzr --delete --filter=':- .gitignore' ./* /web
