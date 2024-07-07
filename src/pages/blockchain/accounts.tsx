@@ -8,10 +8,14 @@ import { accountKeys } from '@/apis/queries'
 import { AccountTag } from '@/components/account/AccountTag'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { useBlockMetadata } from '@/hooks/useBlockMetadata'
 import type { IAccountInfo } from '@/types'
 import { get } from '@/utils'
+import { formatSecondsToAgo } from '@/utils/formatSecondsToAgo'
 
 export default function Accounts() {
+  const { lastProcessedHeight } = useBlockMetadata()
+
   const columns: ColumnDef<IAccountInfo>[] = [
     {
       header: 'Rank',
@@ -78,11 +82,14 @@ export default function Accounts() {
         )
       },
       accessorKey: 'updatedAt',
-      cell: ({ row }) => (
-        <a className="text-$green" target="_blank" href={``}>
-          {row.getValue('updatedAt')}
-        </a>
-      ),
+      cell: ({ row }) => {
+        if (!lastProcessedHeight) {
+          return '-'
+        }
+        const block = row.getValue('updatedAt') as number
+        const time = (lastProcessedHeight - block) * 8
+        return <div>{formatSecondsToAgo(time)}</div>
+      },
     },
   ]
   const [pageIndex, setPageIndex] = useState(0)

@@ -7,10 +7,14 @@ import { delegationKeys } from '@/apis/queries'
 import { AccountTag } from '@/components/account/AccountTag'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { useBlockMetadata } from '@/hooks/useBlockMetadata'
 import type { IDelegationEvents } from '@/types'
 import { get } from '@/utils'
+import { formatSecondsToAgo } from '@/utils/formatSecondsToAgo'
 
 export default function Accounts() {
+  const { lastProcessedHeight } = useBlockMetadata()
+
   const columns: ColumnDef<IDelegationEvents>[] = [
     {
       header: 'Net UID',
@@ -59,11 +63,19 @@ export default function Accounts() {
     {
       header: 'Block Height',
       accessorKey: 'height',
-      cell: ({ row }) => (
-        <a className="text-$green" target="_blank" href={``}>
-          {row.getValue('height')}
-        </a>
-      ),
+      cell: ({ row }) => <div className="text-$green">{row.getValue('height')}</div>,
+    },
+    {
+      header: 'Time',
+      accessorKey: 'time',
+      cell: ({ row }) => {
+        if (!lastProcessedHeight) {
+          return '-'
+        }
+        const block = row.getValue('height') as number
+        const time = (lastProcessedHeight - block) * 8
+        return <div>{formatSecondsToAgo(time)}</div>
+      },
     },
   ]
   const [pageIndex, setPageIndex] = useState(0)

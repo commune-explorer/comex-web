@@ -68,7 +68,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'https://comex.mosaicx.org',
+          target: 'https://stats.communex.ai/',
           changeOrigin: true,
         },
       },

@@ -7,10 +7,13 @@ import { transferKeys } from '@/apis/queries'
 import { AccountTag } from '@/components/account/AccountTag'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { useBlockMetadata } from '@/hooks/useBlockMetadata'
 import type { ITransfer } from '@/types'
 import { get } from '@/utils'
+import { formatSecondsToAgo } from '@/utils/formatSecondsToAgo'
 
 export default function Accounts() {
+  const { lastProcessedHeight } = useBlockMetadata()
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [sorting, setSorting] = useState<SortingState>([])
@@ -61,6 +64,18 @@ export default function Accounts() {
       header: 'Block Number',
       accessorKey: 'blockNumber',
       cell: ({ row }) => <div className="text-$green">{row.getValue('blockNumber')}</div>,
+    },
+    {
+      header: 'Time',
+      accessorKey: 'time',
+      cell: ({ row }) => {
+        if (!lastProcessedHeight) {
+          return '-'
+        }
+        const block = row.getValue('blockNumber') as number
+        const time = (lastProcessedHeight - block) * 8
+        return <div>{formatSecondsToAgo(time)}</div>
+      },
     },
   ]
 
