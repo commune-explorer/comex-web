@@ -5,12 +5,13 @@ import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-tab
 import * as changeCase from 'change-case'
 import { useParams } from 'react-router-dom'
 
-import { accountKeys, transferKeys } from '@/apis/queries'
+import { transferKeys } from '@/apis/queries'
 import { AccountHead } from '@/components/account/AccountHead'
 import { AccountTag } from '@/components/account/AccountTag'
-import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
+import { BlockTime } from '@/components/blockchain/BlockTime'
 import { CopyButton } from '@/components/blockchain/CopyButton'
-import type { IAccountInfo, ITransfer } from '@/types'
+import { useBlockMetadata } from '@/hooks/useBlockMetadata'
+import type { ITransfer } from '@/types'
 import { get } from '@/utils'
 
 export default function Index() {
@@ -19,7 +20,8 @@ export default function Index() {
   const [pageSize, setPageSize] = useState(10)
   const [sorting, setSorting] = useState<SortingState>([])
   const [filters, setFilters] = useState<ColumnFiltersState>([])
-  // @ts-ignore
+  const { lastProcessedHeight } = useBlockMetadata()
+
   const columns: ColumnDef<ITransfer>[] = [
     {
       header: 'From',
@@ -64,6 +66,17 @@ export default function Index() {
       header: 'Block Number',
       accessorKey: 'blockNumber',
       cell: ({ row }) => <div className="text-$green">{row.getValue('blockNumber')}</div>,
+    },
+    {
+      header: 'Time',
+      accessorKey: 'time',
+      cell: ({ row }) => {
+        return (
+          <div className="text-$green">
+            <BlockTime blockNumber={row.getValue('blockNumber')} latestBlockHeight={lastProcessedHeight} />
+          </div>
+        )
+      },
     },
   ]
 

@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 import { accountKeys, subnetKeys } from '@/apis/queries'
 import { Prompting } from '@/components/account/Prompting'
 import { Input } from '@/components/ui/input'
+import { useBlockMetadata } from '@/hooks/useBlockMetadata'
 import { cn } from '@/lib/utils'
 import type { IAccountInfo, ISubnet } from '@/types'
 import { get } from '@/utils'
@@ -30,9 +31,6 @@ export function AccountHead({ currentTab, account }: { currentTab: string; accou
     },
     enabled: true,
   })
-  // if (!data?.data.records[0]) {
-  //   return
-  // }
   if (isFetching) {
     return (
       <div className="container mx-auto mt-10">

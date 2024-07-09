@@ -9,12 +9,16 @@ import { accountKeys, delegationKeys, transferKeys } from '@/apis/queries'
 import { AccountHead } from '@/components/account/AccountHead'
 import { AccountTag } from '@/components/account/AccountTag'
 import { BlockchainTabs } from '@/components/blockchain/BlockchainTabs'
+import { BlockTime } from '@/components/blockchain/BlockTime'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { useBlockMetadata } from '@/hooks/useBlockMetadata'
 import type { IAccountInfo, IDelegationEvents, ITransfer } from '@/types'
 import { get } from '@/utils'
 
 export default function Index() {
   const accountAddress = useParams().account
+  const { lastProcessedHeight } = useBlockMetadata()
+
   const columns: ColumnDef<IDelegationEvents>[] = [
     {
       header: 'Net UID',
@@ -69,6 +73,17 @@ export default function Index() {
           {row.getValue('height')}
         </a>
       ),
+    },
+    {
+      header: 'Time',
+      accessorKey: 'time',
+      cell: ({ row }) => {
+        return (
+          <div className="text-$green">
+            <BlockTime blockNumber={row.getValue('height')} latestBlockHeight={lastProcessedHeight} />
+          </div>
+        )
+      },
     },
   ]
 

@@ -1,13 +1,20 @@
 import { formatAmount } from '@did-network/dapp-sdk'
 import { useQuery } from '@tanstack/react-query'
+import * as React from 'react'
+import { useCookies } from 'react-cookie'
 
-import { accountKeys } from '@/apis/queries'
-import { AccountTag } from '@/components/account/AccountTag'
+import { BlockTime } from '@/components/blockchain/BlockTime'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { useBlockMetadata } from '@/hooks/useBlockMetadata'
 import type { IAccountInfo } from '@/types'
 import { get } from '@/utils'
 
 export const Prompting = ({ account }: { account?: IAccountInfo }) => {
+  const { lastProcessedHeight } = useBlockMetadata()
+
+  const [cookies] = useCookies(['admin'])
+  const isAdmin = cookies.admin && cookies.admin === 'ee352538125f3980d13fef8315a576c5'
+
   const { data: totalCount } = useQuery<{ data: { totalCount: number } }>({
     queryKey: [
       'rank',
@@ -24,6 +31,31 @@ export const Prompting = ({ account }: { account?: IAccountInfo }) => {
     },
     enabled: true,
   })
+
+  const {
+    data: total_deposited,
+    isPending,
+    isFetching,
+  } = useQuery<{ data: { total_deposited: object } }>({
+    queryKey: [
+      'total_deposited',
+      {
+        account: account?.address,
+      },
+    ],
+
+    queryFn: () => {
+      let params = {
+        account: account?.address,
+      } as Record<PropertyKey, any>
+      if (isAdmin) {
+        return account?.address ? get(`/api/accounts/deposits`, { params }) : { data: { total_deposited: {} } }
+      }
+      return { data: { total_deposited: {} } }
+    },
+    enabled: true,
+  })
+
   return (
     <div className="bg-brand/5 py-6 px-8 lt-sm:(py-3 px-4)">
       <div className="flex items-center gap-1 font-[Orbitron] text-brand text-2xl">Account</div>
@@ -44,9 +76,32 @@ export const Prompting = ({ account }: { account?: IAccountInfo }) => {
             {totalCount.data.totalCount}
           </div>
         )}
+        {isAdmin && (
+          <div className="flex items-center">
+            <span className="w-30 shrink-0 text-brand">Total deposited</span>
+            {isFetching && (
+              <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
+            )}
+            {!isFetching && total_deposited && Object.values(total_deposited.data.total_deposited).length === 0 && (
+              <span>none</span>
+            )}
+            {total_deposited && Object.values(total_deposited.data.total_deposited).length > 0 && (
+              <div className="flex items-end">
+                <ul>
+                  {Object.entries(total_deposited.data.total_deposited).map((value) => (
+                    <li>
+                      <b>{value[0]}</b>: {formatAmount(value[1], 9, 2)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="flex items-center">
-          <span className="w-30 shrink-0 text-brand">Updated at</span>
-          {account?.updatedAt}
+          <span className="w-30 shrink-0 text-brand">Last update</span>
+          <BlockTime blockNumber={parseInt(account?.updatedAt ?? '0')} latestBlockHeight={lastProcessedHeight} />
         </div>
       </div>
 

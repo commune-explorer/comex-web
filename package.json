@@ -36,9 +36,11 @@
     "lucide-react": "^0.244.0",
     "node-stdlib-browser": "^1.2.0",
     "react": "^18.2.0",
+    "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-router": "^6.8.0",
     "react-router-dom": "^6.8.0",
+    "react-tooltip": "^5.27.1",
     "recharts": "^2.12.7",
     "tailwind-merge": "^1.13.2",
     "usehooks-ts": "^3.1.0"
