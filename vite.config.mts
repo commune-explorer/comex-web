@@ -68,7 +68,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://0.0.0.0:4012',//https://stats.communex.ai/',
+          target: 'https://stats.communex.ai/',
           changeOrigin: true,
           rewrite: path => path.replace('/api', '')
         },
