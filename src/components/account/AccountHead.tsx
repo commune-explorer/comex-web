@@ -71,7 +71,7 @@ export function AccountHead({ currentTab, account }: { currentTab: string; accou
       <Prompting account={data?.data.records[0]} />
       <div className="justify-between flex">
         <div className="py-4 flex items-center gap-4">
-          {['Transfers', 'Delegations'].map((tab) => (
+          {['Transfers', 'Delegations', 'Extrinsics'].map((tab) => (
             <NavLink
               key={tab}
               className={cn(
