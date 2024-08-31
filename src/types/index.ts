@@ -71,7 +71,41 @@ export interface ITransfer {
   amount: string
 }
 
+export interface IExtrinsic {
+  id: string
+  module: string
+  method: string
+  blockNumber: string
+  extrinsicId: number
+  tip: string
+  version: number
+  signer: string
+  success: boolean
+  hash: string
+  args: string
+}
+
+export interface IEvent {
+  id: string
+  module: string
+  eventName: string
+  blockNumber: string
+  extrinsicId: number
+  data: string
+}
+
 export interface IAccountTag {
   text: string
   color?: string
+}
+
+export interface IBlock {
+  id: string
+  height: string
+  eventCount: number
+  hash: string
+  parentHash: string
+  extrinsicCount: number
+  specVersion: number
+  timestamp: string
 }

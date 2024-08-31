@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 export function BlockchainTabs({ currentTab }: { currentTab: string }) {
   return (
     <div className="py-4 flex items-center gap-4">
-      {['Accounts', 'Delegations', 'Transfers'].map((tab) => (
+      {['Accounts', 'Delegations', 'Transfers', 'Blocks'].map((tab) => (
         <NavLink
           key={tab}
           className={cn(

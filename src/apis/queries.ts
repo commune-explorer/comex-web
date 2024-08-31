@@ -33,3 +33,19 @@ export const transferKeys = {
   lists: () => [...transferKeys.all, 'list'] as const,
   list: (query: any) => [...transferKeys.lists(), { query }] as const,
 }
+export const blockKeys = {
+  all: ['blockchain'] as const,
+  lists: () => [...blockKeys.all, 'list'] as const,
+  list: (query: any) => [...blockKeys.lists(), { query }] as const,
+}
+
+export const extrinsicKeys = {
+  all: ['blockchain'] as const,
+  lists: () => [...extrinsicKeys.all, 'list'] as const,
+  list: (query: any) => [...extrinsicKeys.lists(), { query }] as const,
+}
+export const eventKeys = {
+  all: ['blockchain'] as const,
+  lists: () => [...eventKeys.all, 'list'] as const,
+  list: (query: any) => [...eventKeys.lists(), { query }] as const,
+}

@@ -1,14 +1,12 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import * as changeCase from 'change-case'
+import { useQuery } from '@tanstack/react-query'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { accountKeys, subnetKeys } from '@/apis/queries'
+import { accountKeys } from '@/apis/queries'
 import { Prompting } from '@/components/account/Prompting'
 import { Input } from '@/components/ui/input'
-import { useBlockMetadata } from '@/hooks/useBlockMetadata'
 import { cn } from '@/lib/utils'
-import type { IAccountInfo, ISubnet } from '@/types'
+import type { IAccountInfo } from '@/types'
 import { get } from '@/utils'
 
 export function AccountHead({ currentTab, account }: { currentTab: string; account: string }) {
