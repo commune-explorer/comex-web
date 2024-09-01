@@ -81,7 +81,7 @@ export default function Events() {
           params.account2 = account
         }
       }
-      return await get<{ data: { records: IEvent[]; totalCount: number } }>(`/api/events`, { params })
+      return await get<{ data: { records: IEvent[]; totalCount: number } }>(`/api/evvents`, { params })
     },
     placeholderData: keepPreviousData,
   })

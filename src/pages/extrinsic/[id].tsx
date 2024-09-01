@@ -71,7 +71,7 @@ export default function Index() {
       }
       params.blockNumber = blockNumber
       params.extrinsicId = extrinsicId
-      return await get<{ data: { records: IEvent[]; totalCount: number } }>(`/api/events`, { params })
+      return await get<{ data: { records: IEvent[]; totalCount: number } }>(`/api/evvents`, { params })
     },
     placeholderData: keepPreviousData,
   })
