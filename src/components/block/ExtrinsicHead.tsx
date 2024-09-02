@@ -97,7 +97,7 @@ export function ExtrinsicHead({ id }: { id: string }) {
   if (!extrinsic) {
     return <div>Extrinsic not found!</div>
   }
-  const block = blockdata!.data.records[0]
+  const block = blockdata?.data.records[0]
   return (
     <div className="container mx-auto mt-10">
       <div className="bg-brand/5 py-6 px-8 lt-sm:(py-3 px-4)">
@@ -112,7 +112,7 @@ export function ExtrinsicHead({ id }: { id: string }) {
             {isFetchingBlock ? (
               <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
             ) : (
-              dayjs(block.timestamp).format('MMM D, YYYY h:mm:ss A (UTC)')
+              dayjs(block?.timestamp).format('MMM D, YYYY h:mm:ss A (UTC)')
             )}
           </div>
           <div className="flex items-center">
@@ -129,7 +129,7 @@ export function ExtrinsicHead({ id }: { id: string }) {
             {isFetchingBlock ? (
               <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
             ) : (
-              formatTimestampToAgo(block.timestamp)
+              formatTimestampToAgo(block?.timestamp ?? '')
             )}
           </div>
           <div className="flex items-center">
