@@ -4,6 +4,13 @@ const decodeHexString = (hexString: string): string => {
   try {
     return decodeURIComponent(hexString.replace(/^0x/, '').replace(/[0-9a-f]{2}/g, '%$&'))
   } catch (error) {
+    try {
+      const hex = hexString.replace(/^0x/, '')
+      if (/^[0-9a-fA-F]+$/.test(hex)) {
+        const bigIntValue = BigInt(`0x${hex}`)
+        return bigIntValue.toString()
+      }
+    } catch (e) {}
     return hexString // Return original string if decoding fails
   }
 }
