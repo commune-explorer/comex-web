@@ -31,7 +31,9 @@ export default function Index() {
           <span className="text-center">
             {row.original.fromTag && <AccountTag tag={row.original.fromTag}></AccountTag>}
             {row.getValue('from') !== accountAddress ? (
-              <a href={`/account/${row.getValue('from')}`}>{shorten(row.getValue('from'), 10, 10)}</a>
+              <a href={`/account/${row.getValue('from')}`} className="hover:(underline)">
+                {shorten(row.getValue('from'), 10, 10)}
+              </a>
             ) : (
               <span className="text-$green">{shorten(row.getValue('from'), 10, 10)}</span>
             )}
@@ -48,7 +50,9 @@ export default function Index() {
           <span className="text-center">
             {row.original.toTag && <AccountTag tag={row.original.toTag}></AccountTag>}
             {row.getValue('to') !== accountAddress ? (
-              <a href={`/account/${row.getValue('to')}`}>{shorten(row.getValue('to'), 10, 10)}</a>
+              <a href={`/account/${row.getValue('to')}`} className="hover:(underline)">
+                {shorten(row.getValue('to'), 10, 10)}
+              </a>
             ) : (
               <span className="text-$green">{shorten(row.getValue('to'), 10, 10)}</span>
             )}
@@ -65,7 +69,13 @@ export default function Index() {
     {
       header: 'Block Number',
       accessorKey: 'blockNumber',
-      cell: ({ row }) => <div className="text-$green">{row.getValue('blockNumber')}</div>,
+      cell: ({ row }) => (
+        <div className="text-$green">
+          <a href={`/block/${row.getValue('blockNumber')}`} className="hover:(underline)">
+            {row.getValue('blockNumber')}
+          </a>
+        </div>
+      ),
     },
     {
       header: 'Time',

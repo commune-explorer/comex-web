@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useSvgBg } from '@/hooks/use-svg'
 import { cn } from '@/lib/utils'
-import { type ISubnet } from '@/types'
+import { type IBlock, type IDelegationEvents, type ISubnet } from '@/types'
 import { get } from '@/utils'
 
 export function Header() {
@@ -17,6 +17,7 @@ export function Header() {
   const { svgRef } = useSvgBg()
 
   const [searchQuery, setSearchQuery] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
 
   const { data: { data: { subnets = [] } = {} } = {} } = useQuery<{ data: { subnets: Array<ISubnet> } }>({
     queryKey: subnetKeys.all,
@@ -25,9 +26,19 @@ export function Header() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSearching(true)
 
-    console.log('Searching:', searchQuery)
-    navigate('/')
+    let params = {
+      query: searchQuery,
+    } as Record<PropertyKey, any>
+    get<{ data: { url: string } }>(`/api/search`, { params })
+      .then((resp) => {
+        navigate(resp.data.url)
+      })
+      .finally(() => {
+        setSearchQuery('')
+        setIsSearching(false)
+      })
   }
 
   return (
@@ -43,16 +54,16 @@ export function Header() {
           <div className="relative">
             <Input
               type="text"
-              placeholder="Search by Block / Extrinsic / Event / Account"
+              placeholder="Search by Account / Block / Extrinsic"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pr-20 !shadow-[none] !outline-none rounded-none bg-transparent"
+              className="w-full pr-20 !shadow-[none] !outline-none rounded-none bg-transparent text-brand placeholder-green-500/90 caret-green-500"
             />
             <Button
               type="submit"
               className="absolute right-0 top-0 bottom-0 uppercase px-3 py-2 self-stretch bg-transparent hover:text-foreground hover:bg-#ADACE316 text-brand"
             >
-              Search
+              {isSearching ? <span className="animate-spin text-brand i-mingcute:loading-fill"></span> : 'Search'}
             </Button>
           </div>
         </form>

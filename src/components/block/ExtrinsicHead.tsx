@@ -9,13 +9,14 @@ import { ExpandableJSONContainer } from '@/components/block/ExpandableJSONContai
 import { JSONObjectContainer } from '@/components/block/JSONObjectContainer'
 import { Prompting } from '@/components/block/Prompting'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { ExtrinsicInfo } from '@/components/extrinsic/ExtrinsicInfo'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-import type { IAccountInfo, IBlock, IExtrinsic } from '@/types'
+import type { IAccountInfo, IBlock, IEvent, IExtrinsic } from '@/types'
 import { get } from '@/utils'
 import { formatTimestampToAgo } from '@/utils/formatSecondsToAgo'
 
-export function ExtrinsicHead({ id }: { id: string }) {
+export function ExtrinsicHead({ id, events }: { id: string; events: IEvent[] }) {
   const { data, isPending, isFetching } = useQuery<{ data: { records: IExtrinsic[]; totalCount: number } }>({
     queryKey: [
       'extrinsic',
@@ -156,11 +157,18 @@ export function ExtrinsicHead({ id }: { id: string }) {
             {extrinsic.success ? <div className="text-$green">✔</div> : <div className="text-$red">✗</div>}
           </div>
           <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Call</span>
+            <span className="w-30 shrink-0 text-brand">Action</span>
             <code className="bg-black/50 text-green-400 px-2 py-1 font-mono">
               {extrinsic.module}::{extrinsic.method}
             </code>
           </div>
+          <ExtrinsicInfo
+            module={extrinsic.module}
+            method={extrinsic.method}
+            data={extrinsic.args}
+            signer={extrinsic.signer}
+            events={events}
+          />
           <div className="flex items-center">
             <span className="w-30 shrink-0 text-brand">Arguments</span>
 

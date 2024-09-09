@@ -2,7 +2,16 @@ import React from 'react'
 
 const decodeHexString = (hexString: string): string => {
   try {
-    return decodeURIComponent(hexString.replace(/^0x/, '').replace(/[0-9a-f]{2}/g, '%$&'))
+    const decoded = decodeURIComponent(hexString.replace(/^0x/, '').replace(/[0-9a-f]{2}/g, '%$&'))
+    if (/[^\x20-\x7E]/.test(decoded)) {
+      // If it contains special characters, try to interpret it as a number
+      const hex = hexString.replace(/^0x/, '')
+      if (/^[0-9a-fA-F]+$/.test(hex)) {
+        const bigIntValue = BigInt(`0x${hex}`)
+        return bigIntValue.toString()
+      }
+    }
+    return decoded
   } catch (error) {
     try {
       const hex = hexString.replace(/^0x/, '')

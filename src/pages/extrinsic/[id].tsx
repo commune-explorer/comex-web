@@ -78,7 +78,7 @@ export default function Index() {
 
   return (
     <div className="container mx-auto py-6 lt-sm:(px-4)">
-      <ExtrinsicHead id={id} />
+      <ExtrinsicHead id={id} events={records} />
       <div className="justify-between flex">
         <div className="py-4 flex items-center gap-4">
           <div className="px-2 pb-2 h-full w-full font-medium">Events</div>
