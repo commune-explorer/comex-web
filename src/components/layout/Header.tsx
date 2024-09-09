@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Link, NavLink } from 'react-router-dom'
 
 import { subnetKeys } from '@/apis/queries'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useSvgBg } from '@/hooks/use-svg'
 import { cn } from '@/lib/utils'
 import { type ISubnet } from '@/types'
@@ -13,10 +16,19 @@ export function Header() {
   const navigate = useNavigate()
   const { svgRef } = useSvgBg()
 
+  const [searchQuery, setSearchQuery] = useState('')
+
   const { data: { data: { subnets = [] } = {} } = {} } = useQuery<{ data: { subnets: Array<ISubnet> } }>({
     queryKey: subnetKeys.all,
     queryFn: () => get('/api/subnets'),
   })
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    console.log('Searching:', searchQuery)
+    navigate('/')
+  }
 
   return (
     <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#070907 lt-sm:(px-4)">
@@ -27,6 +39,23 @@ export function Header() {
           </span>
         </Link>
 
+        <form onSubmit={handleSearch} className="flex-1 mx-4 lt-sm:(hidden)">
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="Search by Block / Extrinsic / Event / Account"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pr-20 !shadow-[none] !outline-none rounded-none bg-transparent"
+            />
+            <Button
+              type="submit"
+              className="absolute right-0 top-0 bottom-0 uppercase px-3 py-2 self-stretch bg-transparent hover:text-foreground hover:bg-#ADACE316 text-brand"
+            >
+              Search
+            </Button>
+          </div>
+        </form>
         <div className="flex gap-4 lt-sm:(hidden)">
           <Link
             ref={svgRef}
