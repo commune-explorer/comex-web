@@ -54,12 +54,12 @@ export default function Index() {
         <div className="flex items-center gap-1">
           <span className="text-center">
             {row.original.moduleTag && <AccountTag tag={row.original.moduleTag}></AccountTag>}
-            <a
-              href={`/account/${row.getValue('module')}`}
-              className={`hover:(underline)` && accountAddress === row.getValue('module') ? 'text-$green' : ''}
-            >
-              {shorten(row.getValue('module'), 10, 10)}
-            </a>
+            {/*<a*/}
+            {/*  href={`/account/${row.getValue('module')}`}*/}
+            {/*  className={`hover:(underline)` && accountAddress === row.getValue('module') ? 'text-$green' : ''}*/}
+            {/*>*/}
+            {/*  {shorten(row.getValue('module'), 10, 10)}*/}
+            {/*</a>*/}
           </span>
           <CopyButton value={row.getValue('module')} />
         </div>
