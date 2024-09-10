@@ -213,12 +213,19 @@ function MenuItem({ subnets }: { subnets: any[] }) {
           </div>
 
           <Separator />
-
-          <SheetClose asChild>
-            <NavLink to="/blockchain" className="py-2 capitalize hover:bg-#ADACE316">
-              blockchain
-            </NavLink>
-          </SheetClose>
+          <div className="font-semibold">Blockchain</div>
+          <div className="max-h-[200px] overflow-y-auto">
+            {['accounts', 'delegations', 'transfers', 'blocks'].map((item) => (
+              <SheetClose asChild key={item}>
+                <NavLink
+                  to={`/blockchain/${item}`}
+                  className="block py-2 text-sm uppercase self-stretch bg-transparent text-muted-foreground hover:text-foreground hover:bg-#ADACE316"
+                >
+                  {item}
+                </NavLink>
+              </SheetClose>
+            ))}
+          </div>
         </div>
       </SheetContent>
     </Sheet>

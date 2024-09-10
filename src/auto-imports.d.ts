@@ -9,6 +9,7 @@ declare global {
   const CardHeader: typeof import('./components/ui/card')['CardHeader']
   const CardTitle: typeof import('./components/ui/card')['CardTitle']
   const Checkbox: typeof import('./components/ui/checkbox')['Checkbox']
+  const DataList: typeof import('./components/ui/data-list')['DataList']
   const DataTable: typeof import('./components/ui/data-table')['DataTable']
   const DataTableServer: typeof import('./components/ui/data-table-server')['DataTableServer']
   const Dialog: typeof import('./components/ui/dialog')['Dialog']

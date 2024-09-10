@@ -53,7 +53,7 @@ export default function Index() {
       header: 'Success',
       accessorKey: 'success',
       cell: ({ row }) =>
-        row.getValue('success') ? <div className="text-$green">✔</div> : <div className="text-$red">✗</div>,
+        row.getValue('success') ? <div className="text-$green">✓</div> : <div className="text-$red">✗</div>,
     },
     {
       accessorKey: 'args',

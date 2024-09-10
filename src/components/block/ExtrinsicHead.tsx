@@ -144,7 +144,7 @@ export function ExtrinsicHead({ id, events }: { id: string; events: IEvent[] }) 
           <div className="flex lt-sm:flex-col lt-sm:items-start">
             <span className="w-30 shrink-0 text-brand lt-sm:w-full">Success</span>
             <span className="lt-sm:mt-1">
-              {extrinsic.success ? <div className="text-$green">✔</div> : <div className="text-$red">✗</div>}
+              {extrinsic.success ? <div className="text-$green">✓</div> : <div className="text-$red">✗</div>}
             </span>
           </div>
           <div className="flex lt-sm:flex-col lt-sm:items-start">

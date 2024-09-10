@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom'
 import { eventKeys } from '@/apis/queries'
 import { ExpandableJSONContainer } from '@/components/block/ExpandableJSONContainer'
 import { ExtrinsicHead } from '@/components/block/ExtrinsicHead'
+import { JSONObjectContainer } from '@/components/block/JSONObjectContainer'
+import { DataList } from '@/components/ui/data-list'
 import type { IEvent } from '@/types'
 import { get } from '@/utils'
 
@@ -40,7 +42,7 @@ export default function Index() {
       accessorKey: 'data',
       header: 'Data',
       cell: ({ row }) => {
-        return <ExpandableJSONContainer data={JSON.parse(row.getValue('data'))} />
+        return <JSONObjectContainer data={JSON.parse(row.getValue('data'))} />
       },
     },
   ]
@@ -86,7 +88,7 @@ export default function Index() {
       </div>
 
       <div className="text-sm py-4">
-        <DataTableServer
+        <DataList
           columns={columns}
           data={records}
           total={totalCount || 0}

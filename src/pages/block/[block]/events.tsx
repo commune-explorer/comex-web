@@ -4,13 +4,14 @@ import { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/react-tab
 import * as changeCase from 'change-case'
 import { useState } from 'react'
 import * as React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { eventKeys } from '@/apis/queries'
 import { BlockHead } from '@/components/block/BlockHead'
 import { ExpandableJSONContainer } from '@/components/block/ExpandableJSONContainer'
 import { JSONObjectContainer } from '@/components/block/JSONObjectContainer'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { DataList } from '@/components/ui/data-list'
 import type { IEvent } from '@/types'
 import { get } from '@/utils'
 
@@ -28,11 +29,6 @@ export default function Events() {
       cell: ({ row }) => row.getValue('id'),
     },
     {
-      header: 'Extrinsic id',
-      accessorKey: 'extrinsicId',
-      cell: ({ row }) => ((row.getValue('extrinsicId') as number) >= 0 ? row.getValue('extrinsicId') : '-'),
-    },
-    {
       accessorKey: 'eventName',
       header: 'Name',
       cell: ({ row }) => (
@@ -42,10 +38,29 @@ export default function Events() {
       ),
     },
     {
+      header: 'Extrinsic id',
+      accessorKey: 'extrinsicId',
+      cell: ({ row }) => {
+        if ((row.getValue('extrinsicId') as number) < 0) {
+          return '-'
+        }
+        const formattedNumber = (num: number) =>
+          num < 10 ? `000${num}` : num < 100 ? `00${num}` : num < 1000 ? `0${num}` : `${num}`
+        const extrinsicFormatted = `${(row.getValue('id') as string).split('-')[0]}-${formattedNumber(
+          row.getValue('extrinsicId')
+        )}`
+        return (
+          <Link to={`/extrinsic/${extrinsicFormatted}`} className="hover:underline">
+            {extrinsicFormatted}
+          </Link>
+        )
+      },
+    },
+    {
       accessorKey: 'data',
       header: 'Data',
       cell: ({ row }) => {
-        return <ExpandableJSONContainer data={JSON.parse(row.getValue('data'))} />
+        return <JSONObjectContainer data={JSON.parse(row.getValue('data'))} />
       },
     },
   ]
@@ -89,7 +104,7 @@ export default function Events() {
     <div className="container mx-auto py-6 lt-sm:(px-4)">
       <BlockHead currentTab="events" height={height} />
       <div className="text-sm py-4">
-        <DataTableServer
+        <DataList
           columns={columns}
           data={records}
           total={totalCount || 0}

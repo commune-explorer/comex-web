@@ -9,7 +9,9 @@ import { useParams } from 'react-router-dom'
 import { extrinsicKeys } from '@/apis/queries'
 import { BlockHead } from '@/components/block/BlockHead'
 import { ExpandableJSONContainer } from '@/components/block/ExpandableJSONContainer'
+import { JSONObjectContainer } from '@/components/block/JSONObjectContainer'
 import { CopyButton } from '@/components/blockchain/CopyButton'
+import { DataList } from '@/components/ui/data-list'
 import type { IExtrinsic } from '@/types'
 import { get } from '@/utils'
 
@@ -34,7 +36,7 @@ export default function Index() {
       accessorKey: 'method',
       header: 'Call',
       cell: ({ row }) => (
-        <code className="bg-black/50 text-green-400 px-2 py-1 font-mono">
+        <code className="bg-black/50 text-green-400 font-mono">
           {row.original.module}::{row.original.method}
         </code>
       ),
@@ -57,13 +59,13 @@ export default function Index() {
       header: 'Success',
       accessorKey: 'success',
       cell: ({ row }) =>
-        row.getValue('success') ? <div className="text-$green">✔</div> : <div className="text-$red">✗</div>,
+        row.getValue('success') ? <div className="text-$green">✓</div> : <div className="text-$red">✗</div>,
     },
     {
       accessorKey: 'args',
-      header: 'Args',
+      header: 'Arguments',
       cell: ({ row }) => {
-        return <ExpandableJSONContainer data={JSON.parse(row.getValue('args'))} />
+        return <JSONObjectContainer data={JSON.parse(row.getValue('args'))} />
       },
     },
   ]
@@ -107,7 +109,7 @@ export default function Index() {
     <div className="container mx-auto py-6 lt-sm:(px-4)">
       <BlockHead currentTab="extrinsics" height={height} />
       <div className="text-sm py-4">
-        <DataTableServer
+        <DataList
           columns={columns}
           data={records}
           total={totalCount || 0}
