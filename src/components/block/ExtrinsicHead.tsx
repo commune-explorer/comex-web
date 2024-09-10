@@ -62,33 +62,17 @@ export function ExtrinsicHead({ id, events }: { id: string; events: IEvent[] }) 
   if (isFetching) {
     return (
       <div className="container mx-auto mt-10">
-        <div className="bg-brand/5 py-6 px-8 space-y-3">
-          <Skeleton className="h-9 w-30" />
-          <Skeleton className="h-8 w-40" />
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-50" />
+        <div className="bg-brand/5 py-6 px-8 lt-sm:(py-4 px-4) space-y-4">
+          <Skeleton className="h-9 w-30 lt-sm:(h-7 w-24)" />
+          <Skeleton className="h-8 w-40 lt-sm:(h-6 w-full)" />
+          <div className="space-y-3 lt-sm:space-y-4">
+            {[...Array(7)].map((_, index) => (
+              <div key={index} className="flex lt-sm:flex-col">
+                <Skeleton className="h-4 w-30 lt-sm:w-full" />
+                <Skeleton className="h-4 w-50 ml-4 lt-sm:(ml-0 mt-1 w-3/4)" />
+              </div>
+            ))}
           </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-20" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-20" />
-            <Skeleton className="h-4 w-130" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-130" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-20" />
-            <Skeleton className="h-4 w-10" />
-          </div>
-        </div>
-
-        <div className="mt-20 flex-col-center">
-          <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
         </div>
       </div>
     )
@@ -101,42 +85,46 @@ export function ExtrinsicHead({ id, events }: { id: string; events: IEvent[] }) 
   const block = blockdata?.data.records[0]
   return (
     <div className="container mx-auto mt-10">
-      <div className="bg-brand/5 py-6 px-8 lt-sm:(py-3 px-4)">
-        <div className="flex items-center gap-1 font-[Orbitron] text-brand text-2xl">Extrinsic</div>
-        <div className="flex items-center gap-1 font-[Orbitron] text-xl">
+      <div className="bg-brand/5 py-6 px-8 lt-sm:(py-4 px-4)">
+        <div className="flex items-center gap-1 font-[Orbitron] text-brand text-2xl lt-sm:text-xl">Extrinsic</div>
+        <div className="flex items-center gap-1 font-[Orbitron] text-xl lt-sm:text-lg break-all">
           #{extrinsic.id}
           <CopyButton value={extrinsic.id} />
         </div>
-        <div className="my-4 space-y-2">
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Timestamp</span>
-            {isFetchingBlock ? (
-              <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
-            ) : (
-              dayjs(block?.timestamp).format('MMM D, YYYY h:mm:ss A (UTC)')
-            )}
+        <div className="my-4 space-y-3 lt-sm:space-y-4">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Timestamp</span>
+            <span className="lt-sm:mt-1">
+              {isFetchingBlock ? (
+                <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill lt-sm:translate-x-0"></span>
+              ) : (
+                dayjs(block?.timestamp).format('MMM D, YYYY h:mm:ss A (UTC)')
+              )}
+            </span>
           </div>
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Block</span>
-            <div className="flex items-center gap-1">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Block</span>
+            <div className="flex items-center gap-1 lt-sm:mt-1">
               <a href={`/block/${extrinsic.blockNumber}`} className="hover:(underline)">
                 {extrinsic.blockNumber}
               </a>
               <CopyButton value={extrinsic.blockNumber} />
             </div>
           </div>
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Block time</span>
-            {isFetchingBlock ? (
-              <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill"></span>
-            ) : (
-              formatTimestampToAgo(block?.timestamp ?? '')
-            )}
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Block time</span>
+            <span className="lt-sm:mt-1">
+              {isFetchingBlock ? (
+                <span className="translate-x-10 w-5 h-5 animate-spin text-brand/60 i-mingcute:loading-fill lt-sm:translate-x-0"></span>
+              ) : (
+                formatTimestampToAgo(block?.timestamp ?? '')
+              )}
+            </span>
           </div>
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Signer</span>
-            <div className="flex items-center gap-1">
-              <span>
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Signer</span>
+            <div className="flex items-center gap-1 lt-sm:mt-1">
+              <span className="break-all">
                 <a href={`/account/${extrinsic.signer}`} className="hover:(underline)">
                   {extrinsic.signer}
                 </a>
@@ -144,21 +132,23 @@ export function ExtrinsicHead({ id, events }: { id: string; events: IEvent[] }) 
               <CopyButton value={extrinsic.signer} />
             </div>
           </div>
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">hash</span>
-            {extrinsic.hash}
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">hash</span>
+            <span className="lt-sm:mt-1 break-all">{extrinsic.hash}</span>
           </div>
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Version</span>
-            {extrinsic.version}
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Version</span>
+            <span className="lt-sm:mt-1">{extrinsic.version}</span>
           </div>
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Success</span>
-            {extrinsic.success ? <div className="text-$green">✔</div> : <div className="text-$red">✗</div>}
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Success</span>
+            <span className="lt-sm:mt-1">
+              {extrinsic.success ? <div className="text-$green">✔</div> : <div className="text-$red">✗</div>}
+            </span>
           </div>
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Action</span>
-            <code className="bg-black/50 text-green-400 px-2 py-1 font-mono">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Action</span>
+            <code className="bg-black/50 text-green-400 px-2 py-1 font-mono lt-sm:mt-1">
               {extrinsic.module}::{extrinsic.method}
             </code>
           </div>
@@ -169,11 +159,10 @@ export function ExtrinsicHead({ id, events }: { id: string; events: IEvent[] }) 
             signer={extrinsic.signer}
             events={events}
           />
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Arguments</span>
-
-            <div className="relative">
-              <code className="bg-black/50 text-green-400 px-2 py-1 font-mono block max-h-[350px] overflow-y-auto">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Arguments</span>
+            <div className="relative lt-sm:mt-1 lt-sm:w-full">
+              <code className="bg-black/50 text-green-400 px-2 py-1 font-mono block max-h-[350px] overflow-y-auto lt-sm:w-full">
                 <JSONObjectContainer data={JSON.parse(extrinsic.args)} />
               </code>
             </div>

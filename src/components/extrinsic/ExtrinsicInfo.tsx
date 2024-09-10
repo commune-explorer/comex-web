@@ -34,15 +34,18 @@ export function ExtrinsicInfo({
       ) {
         const amount = formatAmount(parsedArgs[1], 9, 2)
         return (
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Transaction fee</span>
-            <div className="flex items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
-              <div className="py-1 pr-2 font-bold">{amount} COMAI</div>
-              <div className="py-1 pr-2">paid by</div>
-              <div className="py-1 pr-2 font-bold">
-                <a href={`/account/${parsedArgs[0]}`} className="hover:(underline)">
-                  {shorten(parsedArgs[0], 10, 10)}
-                </a>
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Transaction fee</span>
+            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
+              <div className="cursor-default">
+                <Tooltip id="fee" />
+                <span
+                  data-tooltip-content={`Paid by ${shorten(parsedArgs[0], 10, 10)}`}
+                  data-tooltip-id="fee"
+                  data-tooltip-place="top"
+                >
+                  {amount} COMAI
+                </span>
               </div>
             </div>
           </div>
@@ -54,9 +57,9 @@ export function ExtrinsicInfo({
         const amount = formatAmount(parsedArgs[2], 9, 2)
 
         return (
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Transfer</span>
-            <div className="flex items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Transfer</span>
+            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
               <div className="py-1 pr-2 font-bold">{amount} COMAI</div>
               <div className="py-1 pr-2">from</div>
               <div className="py-1 pr-2 font-bold">
@@ -80,9 +83,9 @@ export function ExtrinsicInfo({
         const amount = formatAmount(parsedArgs[2], 9, 2)
 
         return (
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Added stake</span>
-            <div className="flex items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Added stake</span>
+            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
               <div className="py-1 pr-2  font-bold">
                 <a href={`/account/${delegator}`} className="hover:(underline)">
                   {shorten(delegator, 10, 10)}
@@ -106,9 +109,9 @@ export function ExtrinsicInfo({
         const amount = formatAmount(parsedArgs[2], 9, 2)
 
         return (
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Removed stake</span>
-            <div className="flex items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Removed stake</span>
+            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
               <div className="py-1 pr-2  font-bold">
                 <a href={`/account/${delegator}`} className="hover:(underline)">
                   {shorten(delegator, 10, 10)}
@@ -137,9 +140,9 @@ export function ExtrinsicInfo({
         const modulename = decodeURIComponent(extrinsicArgs[1].replace(/^0x/, '').replace(/[0-9a-f]{2}/g, '%$&'))
 
         return (
-          <div className="flex items-center">
-            <span className="w-30 shrink-0 text-brand">Module registered</span>
-            <div className="flex items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
+          <div className="flex lt-sm:flex-col lt-sm:items-start">
+            <span className="w-30 shrink-0 text-brand lt-sm:w-full">Module registered</span>
+            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
               <div className="py-1 pr-2 font-bold">
                 <a href={`/account/${account}`} className="hover:(underline)">
                   {shorten(account, 10, 10)}

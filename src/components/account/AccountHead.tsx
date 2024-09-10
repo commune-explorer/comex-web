@@ -32,29 +32,31 @@ export function AccountHead({ currentTab, account }: { currentTab: string; accou
   if (isFetching) {
     return (
       <div className="container mx-auto mt-10">
-        <div className="bg-brand/5 py-6 px-8 space-y-3">
-          <Skeleton className="h-9 w-30" />
-          <Skeleton className="h-8 w-150" />
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-30" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-30" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-30" />
+        <div className="bg-brand/5 py-6 px-8 lt-sm:(py-4 px-4) space-y-4">
+          <Skeleton className="h-9 w-30 lt-sm:h-7 lt-sm:w-24" />
+          <Skeleton className="h-8 w-150 lt-sm:h-6 lt-sm:w-full" />
+          <div className="space-y-3 lt-sm:space-y-4">
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-30 lt-sm:w-full" />
+              <Skeleton className="h-4 w-30 ml-4 lt-sm:(ml-0 mt-1 w-3/4)" />
+            </div>
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-30 lt-sm:w-full" />
+              <Skeleton className="h-4 w-30 ml-4 lt-sm:(ml-0 mt-1 w-3/4)" />
+            </div>
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-30 lt-sm:w-full" />
+              <Skeleton className="h-4 w-30 ml-4 lt-sm:(ml-0 mt-1 w-3/4)" />
+            </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-3 lt-sm:(grid-cols-2)">
+          <div className="grid grid-cols-4 gap-3 lt-sm:(grid-cols-2 gap-y-4)">
             {Array(3)
               .fill(1)
               .map((i) => (
                 <div key={'skeleton_col' + i} className="space-y-2">
-                  <Skeleton className="h-4 w-30" />
-                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-4 w-30 lt-sm:w-full" />
+                  <Skeleton className="h-4 w-20 lt-sm:w-3/4" />
                 </div>
               ))}
           </div>
@@ -85,22 +87,6 @@ export function AccountHead({ currentTab, account }: { currentTab: string; accou
               <div className="px-2 pb-2 h-full w-full font-medium cursor-pointer">{tab}</div>
             </NavLink>
           ))}
-        </div>
-
-        <div className="flex items-center gap-4">
-          <span className="px-2 pb-2 font-medium text-brand">Find wallet:</span>
-          <div className="flex w-40 h-9 px-2.25 py-0.25 items-center gap-2.5 border-rd-1.25 bg-[rgba(173,172,227,0.03)]">
-            <span className="w-4 h-4 text-brand i-lucide-search"></span>
-            <Input
-              onChange={(event) => {
-                let input = event.target.value
-                if (input && input.length === 48) {
-                  window.location.href = `/account/${input}`
-                }
-              }}
-              className="p-0 !border-none !shadow-[none] !outline-none rounded-none bg-transparent"
-            />
-          </div>
         </div>
       </div>
     </div>

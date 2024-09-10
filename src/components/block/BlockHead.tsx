@@ -32,28 +32,30 @@ export function BlockHead({ currentTab, height }: { currentTab: string; height: 
   if (isFetching) {
     return (
       <div className="container mx-auto mt-10">
-        <div className="bg-brand/5 py-6 px-8 space-y-3">
-          <Skeleton className="h-9 w-30" />
-          <Skeleton className="h-8 w-40" />
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-50" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-20" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-20" />
-            <Skeleton className="h-4 w-130" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-30" />
-            <Skeleton className="h-4 w-130" />
-          </div>
-          <div className="grid grid-cols-2 w-1/4">
-            <Skeleton className="h-4 w-20" />
-            <Skeleton className="h-4 w-10" />
+        <div className="bg-brand/5 py-6 px-8 lt-sm:(py-4 px-4) space-y-4">
+          <Skeleton className="h-9 w-30 lt-sm:(h-7 w-24)" />
+          <Skeleton className="h-8 w-40 lt-sm:(h-6 w-full)" />
+          <div className="space-y-3 lt-sm:space-y-4">
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-30 lt-sm:w-full" />
+              <Skeleton className="h-4 w-50 ml-4 lt-sm:(ml-0 mt-1 w-3/4)" />
+            </div>
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-30 lt-sm:w-full" />
+              <Skeleton className="h-4 w-20 ml-4 lt-sm:(ml-0 mt-1 w-1/2)" />
+            </div>
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-20 lt-sm:w-full" />
+              <Skeleton className="h-4 w-130 ml-4 lt-sm:(ml-0 mt-1 w-full)" />
+            </div>
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-30 lt-sm:w-full" />
+              <Skeleton className="h-4 w-130 ml-4 lt-sm:(ml-0 mt-1 w-full)" />
+            </div>
+            <div className="flex lt-sm:flex-col">
+              <Skeleton className="h-4 w-20 lt-sm:w-full" />
+              <Skeleton className="h-4 w-10 ml-4 lt-sm:(ml-0 mt-1 w-1/4)" />
+            </div>
           </div>
         </div>
 

@@ -42,15 +42,15 @@ export function Header() {
   }
 
   return (
-    <div className="h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#070907 lt-sm:(px-4)">
-      <div className="container m-auto h-full flex justify-between items-center">
-        <Link to="/" className="flex items-center font-bold cursor-pointer">
+    <div className="h-auto min-h-16 border-b-1 border-solid box-border sticky top-0 z-10 bg-#070907 lt-sm:(px-4)">
+      <div className="container m-auto h-full flex flex-wrap justify-between items-center py-2">
+        <Link to="/" className="flex items-center font-bold cursor-pointer mb-2 sm:mb-0">
           <span className="text-xl font-[Orbitron]">
             <span className="text-brand">C</span>OMEX
           </span>
         </Link>
 
-        <form onSubmit={handleSearch} className="flex-1 mx-4 lt-sm:(hidden)">
+        <form onSubmit={handleSearch} className="flex-1 mx-4 w-full sm:w-auto order-3 sm:order-2 hidden sm:block">
           <div className="relative">
             <Input
               type="text"
@@ -67,7 +67,8 @@ export function Header() {
             </Button>
           </div>
         </form>
-        <div className="flex gap-4 lt-sm:(hidden)">
+
+        <div className="flex gap-4 lt-sm:(hidden) order-2 sm:order-3">
           <Link
             ref={svgRef}
             to={'/'}
@@ -130,35 +131,89 @@ export function Header() {
 }
 
 function MenuItem({ subnets }: { subnets: any[] }) {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
+  const navigate = useNavigate()
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSearching(true)
+
+    let params = {
+      query: searchQuery,
+    } as Record<PropertyKey, any>
+    get<{ data: { url: string } }>(`/api/search`, { params })
+      .then((resp) => {
+        navigate(resp.data.url)
+      })
+      .finally(() => {
+        setSearchQuery('')
+        setIsSearching(false)
+      })
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
         <span className="w-6 h-6 sm:hidden i-lucide:menu"></span>
       </SheetTrigger>
-      <SheetContent>
-        <div className="flex flex-col gap-3">
+      <SheetContent side="left" className="w-[280px] sm:w-[400px]">
+        <SheetHeader>
+          <SheetTitle>
+            <span className="text-xl font-[Orbitron]">
+              <span className="text-brand">C</span>OMEX
+            </span>
+          </SheetTitle>
+        </SheetHeader>
+        <div className="flex flex-col gap-4 py-4">
+          <form onSubmit={handleSearch} className="flex-1">
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pr-20 !shadow-[none] !outline-none rounded-none bg-transparent text-brand placeholder-green-500/90 caret-green-500"
+              />
+              <Button
+                type="submit"
+                className="absolute right-0 top-0 bottom-0 uppercase px-3 py-2 self-stretch bg-transparent hover:text-foreground hover:bg-#ADACE316 text-brand"
+              >
+                {isSearching ? (
+                  <span className="animate-spin text-brand i-mingcute:loading-fill"></span>
+                ) : (
+                  <span className="i-lucide-search"></span>
+                )}
+              </Button>
+            </div>
+          </form>
+
           <SheetClose asChild>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/" className="py-2 hover:bg-#ADACE316">
+              Home
+            </NavLink>
           </SheetClose>
 
           <Separator />
 
-          <span>Subnets</span>
-          {subnets.map((item) => (
-            <SheetClose asChild key={item.id}>
-              <NavLink
-                to={`/subnets/${item.id}`}
-                className={'text-xs uppercase self-stretch bg-transparent text-muted-foreground'}
-              >
-                {item.id}: {item.name}
-              </NavLink>
-            </SheetClose>
-          ))}
+          <div className="font-semibold">Subnets</div>
+          <div className="max-h-[200px] overflow-y-auto">
+            {subnets.map((item) => (
+              <SheetClose asChild key={item.id}>
+                <NavLink
+                  to={`/subnets/${item.id}`}
+                  className="block py-2 text-sm uppercase self-stretch bg-transparent text-muted-foreground hover:text-foreground hover:bg-#ADACE316"
+                >
+                  {item.id}: {item.name}
+                </NavLink>
+              </SheetClose>
+            ))}
+          </div>
 
           <Separator />
 
           <SheetClose asChild>
-            <NavLink to="/blockchain" className="capitalize">
+            <NavLink to="/blockchain" className="py-2 capitalize hover:bg-#ADACE316">
               blockchain
             </NavLink>
           </SheetClose>
