@@ -135,6 +135,7 @@ function MenuItem({ subnets }: { subnets: any[] }) {
   const [isSearching, setIsSearching] = useState(false)
   const navigate = useNavigate()
 
+  const sheetCloseRef = useRef<HTMLButtonElement>(null)
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setIsSearching(true)
@@ -144,6 +145,7 @@ function MenuItem({ subnets }: { subnets: any[] }) {
     } as Record<PropertyKey, any>
     get<{ data: { url: string } }>(`/api/search`, { params })
       .then((resp) => {
+        sheetCloseRef.current?.click()
         navigate(resp.data.url)
       })
       .finally(() => {
@@ -154,7 +156,7 @@ function MenuItem({ subnets }: { subnets: any[] }) {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger asChild ref={sheetCloseRef}>
         <span className="w-6 h-6 sm:hidden i-lucide:menu"></span>
       </SheetTrigger>
       <SheetContent side="left" className="w-[280px] sm:w-[400px]">
