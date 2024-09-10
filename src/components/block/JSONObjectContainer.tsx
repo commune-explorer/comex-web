@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactJson from 'react-json-view'
 
 const decodeHexString = (hexString: string): string => {
   try {
@@ -24,30 +25,37 @@ const decodeHexString = (hexString: string): string => {
   }
 }
 
-export const JSONObjectContainer: React.FC<{ data: any; depth?: number }> = ({ data, depth = 0 }) => {
-  if (typeof data !== 'object' || data === null) {
-    if (typeof data === 'string' && data.startsWith('0x')) {
-      return (
-        <span>
-          {decodeHexString(data)} (hex: {data})
-        </span>
-      )
+const decodeHexInObject = (obj: any): any => {
+  if (typeof obj !== 'object' || obj === null) {
+    if (typeof obj === 'string' && obj.startsWith('0x')) {
+      return decodeHexString(obj)
     }
-    return <span>{JSON.stringify(data)}</span>
+    return obj
   }
 
+  if (Array.isArray(obj)) {
+    return obj.map(decodeHexInObject)
+  }
+
+  const result: { [key: string]: any } = {}
+  for (const [key, value] of Object.entries(obj)) {
+    result[key] = decodeHexInObject(value)
+  }
+  return result
+}
+
+export const JSONObjectContainer: React.FC<{ data: any; depth?: number }> = ({ data, depth = 0 }) => {
+  const decodedData = React.useMemo(() => decodeHexInObject(data), [data])
+
   return (
-    <div style={{ marginLeft: `${depth * 20}px` }}>
-      {Object.entries(data).map(([key, value]) => (
-        <div key={key}>
-          <span>{key}: </span>
-          {typeof value === 'string' && value.startsWith('{') && value.endsWith('}') ? (
-            <JSONObjectContainer data={JSON.parse(value)} depth={depth + 1} />
-          ) : (
-            <JSONObjectContainer data={value} depth={depth + 1} />
-          )}
-        </div>
-      ))}
-    </div>
+    <ReactJson
+      src={decodedData}
+      theme="greenscreen"
+      iconStyle="square"
+      collapsed={1}
+      displayDataTypes={false}
+      name={false}
+      collapseStringsAfterLength={15}
+    />
   )
 }

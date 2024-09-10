@@ -2,6 +2,7 @@ import { shorten } from '@did-network/dapp-sdk'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import * as React from 'react'
+import ReactJson from 'react-json-view'
 import { NavLink } from 'react-router-dom'
 
 import { accountKeys, blockKeys, eventKeys, extrinsicKeys } from '@/apis/queries'
@@ -162,7 +163,7 @@ export function ExtrinsicHead({ id, events }: { id: string; events: IEvent[] }) 
           <div className="flex lt-sm:flex-col lt-sm:items-start">
             <span className="w-30 shrink-0 text-brand lt-sm:w-full">Arguments</span>
             <div className="relative lt-sm:mt-1 lt-sm:w-full">
-              <code className="bg-black/50 text-green-400 px-2 py-1 font-mono block max-h-[350px] overflow-y-auto lt-sm:w-full">
+              <code className="bg-black/50 p-1 block overflow-y-auto lt-sm:w-full">
                 <JSONObjectContainer data={JSON.parse(extrinsic.args)} />
               </code>
             </div>

@@ -36,7 +36,13 @@ export function ExtrinsicInfo({
         return (
           <div className="flex lt-sm:flex-col lt-sm:items-start">
             <span className="w-30 shrink-0 text-brand lt-sm:w-full">Transaction fee</span>
-            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
+            <div
+              className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 px-2 py-1 bg-[rgb(0, 17, 0)]"
+              style={{
+                fontFamily: 'monospace',
+                color: 'rgb(0, 255, 0)',
+              }}
+            >
               <div className="cursor-default">
                 <Tooltip id="fee" />
                 <span
@@ -59,16 +65,23 @@ export function ExtrinsicInfo({
         return (
           <div className="flex lt-sm:flex-col lt-sm:items-start">
             <span className="w-30 shrink-0 text-brand lt-sm:w-full">Transfer</span>
-            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
-              <div className="py-1 pr-2 font-bold">{amount} COMAI</div>
-              <div className="py-1 pr-2">from</div>
-              <div className="py-1 pr-2 font-bold">
+            <div
+              className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 px-2 py-1 bg-[rgb(0, 17, 0)]"
+              style={{
+                fontFamily: 'monospace',
+                color: 'rgb(0, 153, 0)',
+              }}
+            >
+              {/*<div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">*/}
+              <div className="py-1 pr-2 text-#0f0">{amount} COMAI</div>
+              <div className="py-1 pr-2 italic">from</div>
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${sender}`} className="hover:(underline)">
                   {shorten(sender, 10, 10)}
                 </a>
               </div>
-              <div className="py-1 pr-2">to</div>
-              <div className="py-1 pr-2 font-bold">
+              <div className="py-1 pr-2 italic">to</div>
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${receiver}`} className="hover:(underline)">
                   {shorten(receiver, 10, 10)}
                 </a>
@@ -85,16 +98,22 @@ export function ExtrinsicInfo({
         return (
           <div className="flex lt-sm:flex-col lt-sm:items-start">
             <span className="w-30 shrink-0 text-brand lt-sm:w-full">Added stake</span>
-            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
-              <div className="py-1 pr-2  font-bold">
+            <div
+              className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 px-2 py-1 bg-[rgb(0, 17, 0)]"
+              style={{
+                fontFamily: 'monospace',
+                color: 'rgb(0, 153, 0)',
+              }}
+            >
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${delegator}`} className="hover:(underline)">
                   {shorten(delegator, 10, 10)}
                 </a>
               </div>
-              <div className="py-1 pr-2">added</div>
-              <div className="py-1 pr-2 font-bold">{amount} COMAI</div>
-              <div className="py-1 pr-2">stake to</div>
-              <div className="py-1 pr-2 font-bold">
+              <div className="py-1 pr-2 italic">added</div>
+              <div className="py-1 pr-2 text-#0f0">{amount} COMAI</div>
+              <div className="py-1 pr-2 italic">stake to</div>
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${delegatedTo}`} className="hover:(underline)">
                   {shorten(delegatedTo, 10, 10)}
                 </a>
@@ -111,16 +130,22 @@ export function ExtrinsicInfo({
         return (
           <div className="flex lt-sm:flex-col lt-sm:items-start">
             <span className="w-30 shrink-0 text-brand lt-sm:w-full">Removed stake</span>
-            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
-              <div className="py-1 pr-2  font-bold">
+            <div
+              className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 px-2 py-1 bg-[rgb(0, 17, 0)]"
+              style={{
+                fontFamily: 'monospace',
+                color: 'rgb(0, 153, 0)',
+              }}
+            >
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${delegator}`} className="hover:(underline)">
                   {shorten(delegator, 10, 10)}
                 </a>
               </div>
-              <div className="py-1 pr-2">removed</div>
-              <div className="py-1 pr-2 font-bold">{amount} COMAI</div>
-              <div className="py-1 pr-2">stake from</div>
-              <div className="py-1 pr-2 font-bold">
+              <div className="py-1 pr-2 italic">removed</div>
+              <div className="py-1 pr-2 text-#0f0">{amount} COMAI</div>
+              <div className="py-1 pr-2 italic">stake from</div>
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${delegatedTo}`} className="hover:(underline)">
                   {shorten(delegatedTo, 10, 10)}
                 </a>
@@ -142,20 +167,26 @@ export function ExtrinsicInfo({
         return (
           <div className="flex lt-sm:flex-col lt-sm:items-start">
             <span className="w-30 shrink-0 text-brand lt-sm:w-full">Module registered</span>
-            <div className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 text-green-400 px-2 py-1">
-              <div className="py-1 pr-2 font-bold">
+            <div
+              className="flex lt-sm:flex-col lt-sm:items-start items-center gap-1 bg-black/50 px-2 py-1 bg-[rgb(0, 17, 0)]"
+              style={{
+                fontFamily: 'monospace',
+                color: 'rgb(0, 153, 0)',
+              }}
+            >
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${account}`} className="hover:(underline)">
                   {shorten(account, 10, 10)}
                 </a>
               </div>
-              <div className="py-1 pr-2">registered as</div>
-              <div className="py-1 pr-2 font-bold">
+              <div className="py-1 pr-2 italic">registered as</div>
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/account/${account}`} className="hover:(underline)">
                   {modulename}
                 </a>
               </div>
-              <div className="py-1 pr-2">on subnet</div>
-              <div className="py-1 pr-2 font-bold">
+              <div className="py-1 pr-2 italic">on subnet</div>
+              <div className="py-1 pr-2 text-#0f0">
                 <a href={`/subnets/${subnet}`} className="hover:(underline)">
                   {subnet}: {snname}
                 </a>
