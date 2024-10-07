@@ -20,19 +20,17 @@ function App() {
   const { toasts } = useToast()
   return (
     <div className="min-h-100vh flex flex-col">
-      <img
-        src="/bg-pattern.svg"
-        alt="bg-pattern"
+      <div
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
+          right: 0,
+          bottom: 0,
           zIndex: -10,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
+          backgroundImage: 'url("/bg-pattern.svg")',
           backgroundRepeat: 'repeat',
-          objectPosition: 'center',
+          backgroundSize: '300px 300px',
         }}
       />
       <Header />
